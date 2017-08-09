@@ -27,7 +27,7 @@ var buttonComponent = (function () {
     ], buttonComponent.prototype, "parentClass", void 0);
     buttonComponent = __decorate([
         core_1.Component({
-            selector: 'buttonAsLink',
+            selector: 'linkAsButton',
             template: " \n    <div [class]=parentClass><a href=\"javascript:void(0)\" class=\"{{applyClass}}\">{{btnText}}</a></div>\n    "
         })
     ], buttonComponent);

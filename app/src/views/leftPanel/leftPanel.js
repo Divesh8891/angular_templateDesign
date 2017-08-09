@@ -13,7 +13,7 @@ var leftPanelComponent = (function () {
     leftPanelComponent = __decorate([
         core_1.Component({
             selector: 'left-panel',
-            template: " \n                <section class=\"option-panel col-xs-3\">\n                    <text-module></text-module>\n                    <image-module></image-module>\n                    <template-module></template-module>\n                    <alignment-module></alignment-module>\n                    \n                    \n                </section>\n            "
+            template: " \n                <section class=\"option-panel col-xs-3\">\n                    <text-module ></text-module>\n                    <image-module></image-module>\n                    <template-module></template-module>\n                    <alignment-module></alignment-module>\n                    \n                    \n                </section>\n            "
         })
     ], leftPanelComponent);
     return leftPanelComponent;

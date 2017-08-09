@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { TextService } from '../../service/text.service';
 
 @Component({
     selector: 'my-textArea',
@@ -12,8 +13,11 @@ export class textAreaComponent {
     textAreaValue: any;
     textAreaClass = 'js-text-val text-val';
     textPlaceholder = 'Add Text';
+
     addtext(event: any) {
-        alert(this.textAreaValue);
+        this.textAreaValue === '' ? alert(this.textAreaValue) : this._textService.setTextValue(this.textAreaValue);
     }
+
+    constructor(private _textService: TextService) { }
 
 }

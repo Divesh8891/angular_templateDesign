@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-    selector: 'buttonAsLink',
+    selector: 'linkAsButton',
     template: ` 
     <div [class]=parentClass><a href="javascript:void(0)" class="{{applyClass}}">{{btnText}}</a></div>
     `

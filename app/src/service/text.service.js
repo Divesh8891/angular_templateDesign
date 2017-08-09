@@ -7,18 +7,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var headerComponent = (function () {
-    function headerComponent() {
-        this.headerHeading = "Template Design";
-        this.headerHeadingClassName = "heading m-0 ptb-20 text-white text-center";
+var Subject_1 = require("rxjs/Subject");
+var TextService = (function () {
+    function TextService() {
+        this.dataStringSource = new Subject_1.Subject();
+        this.dataString$ = this.dataStringSource.asObservable();
     }
-    headerComponent = __decorate([
-        core_1.Component({
-            selector: 'custom-header',
-            template: " \n              <header class=\"col-xs-12\">\n                 <h4 [class]=\"headerHeadingClassName\">{{headerHeading}}</h4>\n              </header>\n    "
-        })
-    ], headerComponent);
-    return headerComponent;
+    TextService.prototype.setTextValue = function (data) {
+        this.dataStringSource.next(data);
+    };
+    TextService = __decorate([
+        core_1.Injectable()
+    ], TextService);
+    return TextService;
 }());
-exports.headerComponent = headerComponent;
-//# sourceMappingURL=header.js.map
+exports.TextService = TextService;
+//# sourceMappingURL=text.service.js.map

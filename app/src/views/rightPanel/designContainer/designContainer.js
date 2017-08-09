@@ -5,16 +5,28 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var text_service_1 = require("../../../service/text.service");
 var designContainer = (function () {
-    function designContainer() {
+    function designContainer(_textService) {
+        this._textService = _textService;
     }
+    designContainer.prototype.ngOnInit = function () {
+        var _this = this;
+        this._textService.dataString$.subscribe(function (data) {
+            _this.textAreaVal = data;
+        });
+    };
     designContainer = __decorate([
         core_1.Component({
             selector: 'designContainer',
-            template: " \n                <section class=\"design-section col-xs-12\">\n                    <div class=\"desgin-tool-sec\" style=\"width: 780px; height: 780px;\">\n                        <section class=\"desgin-inner\" data-bg=\"blank\"></section>\n                        <div class=\"handler\"></div>\n                     </div>\n                </section>\n    "
-        })
+            template: " \n                <section class=\"design-section col-xs-12\">\n                    <div class=\"desgin-tool-sec\" style=\"width: 780px; height: 780px;\">\n                        <section class=\"desgin-inner\" data-bg=\"blank\">{{textAreaVal}}</section>\n                        <div class=\"handler\"></div>\n                     </div>\n                </section>\n    "
+        }),
+        __metadata("design:paramtypes", [text_service_1.TextService])
     ], designContainer);
     return designContainer;
 }());
