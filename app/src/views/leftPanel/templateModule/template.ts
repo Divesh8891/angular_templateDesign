@@ -52,5 +52,5 @@ import { Component } from '@angular/core';
 })
 
 export class templateModuleComponent {
-   imagePanelTitle = "Text";
+   tempatePanelTitle = "Text";
 }

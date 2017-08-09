@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var templateModuleComponent = (function () {
     function templateModuleComponent() {
-        this.imagePanelTitle = "Text";
+        this.tempatePanelTitle = "Text";
     }
     templateModuleComponent = __decorate([
         core_1.Component({
