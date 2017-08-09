@@ -2,22 +2,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
-import { AppComponent } from '../component/myApp/app';
-import { headerComponent } from '../component/myApp/header/header';
-import { leftPanelComponent } from '../component/myApp/leftPanel/leftPanel';
-import { rightPanelComponent } from '../component/myApp/rightPanel/rightPanel';
+import { AppComponent } from '../src/module/app';
+import { headerComponent } from '../src/module/header/header';
+import { leftPanelComponent } from '../src/module/leftPanel/leftPanel';
+import { rightPanelComponent } from '../src/module/rightPanel/rightPanel';
 
-import { textModuleComponent } from '../component/myApp/leftPanel/textModule/text';
-import { imageModuleComponent } from '../component/myApp/leftPanel/imageModule/image';
-import { templateModuleComponent } from '../component/myApp/leftPanel/templateModule/template';
-import { alignmentModuleComponent } from '../component/myApp/leftPanel/alignmentModule/alignment';
+import { textModuleComponent } from '../src/module/leftPanel/textModule/text';
+import { imageModuleComponent } from '../src/module/leftPanel/imageModule/image';
+import { templateModuleComponent } from '../src/module/leftPanel/templateModule/template';
+import { alignmentModuleComponent } from '../src/module/leftPanel/alignmentModule/alignment';
 
 
-import { designContainer } from '../component/myApp/rightPanel/designContainer/designContainer';
+import { designContainer } from '../src/module/rightPanel/designContainer/designContainer';
 
-import { textAreaComponent } from '../component/reuseComponent/textArea/textArea';
-import { selectBoxComponent } from '../component/reuseComponent/selectBox/selectBox';
-import { buttonComponent } from '../component/reuseComponent/button/button';
+import { textAreaComponent } from '../src/component/textArea/textArea';
+import { selectBoxComponent } from '../src/component/selectBox/selectBox';
+import { buttonComponent } from '../src/component/button/button';
 
 
 

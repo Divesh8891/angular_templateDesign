@@ -9,18 +9,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
-var app_1 = require("../component/myApp/app");
-var header_1 = require("../component/myApp/header/header");
-var leftPanel_1 = require("../component/myApp/leftPanel/leftPanel");
-var rightPanel_1 = require("../component/myApp/rightPanel/rightPanel");
-var text_1 = require("../component/myApp/leftPanel/textModule/text");
-var image_1 = require("../component/myApp/leftPanel/imageModule/image");
-var template_1 = require("../component/myApp/leftPanel/templateModule/template");
-var alignment_1 = require("../component/myApp/leftPanel/alignmentModule/alignment");
-var designContainer_1 = require("../component/myApp/rightPanel/designContainer/designContainer");
-var textArea_1 = require("../component/reuseComponent/textArea/textArea");
-var selectBox_1 = require("../component/reuseComponent/selectBox/selectBox");
-var button_1 = require("../component/reuseComponent/button/button");
+var app_1 = require("../src/module/app");
+var header_1 = require("../src/module/header/header");
+var leftPanel_1 = require("../src/module/leftPanel/leftPanel");
+var rightPanel_1 = require("../src/module/rightPanel/rightPanel");
+var text_1 = require("../src/module/leftPanel/textModule/text");
+var image_1 = require("../src/module/leftPanel/imageModule/image");
+var template_1 = require("../src/module/leftPanel/templateModule/template");
+var alignment_1 = require("../src/module/leftPanel/alignmentModule/alignment");
+var designContainer_1 = require("../src/module/rightPanel/designContainer/designContainer");
+var textArea_1 = require("../src/component/textArea/textArea");
+var selectBox_1 = require("../src/component/selectBox/selectBox");
+var button_1 = require("../src/component/button/button");
 var AppModule = (function () {
     function AppModule() {
     }
