@@ -21,10 +21,23 @@ var designContainer = (function () {
             _this.textAreaVal = data;
         });
     };
+    designContainer.prototype.textNodeEvent = function (event) {
+        console.log(event.target.offsetWidth);
+        console.log(this.textHandler);
+        this.textHandler.nativeElement.style.display = 'block';
+        this.textHandler.nativeElement.style.width = event.target.offsetWidth + 10 + 'px';
+        this.textHandler.nativeElement.style.height = event.target.offsetHeight + 10 + 'px';
+        this.textHandler.nativeElement.style.left = event.target.offsetLeft - 5 + 'px';
+        this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
+    };
+    __decorate([
+        core_1.ViewChild('handler'),
+        __metadata("design:type", Object)
+    ], designContainer.prototype, "textHandler", void 0);
     designContainer = __decorate([
         core_1.Component({
             selector: 'designContainer',
-            template: " \n                <section class=\"design-section col-xs-12\">\n                    <div class=\"desgin-tool-sec\" style=\"width: 780px; height: 780px;\">\n                        <section class=\"desgin-inner\" data-bg=\"blank\">{{textAreaVal}}</section>\n                        <div class=\"handler\"></div>\n                     </div>\n                </section>\n    "
+            template: " \n                <section class=\"design-section col-xs-12\">\n                    <div [ngGrid]=\"gridConfig\" class=\"desgin-tool-sec\" style=\"width: 780px; height: 780px;\">\n                        <section class=\"desgin-inner\" data-bg=\"blank\">\n                         <p class=\"textNative\" id=\"{{text.randomNumber}}\" (click)=\"textNodeEvent($event)\" style=\"font-size: 18px;\" *ngFor=\"let text of textAreaVal\">{{text.text}}</p>\n                        </section>\n                        <div class=\"handler\" #handler [(ngGridItem)]=\"config\" (onResize)=\"onResize(i, $event)\" (onDrag)=\"onDrag(i, $event)\"></div>\n                     </div>\n                </section>\n    "
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], designContainer);

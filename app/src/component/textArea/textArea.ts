@@ -13,11 +13,22 @@ export class textAreaComponent {
     textAreaValue: any;
     textAreaClass = 'js-text-val text-val';
     textPlaceholder = 'Add Text';
-
+    randomNumber: any;
+    users: User[] = [];
     addtext(event: any) {
-        this.textAreaValue === '' ? alert(this.textAreaValue) : this._textService.setTextValue(this.textAreaValue);
+        let a = new Date();
+        this.randomNumber = a.getTime();
+        this.users.push(new User(this.textAreaValue, this.randomNumber));
+        this.textAreaValue === '' ? alert(this.textAreaValue) : this._textService.setTextValue(this.users);
     }
 
     constructor(private _textService: TextService) { }
 
+}
+
+export class User {
+    constructor(
+        public text: any,
+        public randomNumber: number) {
+    }
 }

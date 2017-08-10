@@ -1,4 +1,7 @@
 ﻿import { NgModule } from '@angular/core';
+
+import { NgGridModule } from 'angular2Grid';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import {TextService} from '../src/service/text.service';
