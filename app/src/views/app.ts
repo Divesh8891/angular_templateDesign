@@ -12,8 +12,11 @@ import { Component, Input } from '@angular/core';
             </div>
         </div>
     </div>
+    
     `
 })
 
 export class AppComponent {
+    
+
 }

@@ -1,6 +1,5 @@
 ﻿import { NgModule } from '@angular/core';
-
-import { NgGridModule } from 'angular2Grid';
+import { NgGridModule } from 'angular2-grid';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -28,7 +27,7 @@ import { buttonComponent } from '../src/component/button/button';
 
 
 @NgModule({
-  imports: [BrowserModule, FormsModule],
+  imports: [BrowserModule, FormsModule,NgGridModule],
   declarations: [AppComponent,headerComponent, leftPanelComponent, rightPanelComponent, textModuleComponent,imageModuleComponent,templateModuleComponent,alignmentModuleComponent, designContainer, textAreaComponent, selectBoxComponent, buttonComponent],
   bootstrap: [AppComponent],
   providers: [TextService]

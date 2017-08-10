@@ -14,6 +14,12 @@ var text_service_1 = require("../../../service/text.service");
 var designContainer = (function () {
     function designContainer(_textService) {
         this._textService = _textService;
+        this.gridConfig = {
+            'draggable': true,
+            'resizable': true
+        };
+        var conf = [{ 'dragHandle': '.handle' }];
+        this.config = conf;
     }
     designContainer.prototype.ngOnInit = function () {
         var _this = this;
@@ -22,13 +28,28 @@ var designContainer = (function () {
         });
     };
     designContainer.prototype.textNodeEvent = function (event) {
-        console.log(event.target.offsetWidth);
-        console.log(this.textHandler);
+        console.log(event);
+        this.currentObj = event;
         this.textHandler.nativeElement.style.display = 'block';
         this.textHandler.nativeElement.style.width = event.target.offsetWidth + 10 + 'px';
         this.textHandler.nativeElement.style.height = event.target.offsetHeight + 10 + 'px';
         this.textHandler.nativeElement.style.left = event.target.offsetLeft - 5 + 'px';
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
+        console.log(this.currentObj);
+    };
+    designContainer.prototype.onDrag = function (index, event, item) {
+        console.log(index, event, item);
+        // console.log(this.currentObj)
+        // this.currentObj.style.left = event.left + 5 + 'px';
+        // this.currentObj.style.top = event.top + 5 + 'px';
+    };
+    designContainer.prototype.onDragStop = function (index, event, item) {
+        console.log(index, event, item);
+        // this.currentObj.style.left = event.left + 5 + 'px';
+        // this.currentObj.style.top = event.top + 5 + 'px';
+    };
+    designContainer.prototype.onResize = function (index, event) {
+        console.log(event);
     };
     __decorate([
         core_1.ViewChild('handler'),
@@ -37,7 +58,7 @@ var designContainer = (function () {
     designContainer = __decorate([
         core_1.Component({
             selector: 'designContainer',
-            template: " \n                <section class=\"design-section col-xs-12\">\n                    <div [ngGrid]=\"gridConfig\" class=\"desgin-tool-sec\" style=\"width: 780px; height: 780px;\">\n                        <section class=\"desgin-inner\" data-bg=\"blank\">\n                         <p class=\"textNative\" id=\"{{text.randomNumber}}\" (click)=\"textNodeEvent($event)\" style=\"font-size: 18px;\" *ngFor=\"let text of textAreaVal\">{{text.text}}</p>\n                        </section>\n                        <div class=\"handler\" #handler [(ngGridItem)]=\"config\" (onResize)=\"onResize(i, $event)\" (onDrag)=\"onDrag(i, $event)\"></div>\n                     </div>\n                </section>\n    "
+            template: " \n                <section class=\"design-section col-xs-12\">\n                    <div [ngGrid]=\"gridConfig\" class=\"desgin-tool-sec\" style=\"width: 780px; height: 780px;\">\n                        <section class=\"desgin-inner\" data-bg=\"blank\">\n                         <p class=\"textNative\" id=\"{{text.randomNumber}}\" (click)=\"textNodeEvent($event)\" style=\"font-size: 18px;\" *ngFor=\"let text of textAreaVal\">{{text.text}}</p>\n                        </section>\n                        <div class=\"handler\" #handler [(ngGridItem)]=\"config\" (onResize)=\"onResize(i, $event)\" (onDrag)=\"onDrag(i, $event)\"></div>\n                     </div>\n                </section>\n                \n    "
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], designContainer);

@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var angular2_grid_1 = require("angular2-grid");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var text_service_1 = require("../src/service/text.service");
@@ -27,7 +28,7 @@ var AppModule = (function () {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule],
+            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, angular2_grid_1.NgGridModule],
             declarations: [app_1.AppComponent, header_1.headerComponent, leftPanel_1.leftPanelComponent, rightPanel_1.rightPanelComponent, text_1.textModuleComponent, image_1.imageModuleComponent, template_1.templateModuleComponent, alignment_1.alignmentModuleComponent, designContainer_1.designContainer, textArea_1.textAreaComponent, selectBox_1.selectBoxComponent, button_1.buttonComponent],
             bootstrap: [app_1.AppComponent],
             providers: [text_service_1.TextService]
