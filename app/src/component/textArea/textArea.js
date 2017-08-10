@@ -18,6 +18,12 @@ var textAreaComponent = (function () {
         this.textPlaceholder = 'Add Text';
         this.users = [];
     }
+    textAreaComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this._textService.dataString$.subscribe(function (data) {
+            _this.currentObj = data;
+        });
+    };
     textAreaComponent.prototype.addtext = function (event) {
         var a = new Date();
         this.randomNumber = a.getTime();

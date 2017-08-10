@@ -14,7 +14,18 @@ export class textAreaComponent {
     textAreaClass = 'js-text-val text-val';
     textPlaceholder = 'Add Text';
     randomNumber: any;
+    currentObj : any;
     users: User[] = [];
+
+    ngOnInit() {
+        this._textService.dataString$.subscribe(
+            data => {
+                this.currentObj = data;
+            });
+
+
+    }
+
     addtext(event: any) {
         let a = new Date();
         this.randomNumber = a.getTime();
