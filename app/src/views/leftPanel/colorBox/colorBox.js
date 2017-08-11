@@ -1,0 +1,22 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var colorBoxComponent = (function () {
+    function colorBoxComponent() {
+    }
+    colorBoxComponent = __decorate([
+        core_1.Component({
+            selector: 'color-box',
+            template: "\n  <ul class=\"custom-color-picker\" data-call=\"color-sec > a\" style=\"display: block; left: 10px; top: 208px;\">\n                    <li>\n                    <span style=\"background-color: #000000;\" data-color=\"#000000\"></span>\n                    </li><li><span style=\"background-color: #54585A;\" data-color=\"#54585A\"></span></li><li><span style=\"background-color: #9fcece;\" data-color=\"#9fcece\"></span></li><li><span style=\"background-color: #8E9089;\" data-color=\"#8E9089\"></span></li><li><span style=\"background-color: #C7C9C7;\" data-color=\"#C7C9C7\"></span></li><li><span style=\"background-color: #f5d56c;\" data-color=\"#f5d56c\"></span></li><li><span style=\"background-color: #347574;\" data-color=\"#347574\"></span></li><li><span style=\"background-color: #FFFFFF;\" data-color=\"#FFFFFF\"></span></li><li><span style=\"background-color: #CB333B;\" data-color=\"#CB333B\"></span></li><li><span style=\"background-color: #E53C2E;\" data-color=\"#E53C2E\"></span></li><li><span style=\"background-color: #FF3EB3;\" data-color=\"#FF3EB3\"></span></li><li><span style=\"background-color: #C5299B;\" data-color=\"#C5299B\"></span></li><li><span style=\"background-color: #F57EB6;\" data-color=\"#F57EB6\"></span></li><li><span style=\"background-color: #FABBCB;\" data-color=\"#FABBCB\"></span></li><li><span style=\"background-color: #D9C89E;\" data-color=\"#D9C89E\"></span></li><li><span style=\"background-color: #F9E547;\" data-color=\"#F9E547\"></span></li><li><span style=\"background-color: #FFB81C;\" data-color=\"#FFB81C\"></span></li><li><span style=\"background-color: #FF6A13;\" data-color=\"#FF6A13\"></span></li><li><span style=\"background-color: #FDDA24;\" data-color=\"#FDDA24\"></span></li><li><span style=\"background-color: #B58500;\" data-color=\"#B58500\"></span></li><li><span style=\"background-color: #7B4931;\" data-color=\"#7B4931\"></span></li><li><span style=\"background-color: #9D2235;\" data-color=\"#9D2235\"></span></li><li><span style=\"background-color: #7E2D40;\" data-color=\"#7E2D40\"></span></li><li><span style=\"background-color: #006747;\" data-color=\"#006747\"></span></li><li><span style=\"background-color: #8EDD65;\" data-color=\"#8EDD65\"></span></li><li><span style=\"background-color: #154734;\" data-color=\"#154734\"></span></li><li><span style=\"background-color: #00843D;\" data-color=\"#00843D\"></span></li><li><span style=\"background-color: #827A04;\" data-color=\"#827A04\"></span></li><li><span style=\"background-color: #9ADBE8;\" data-color=\"#9ADBE8\"></span></li><li><span style=\"background-color: #3EB1C8;\" data-color=\"#3EB1C8\"></span></li><li><span style=\"background-color: #0254A2;\" data-color=\"#0254A2\"></span></li><li><span style=\"background-color: #003087;\" data-color=\"#003087\"></span></li><li><span style=\"background-color: #13294B;\" data-color=\"#13294B\"></span></li><li><span style=\"background-color: #CBA3D8;\" data-color=\"#CBA3D8\"></span></li><li><span style=\"background-color: #3D0182;\" data-color=\"#3D0182\"></span></li><li><a href=\"javascript:text.openColorPicker()\" class=\"more-color pull-right\">More color</a><a class=\"default pull-left\" href=\"javascript:text.removeBG(0)\">No color</a></li></ul>\n                    \n     "
+        })
+    ], colorBoxComponent);
+    return colorBoxComponent;
+}());
+exports.colorBoxComponent = colorBoxComponent;
+//# sourceMappingURL=colorBox.js.map

@@ -16,9 +16,12 @@ var TextService = (function () {
     TextService.prototype.setTextValue = function (data) {
         this.dataStringSource.next(data);
     };
-    TextService.prototype.setCurrentObj = function (data) {
-        this.currentObj = data[0].elem;
-        console.log(this.currentObj);
+    TextService.prototype.setCurrentObj = function (currentObjData, handlerData) {
+        this.currentObj = currentObjData;
+        this.handlerRef = handlerData;
+    };
+    TextService.prototype.setColorBoxRef = function (data) {
+        this.colorBoxRef = data;
     };
     TextService = __decorate([
         core_1.Injectable()

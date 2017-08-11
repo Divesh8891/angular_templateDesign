@@ -13,7 +13,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: " \n    <div class=\"wrapper container\">\n        <custom-header></custom-header>\n        <div class=\"wrapper-inner col-xs-12\" style=\"min-height: 891px;\">\n            <div class=\"row\">\n                 <left-panel></left-panel>\n                 <right-panel></right-panel>\n            </div>\n        </div>\n    </div>\n    \n    "
+            template: " \n    <div class=\"wrapper container\">\n        <custom-header></custom-header>\n        <div class=\"wrapper-inner col-xs-12\" style=\"min-height: 891px;\">\n            <div class=\"row\">\n                 <left-panel></left-panel>\n                 <right-panel></right-panel>\n            </div>\n        </div>\n    </div>\n    "
         })
     ], AppComponent);
     return AppComponent;

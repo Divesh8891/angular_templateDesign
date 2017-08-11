@@ -34,14 +34,13 @@ var designContainer = (function () {
             console.log(this.elements._results[i].nativeElement.id);
             if (event.target.id === this.elements._results[i].nativeElement.id) {
                 this.currentObj = this.elements._results[i];
-                this.currentObjArr.push(new currentElem(this.currentObj));
-                this._textService.setCurrentObj(this.currentObjArr);
             }
         }
         this.textHandler.nativeElement.style.width = event.target.offsetWidth + 10 + 'px';
         this.textHandler.nativeElement.style.height = event.target.offsetHeight + 10 + 'px';
         this.textHandler.nativeElement.style.left = event.target.offsetLeft - 5 + 'px';
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
+        this._textService.setCurrentObj(this.currentObj, this.textHandler);
     };
     designContainer.prototype.onDrag = function (index, event, item) {
         this.currentObj.nativeElement.style.left = event.left + 5 + 'px';

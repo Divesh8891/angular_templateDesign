@@ -17,18 +17,20 @@ import { templateModuleComponent } from '../src/views/leftPanel/templateModule/t
 import { alignmentModuleComponent } from '../src/views/leftPanel/alignmentModule/alignment';
 
 
+
 import { designContainer } from '../src/views/rightPanel/designContainer/designContainer';
 
 import { textAreaComponent } from '../src/component/textArea/textArea';
 import { selectBoxComponent } from '../src/component/selectBox/selectBox';
 import { buttonComponent } from '../src/component/button/button';
+import { colorBoxComponent } from '../src/component/colorBox/colorBox';
 
 
 
 
 @NgModule({
   imports: [BrowserModule, FormsModule,NgGridModule],
-  declarations: [AppComponent,headerComponent, leftPanelComponent, rightPanelComponent, textModuleComponent,imageModuleComponent,templateModuleComponent,alignmentModuleComponent, designContainer, textAreaComponent, selectBoxComponent, buttonComponent],
+  declarations: [AppComponent,headerComponent, leftPanelComponent, rightPanelComponent, textModuleComponent,imageModuleComponent,templateModuleComponent,alignmentModuleComponent,colorBoxComponent, designContainer, textAreaComponent, selectBoxComponent, buttonComponent],
   bootstrap: [AppComponent],
   providers: [TextService]
 })

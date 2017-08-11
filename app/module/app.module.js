@@ -23,13 +23,14 @@ var designContainer_1 = require("../src/views/rightPanel/designContainer/designC
 var textArea_1 = require("../src/component/textArea/textArea");
 var selectBox_1 = require("../src/component/selectBox/selectBox");
 var button_1 = require("../src/component/button/button");
+var colorBox_1 = require("../src/component/colorBox/colorBox");
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, angular2_grid_1.NgGridModule],
-            declarations: [app_1.AppComponent, header_1.headerComponent, leftPanel_1.leftPanelComponent, rightPanel_1.rightPanelComponent, text_1.textModuleComponent, image_1.imageModuleComponent, template_1.templateModuleComponent, alignment_1.alignmentModuleComponent, designContainer_1.designContainer, textArea_1.textAreaComponent, selectBox_1.selectBoxComponent, button_1.buttonComponent],
+            declarations: [app_1.AppComponent, header_1.headerComponent, leftPanel_1.leftPanelComponent, rightPanel_1.rightPanelComponent, text_1.textModuleComponent, image_1.imageModuleComponent, template_1.templateModuleComponent, alignment_1.alignmentModuleComponent, colorBox_1.colorBoxComponent, designContainer_1.designContainer, textArea_1.textAreaComponent, selectBox_1.selectBoxComponent, button_1.buttonComponent],
             bootstrap: [app_1.AppComponent],
             providers: [text_service_1.TextService]
         })

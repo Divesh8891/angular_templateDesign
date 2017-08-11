@@ -5,13 +5,19 @@ import { Subject } from 'rxjs/Subject';
 export class TextService {
     private dataStringSource = new Subject<string>();
     dataString$ = this.dataStringSource.asObservable();
-    currentObj:any;
+    currentObj: any;
+    colorBoxRef: any;
+    handlerRef: any;
     setTextValue(data: any) {
         this.dataStringSource.next(data);
     }
-    setCurrentObj(data: any) {
-        this.currentObj =  data[0].elem;
-        console.log(this.currentObj)
+    setCurrentObj(currentObjData: any, handlerData: any) {
+        this.currentObj = currentObjData;
+        this.handlerRef = handlerData;
+
+    }
+    setColorBoxRef(data: any) {
+        this.colorBoxRef = data;
     }
 
 }

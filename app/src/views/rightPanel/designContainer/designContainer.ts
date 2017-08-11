@@ -22,7 +22,7 @@ export class designContainer {
     textAreaVal: any;
     public currentObj: any;
     currentObjArr: currentElem[] = [];
-    @ViewChild('handler') private textHandler: any;
+    @ViewChild('handler') public textHandler: any;
     @ViewChildren('xyz') elements: any;
 
     ngOnInit() {
@@ -40,14 +40,13 @@ export class designContainer {
             console.log(this.elements._results[i].nativeElement.id)
             if (event.target.id === this.elements._results[i].nativeElement.id) {
                 this.currentObj = this.elements._results[i];
-                this.currentObjArr.push(new currentElem(this.currentObj));
-                this._textService.setCurrentObj(this.currentObjArr);
             }
         }
         this.textHandler.nativeElement.style.width = event.target.offsetWidth + 10 + 'px';
         this.textHandler.nativeElement.style.height = event.target.offsetHeight + 10 + 'px';
         this.textHandler.nativeElement.style.left = event.target.offsetLeft - 5 + 'px';
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
+        this._textService.setCurrentObj(this.currentObj,this.textHandler);
     }
 
     private gridConfig: NgGridConfig = <NgGridConfig>{
@@ -69,8 +68,6 @@ export class designContainer {
     onResize(index: number, event: NgGridItemEvent): void {
         console.log(event)
     }
-
-
 
     constructor(private _textService: TextService) {
         const conf = [{ 'dragHandle': '.handle' }];
