@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'right-panel',
     template: ` 
-        <div class="col-xs-9">
+        <div class="col-xs-9" >
                     <div class="text-center ptb-20 col-xs-12">
                         <ul class="list-inline">
                             <li><a href="javascript:commonoption.alignb();" class="btn">Send Back</a></li>
@@ -21,5 +21,5 @@ import { Component } from '@angular/core';
 })
 
 export class rightPanelComponent{
-   
+    
 }

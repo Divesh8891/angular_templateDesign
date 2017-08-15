@@ -9,11 +9,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var leftPanelComponent = (function () {
     function leftPanelComponent() {
+        this.childTitle = 'This text is passed to child';
     }
+    leftPanelComponent.prototype.onNotify = function (message) {
+        console.log(message);
+    };
     leftPanelComponent = __decorate([
         core_1.Component({
             selector: 'left-panel',
-            template: " \n                <section class=\"option-panel col-xs-3\">\n                    <text-module></text-module>\n                    <image-module></image-module>\n                    <template-module></template-module>\n                    <alignment-module></alignment-module>\n                    <color-box></color-box>\n                </section>\n            "
+            template: " \n                <section class=\"option-panel col-xs-3\">\n                    <text-module [title]='childTitle' (notify)='onNotify($event)'></text-module>\n                    <image-module></image-module>\n                    <template-module></template-module>\n                    <alignment-module></alignment-module>\n                    <color-box [title] = 'localString'></color-box>\n                </section>{{localString}}\n            "
         })
     ], leftPanelComponent);
     return leftPanelComponent;

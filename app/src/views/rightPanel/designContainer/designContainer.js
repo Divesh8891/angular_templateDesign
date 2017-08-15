@@ -15,6 +15,7 @@ var designContainer = (function () {
     function designContainer(_textService) {
         this._textService = _textService;
         this.currentObjArr = [];
+        this.parentnotify = new core_1.EventEmitter();
         this.gridConfig = {
             'draggable': true,
             'resizable': true
@@ -41,6 +42,7 @@ var designContainer = (function () {
         this.textHandler.nativeElement.style.left = event.target.offsetLeft - 5 + 'px';
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
         this._textService.setCurrentObj(this.currentObj, this.textHandler);
+        this.parentnotify.emit(this.currentObj);
     };
     designContainer.prototype.onDrag = function (index, event, item) {
         this.currentObj.nativeElement.style.left = event.left + 5 + 'px';
@@ -62,6 +64,10 @@ var designContainer = (function () {
         core_1.ViewChildren('xyz'),
         __metadata("design:type", Object)
     ], designContainer.prototype, "elements", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], designContainer.prototype, "parentnotify", void 0);
     designContainer = __decorate([
         core_1.Component({
             selector: 'designContainer',

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewChildren, Input } from '@angular/core';
+import { Component, ViewChild, ViewChildren, Input,Output,EventEmitter } from '@angular/core';
 import { TextService } from '../../../service/text.service';
 import { NgGrid, NgGridItem, NgGridConfig, NgGridItemConfig, NgGridItemEvent } from 'angular2-grid';
 
@@ -24,6 +24,7 @@ export class designContainer {
     currentObjArr: currentElem[] = [];
     @ViewChild('handler') public textHandler: any;
     @ViewChildren('xyz') elements: any;
+    @Output() parentnotify: EventEmitter<string> = new EventEmitter<string>();
 
     ngOnInit() {
         this._textService.dataString$.subscribe(
@@ -47,6 +48,7 @@ export class designContainer {
         this.textHandler.nativeElement.style.left = event.target.offsetLeft - 5 + 'px';
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
         this._textService.setCurrentObj(this.currentObj,this.textHandler);
+this.parentnotify.emit(this.currentObj); 
     }
 
     private gridConfig: NgGridConfig = <NgGridConfig>{
