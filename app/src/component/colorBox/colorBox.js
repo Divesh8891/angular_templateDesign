@@ -16,7 +16,6 @@ var colorBoxComponent = (function () {
         this._textService = _textService;
     }
     colorBoxComponent.prototype.pickcolor = function (event) {
-        alert(this.title);
         this.currentObj = this._textService.currentObj;
         var styleProp = this.elements.nativeElement.dataset['call'];
         var pickedColorValue = event.target.style.backgroundColor;
@@ -39,10 +38,6 @@ var colorBoxComponent = (function () {
         this.colorArray = ["#000000", "#54585A", "#9fcece", "#8E9089", "#C7C9C7", "#f5d56c", "#347574", "#FFFFFF", "#CB333B", "#E53C2E", "#FF3EB3", "#C5299B", "#F57EB6", "#FABBCB", "#D9C89E", "#F9E547", "#FFB81C", "#FF6A13", "#FDDA24", "#B58500", "#7B4931", "#9D2235", "#7E2D40", "#006747", "#8EDD65", "#154734", "#00843D", "#827A04", "#9ADBE8", "#3EB1C8", "#0254A2", "#003087", "#13294B", "#CBA3D8", "#3D0182"];
         this._textService.setColorBoxRef(this.elements);
     };
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", String)
-    ], colorBoxComponent.prototype, "title", void 0);
     __decorate([
         core_1.ViewChild('colorBox'),
         __metadata("design:type", Object)

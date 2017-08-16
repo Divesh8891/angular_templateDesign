@@ -8,8 +8,8 @@ import { designContainer } from '../../src/views/rightPanel/designContainer/desi
         <custom-header></custom-header>
         <div class="wrapper-inner col-xs-12" style="min-height: 891px;">
             <div class="row">
-                 <left-panel  ></left-panel>
-                 <right-panel  (parentnotify)='onNotify($event)'></right-panel>
+                 <left-panel></left-panel>
+                 <right-panel></right-panel>
             </div>
         </div>
     </div>
@@ -17,7 +17,4 @@ import { designContainer } from '../../src/views/rightPanel/designContainer/desi
 })
 
 export class AppComponent {
- onNotify(message: string): void {
-        console.log(message);
-    }
-}
+ }

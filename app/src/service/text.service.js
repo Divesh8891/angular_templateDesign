@@ -11,10 +11,12 @@ var Subject_1 = require("rxjs/Subject");
 var TextService = (function () {
     function TextService() {
         this.dataStringSource = new Subject_1.Subject();
-        this.dataString$ = this.dataStringSource.asObservable();
     }
     TextService.prototype.setTextValue = function (data) {
         this.dataStringSource.next(data);
+    };
+    TextService.prototype.getTextValue = function () {
+        return this.dataStringSource.asObservable();
     };
     TextService.prototype.setCurrentObj = function (currentObjData, handlerData) {
         this.currentObj = currentObjData;

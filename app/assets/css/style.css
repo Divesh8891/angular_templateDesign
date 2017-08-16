@@ -1,7 +1,7 @@
 
 .bgWhite{background-color:#fff;}
 .text-white{color: #fff;}
-.m-0{margin: 0;}
+.m-0{margin: 0!important;}
 .mt-10{margin-top: 10px;}
 .p-0{padding:0;}
 .pr-0{padding-right: 0;}
@@ -45,7 +45,7 @@ input{width: 60px;margin:0 0 0 5px;height: 25px;}
     background-color: #ddd;
     border: 1px solid #000;
 }
-.handler{display:none;position:absolute!important;border:1px dotted red;z-index:999;}
+.handler{display:none;position:absolute!important;border:1px dotted red;}
 .ui-icon{display:none;}
 #img-out{text-align:center;}
 #img-out img{width:200px;}

@@ -5,17 +5,59 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var text_service_1 = require("../../../service/text.service");
 var alignmentModuleComponent = (function () {
-    function alignmentModuleComponent() {
-        this.imagePanelTitle = "Text";
+    function alignmentModuleComponent(_textService) {
+        this._textService = _textService;
+        this.AlignmnetPanelTitle = "Text";
     }
+    alignmentModuleComponent.prototype.leftAlignment = function (event) {
+        this.updateCurrentObj({ 'left': '0px', 'right': 'auto', 'transform': '' });
+    };
+    alignmentModuleComponent.prototype.middleAlignment = function (event) {
+        this.updateCurrentObj({ 'left': '50%', 'right': 'auto', 'transform': 'translateX(-50%)' });
+    };
+    alignmentModuleComponent.prototype.rightAlignment = function (event) {
+        this.updateCurrentObj({ 'left': 'auto', 'right': '0', 'transform': '' });
+    };
+    alignmentModuleComponent.prototype.setAlignment = function () {
+        this.currentObj = this._textService.currentObj;
+        this.handlerRef = this._textService.handlerRef;
+        this.currentObj.nativeElement.style['transform'] = '';
+        this.currentObj.nativeElement.style['left'] = this.inputLeftValue;
+        this.currentObj.nativeElement.style['top'] = this.inputTopValue;
+        this.currentObj.nativeElement.style['right'] = 'auto';
+        this.handlerRef.nativeElement.style.left = this.inputLeftValue;
+        this.handlerRef.nativeElement.style.top = this.inputTopValue;
+    };
+    alignmentModuleComponent.prototype.setwidth = function () {
+        this.currentObj = this._textService.currentObj;
+        this.handlerRef = this._textService.handlerRef;
+        this.currentObj.nativeElement.style['width'] = this.inputWidthValue;
+        this.handlerRef.nativeElement.style['width'] = this.inputWidthValue + 5 + 'px';
+    };
+    alignmentModuleComponent.prototype.updateCurrentObj = function (propertyArray) {
+        this.currentObj = this._textService.currentObj;
+        this.handlerRef = this._textService.handlerRef;
+        this.currentObj.nativeElement.style['left'] = propertyArray.left;
+        this.currentObj.nativeElement.style['right'] = propertyArray.right;
+        this.currentObj.nativeElement.style['transform'] = propertyArray.transform;
+        this.handlerRef.nativeElement.style.left = propertyArray.left;
+        this.handlerRef.nativeElement.style.right = propertyArray.right;
+        this.inputLeftValue = propertyArray.left;
+        this.inputTopValue = this.currentObj.nativeElement.style.top;
+    };
     alignmentModuleComponent = __decorate([
         core_1.Component({
             selector: 'alignment-module',
-            template: " \n                <section class=\"AlignmentModule col-xs-12 p-0 module\">\n                        <h5 class=\"option-heading col-xs-12 m-0 p-0\">Alignment</h5>\n                        <div class=\"seperator\"></div>\n                        <div class=\"l align-opt col-xs-4 \"><a href=\"javascript:commonoption.alignLeft();\" class=\"leftA btn btn-lrg\">L</a></div>\n                        <div class=\"m align-opt col-xs-4 \"><a href=\"javascript:commonoption.alignMid();\" class=\"mid btn btn-lrg\">M</a></div>\n                        <div class=\"r align-opt col-xs-4 \"><a href=\"javascript:commonoption.alignRight();\" class=\"right btn btn-lrg\">R</a></div>\n                        <div class=\"seperator\"></div>\n                        <div class=\"col-xs-12\">\n                            <label>L : </label><input type=\"text\" class=\"leftP\"><label>T : </label><input type=\"text\" class=\"topP\">\n                            <a href=\"javascript:commonoption.setP();\" class=\"goSize btn\">Go</a>\n                        </div>\n                        <div class=\"seperator\"></div>\n                        <div class=\"col-xs-12\">\n                            <label>w : </label><input type=\"text\" class=\"widthA\">\n                            <a href=\"javascript:commonoption.setDimension();\" class=\"goSize btn\">Go</a>\n                        </div>\n                    </section>\n    "
-        })
+            template: " \n                <section class=\"AlignmentModule col-xs-12 p-0 module\">\n                        <h5 class=\"option-heading col-xs-12 m-0 p-0\">{{AlignmnetPanelTitle}}</h5>\n                        <div class=\"seperator\"></div> \n                        <linkAsButton [parentClass]=\"'l align-opt col-xs-4'\" [applyClass]=\"'leftA btn btn-lrg'\" [btnText]=\"'L'\" (click)=leftAlignment($event)></linkAsButton>\n                        <linkAsButton [parentClass]=\"'m align-opt col-xs-4'\" [applyClass]=\"'mid btn btn-lrg'\" [btnText]=\"'M'\" (click)=middleAlignment($event)></linkAsButton>\n                        <linkAsButton [parentClass]=\"'r align-opt col-xs-4'\" [applyClass]=\"'right btn btn-lrg'\" [btnText]=\"'R'\" (click)=rightAlignment($event)></linkAsButton>\n                        <div class=\"seperator\"></div>\n                        <div class=\"col-xs-12\">\n                            <label>L : </label><input type=\"text\" class=\"leftP\" [(ngModel)]=\"inputLeftValue\" ><label>T : </label><input type=\"text\" class=\"topP\" [(ngModel)]=\"inputTopValue\">\n                            <linkAsButton [parentClass]=\"'col-xs-3 pull-right m-0'\" [applyClass]=\"'goSize btn'\" [btnText]=\"'GO'\" (click)=setAlignment($event)></linkAsButton>\n                        </div>\n                        <div class=\"seperator\"></div>\n                        <div class=\"col-xs-12\">\n                            <label>w : </label><input type=\"text\" class=\"widthA\" [(ngModel)]=\"inputWidthValue\">\n                            <linkAsButton [parentClass]=\"'col-xs-3 pull-right m-0'\" [applyClass]=\"'goSize btn'\" [btnText]=\"'GO'\" (click)=setwidth($event)></linkAsButton>\n                        </div>\n                    </section>\n    "
+        }),
+        __metadata("design:paramtypes", [text_service_1.TextService])
     ], alignmentModuleComponent);
     return alignmentModuleComponent;
 }());

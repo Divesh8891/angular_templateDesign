@@ -7,7 +7,7 @@ import { TextService } from '../../../service/text.service';
                   <section class="TextModule col-xs-12 p-0 module">
                         <h2 id="textValhidden">fsdfs</h2>
                         <h5 class="option-heading col-xs-12 m-0 p-0">{{textPanelTitle}}</h5>
-                        <div class="seperator">{{title}}</div>
+                        <div class="seperator"></div>
                         <my-textArea></my-textArea>
                         <div class="seperator"></div>
                         <select-box [parentClass]="'font-sec col-xs-6'" [defaultOptionValue]="'Font-size'" (change)="updateFontS($event)"></select-box>
@@ -28,8 +28,6 @@ import { TextService } from '../../../service/text.service';
 })
 
 export class textModuleComponent {
-    @Input() title: string;
-    @Output() notify: EventEmitter<string> = new EventEmitter<string>();
     
     textPanelTitle = "Text";
     currentObj: any;
@@ -37,7 +35,6 @@ export class textModuleComponent {
     handlerRef: any;
     updateFontS(event: any) {
         this.updateTextcurrentObj('fontSize', event.target.value + 'px');
-                this.notify.emit('payload');  
 
     }
     updateLineHeight(event: any) {

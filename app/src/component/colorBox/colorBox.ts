@@ -22,12 +22,11 @@ export class colorBoxComponent {
   colorArray: any[];
   currentObj: any;
   colorBoxObj: any;
-      @Input() title: string;
+     
 
   @ViewChild('colorBox') elements: any;
 
   pickcolor(event: any) {
-  alert(this.title)
     this.currentObj = this._textService.currentObj;
 
     let styleProp = this.elements.nativeElement.dataset['call'];
