@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { designContainer } from '../../src/views/rightPanel/designContainer/designContainer';
+import { TextService } from '../service/text.service';
 
 @Component({
     selector: 'my-app',
@@ -11,10 +12,22 @@ import { designContainer } from '../../src/views/rightPanel/designContainer/desi
                  <left-panel></left-panel>
                  <right-panel></right-panel>
             </div>
+            
         </div>
+         <section class="imageGen" #imageGen>
+             <img id="canvasPNG" class="downloadable">
+         </section>
     </div>
     `
 })
 
 export class AppComponent {
- }
+    canvanElem: any;
+    @ViewChild('imageGen') public canvasElemRef: any;
+
+    ngOnInit() {
+        this._textService.setCanvasElem(this.canvasElemRef)
+    }
+    constructor(private _textService: TextService) { }
+
+}

@@ -1,29 +1,33 @@
-import { Component, ViewChild, ViewChildren, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, ViewChildren, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { TextService } from '../../../service/text.service';
-import { NgGrid, NgGridItem, NgGridConfig, NgGridItemConfig, NgGridItemEvent } from 'angular2-grid';
+import { ResizableModule } from 'angular-resizable-element'
 
 @Component({
     selector: 'designContainer',
     template: ` 
                 <section class="design-section col-xs-12">
-                    <div [ngGrid]="gridConfig" class="desgin-tool-sec" style="width: 780px; height: 780px;">
+                    <div class="desgin-tool-sec" style="width: 780px; height: 780px;" #designTooSec>
                         <section class="desgin-inner" data-bg="blank">
                          <p #xyz class="textNative" id="{{text.randomNumber}}" (click)="textNodeEvent($event,text)" style="font-size: 18px;" *ngFor="let text of textAreaVal">{{text.text}}</p>
                         </section>
-                        <div class="handler" #handler [(ngGridItem)]="config" (onResize)="onResize(i, $event)" (onChangeAny)="onChangeAny(i, $event)" (onDrag)="onDrag(i, $event)" ></div>
+                        <div class="handler cube" #handler  [ng2-draggable]="true" (postions)=getPos($event)></div>
                      </div>
                 </section>
+             
+                
+              
                 
     `
 })
 
 export class designContainer {
-    public config: any[];
     textAreaVal: any;
     public currentObj: any;
-    currentObjArr: currentElem[] = [];
+    modalImgSrc:any;
 
     @ViewChild('handler') public textHandler: any;
+    @ViewChild('designTooSec') public designTooSec: any;
+    
     @ViewChildren('xyz') elements: any;
 
     ngOnInit() {
@@ -31,13 +35,12 @@ export class designContainer {
             data => {
                 this.textAreaVal = data;
             });
-
+        this._textService.setDesigncontainerRef(this.designTooSec);
 
     }
 
     textNodeEvent(event: any) {
         this.textHandler.nativeElement.style.display = 'block';
-
         for (let i = 0; i < this.elements._results.length; i++) {
             console.log(this.elements._results[i].nativeElement.id)
             if (event.target.id === this.elements._results[i].nativeElement.id) {
@@ -48,61 +51,15 @@ export class designContainer {
         this.textHandler.nativeElement.style.height = event.target.offsetHeight + 10 + 'px';
         this.textHandler.nativeElement.style.left = event.target.offsetLeft - 5 + 'px';
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
-
         this._textService.setCurrentObj(this.currentObj, this.textHandler);
+        console.log(this._textService.setHtml2Canvas())
     }
-
-    private gridConfig: NgGridConfig = <NgGridConfig>{
-        'draggable': true,
-        'resizable': true
-
-    };
-    onDrag(index: number, event: NgGridItemEvent, item: any): void {
-      
-        let me = this;
-        setTimeout(function () {
-            console.log(me.currentObj.nativeElement.style)
-            me.currentObj.nativeElement.style.left = event.left + 5 + 'px';
-            me.currentObj.nativeElement.style.top = event.top + 5 + 'px';
-            me.textHandler.nativeElement.style.width = me.currentObj.nativeElement.offsetWidth + 10 + 'px';
-            me.textHandler.nativeElement.style.height = me.currentObj.nativeElement.offsetHeight + 10 + 'px';
-            me.textHandler.nativeElement.style.left = me.currentObj.nativeElement.style.left - 5 + 'px';
-            me.textHandler.nativeElement.style.top = me.currentObj.nativeElement.style.top - 5 + 'px';
-            me.textHandler.nativeElement.style.display = 'block';
-
-        }, 100)
+    getPos(event: any) {
+        this.currentObj.nativeElement.style.left = event.left + 5 + 'px'
+        this.currentObj.nativeElement.style.top = event.top + 5 + 'px'
     }
-    onChangeAny(index: number, event: NgGridItemEvent, item: any): void {
-        console.log(event)
-
-        let me = this;
-        setTimeout(function () {
-            console.log(me.currentObj.nativeElement.style)
-            me.currentObj.nativeElement.style.left = event.left + 5 + 'px';
-            me.currentObj.nativeElement.style.top = event.top + 5 + 'px';
-            me.textHandler.nativeElement.style.width = me.currentObj.nativeElement.offsetWidth + 10 + 'px';
-            me.textHandler.nativeElement.style.height = me.currentObj.nativeElement.offsetHeight + 10 + 'px';
-            me.textHandler.nativeElement.style.left = me.currentObj.nativeElement.style.left - 5 + 'px';
-            me.textHandler.nativeElement.style.top = me.currentObj.nativeElement.style.top - 5 + 'px';
-            me.textHandler.nativeElement.style.display = 'block';
-
-        }, 100)
-    }
-
-
-    onResize(index: number, event: NgGridItemEvent): void {
-        console.log("resioze")
-    }
-
-    constructor(private _textService: TextService) {
-        const conf = [{ 'dragHandle': '.handle' }];
-        this.config = conf;
-
-    }
-
-}
-export class currentElem {
-    constructor(
-        public elem: any) {
-    }
+     onResizeEnd(event: any): void {
+    console.log('Element was resized', event);
+  }
+    constructor(private _textService: TextService) { }
 }

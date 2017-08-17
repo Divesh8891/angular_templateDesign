@@ -48,6 +48,10 @@ input{width: 60px;margin:0 0 0 5px;height: 25px;}
 .handler{display:none;position:absolute!important;border:1px dotted red;}
 .ui-icon{display:none;}
 #img-out{text-align:center;}
-#img-out img{width:200px;}
+#img-out img{width:60%;}
 #canvasPNG,.imageGen,.downloadImgCont{display:none;}
 .seperator{width: 105%;border: 1px solid #ddd;float: left;margin: 0 -5px;}
+.popup-body{    position: absolute;
+    top: 100px;
+    width: 400px;
+    height: 400px;}

@@ -1,6 +1,7 @@
 ﻿import { NgModule } from '@angular/core';
-import { NgGridModule } from 'angular2-grid';
+import { Draggable } from '../src/service/ng2draggable/draggable.directive';
 
+import { ResizableModule } from 'angular-resizable-element'
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import {TextService} from '../src/service/text.service';
@@ -29,8 +30,8 @@ import { colorBoxComponent } from '../src/component/colorBox/colorBox';
 
 
 @NgModule({
-  imports: [BrowserModule, FormsModule,NgGridModule],
-  declarations: [AppComponent,headerComponent, leftPanelComponent, rightPanelComponent, textModuleComponent,imageModuleComponent,templateModuleComponent,alignmentModuleComponent,colorBoxComponent, designContainer, textAreaComponent, selectBoxComponent, buttonComponent],
+  imports: [BrowserModule, FormsModule,ResizableModule],
+  declarations: [Draggable,AppComponent,headerComponent, leftPanelComponent, rightPanelComponent, textModuleComponent,imageModuleComponent,templateModuleComponent,alignmentModuleComponent,colorBoxComponent, designContainer, textAreaComponent, selectBoxComponent, buttonComponent],
   bootstrap: [AppComponent],
   providers: [TextService]
 })

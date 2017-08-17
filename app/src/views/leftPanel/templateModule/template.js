@@ -5,17 +5,70 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var text_service_1 = require("../../../service/text.service");
 var templateModuleComponent = (function () {
-    function templateModuleComponent() {
+    function templateModuleComponent(_textService) {
+        this._textService = _textService;
         this.tempatePanelTitle = "Text";
     }
+    templateModuleComponent.prototype.setTemplateSize = function (event) {
+        this.getDesignContainerRef();
+        if (event.target.innerHTML === "1:1") {
+            this.designcontainerRef.nativeElement.style['width'] = '400px';
+            this.designcontainerRef.nativeElement.style['height'] = '400px';
+        }
+        if (event.target.innerHTML === "5:4") {
+            this.designcontainerRef.nativeElement.style['width'] = '500px';
+            this.designcontainerRef.nativeElement.style['height'] = '400px';
+        }
+        if (event.target.innerHTML === "4:3") {
+            this.designcontainerRef.nativeElement.style['width'] = '400px';
+            this.designcontainerRef.nativeElement.style['height'] = '300px';
+        }
+        if (event.target.innerHTML === "3:2") {
+            this.designcontainerRef.nativeElement.style['width'] = '300px';
+            this.designcontainerRef.nativeElement.style['height'] = '200px';
+        }
+        if (event.target.innerHTML === "8:5") {
+            this.designcontainerRef.nativeElement.style['width'] = '800px';
+            this.designcontainerRef.nativeElement.style['height'] = '500px';
+        }
+        if (event.target.innerHTML === "16:9") {
+            this.designcontainerRef.nativeElement.style['width'] = '800px';
+            this.designcontainerRef.nativeElement.style['height'] = '450px';
+        }
+        if (event.target.innerHTML === "FB") {
+            this.designcontainerRef.nativeElement.style['width'] = '768px';
+            this.designcontainerRef.nativeElement.style['height'] = '768px';
+        }
+    };
+    templateModuleComponent.prototype.setTemplateBg = function (event) {
+        this.getDesignContainerRef();
+        this.designcontainerRef.nativeElement.firstElementChild.attributes['data-bg'].value = event.target.innerHTML.toLowerCase();
+    };
+    templateModuleComponent.prototype.getDesignContainerRef = function () {
+        this.designcontainerRef = this._textService.designcontainerRef;
+    };
+    templateModuleComponent.prototype.setTemplateBgcolor = function () {
+        this.colorBoxRef = this._textService.colorBoxRef;
+        this.colorBoxRef.nativeElement.dataset['call'] = 'backgroundColor';
+        this.colorBoxRef.nativeElement.dataset['module'] = 'template';
+        this.colorBoxRef.nativeElement.style.display = 'block';
+    };
+    templateModuleComponent.prototype.updateOpacity = function (event) {
+        this.designcontainerRef.nativeElement.style['opacity'] = event.target.value;
+    };
     templateModuleComponent = __decorate([
         core_1.Component({
             selector: 'template-module',
-            template: " \n                 <section class=\"TemplateModule col-xs-12 p-0 module\">\n                        <h5 class=\"option-heading col-xs-12 m-0 p-0\">Template Setting</h5>\n                        <div class=\"seperator\"></div>\n\n                        <div class=\"col-xs-12 mt-10\">\n                            <span>Size</span>\n                            <input type=\"text\" class=\"width\"><input type=\"text\" class=\"height\">\n                            <a href=\"javascript:template.gosize();\" class=\"goSize btn\">Go</a>\n                        </div>\n                        <div class=\"quote_image_share col-xs-3\">\n                            <a class=\"btn update_canvas_size col-xs-12\" data-dimension=\"400:400\" href=\"javascript:template.update_canvas_size('400:400');\">1:1</a>\n                        </div>\n                        <div class=\"quote_image_share col-xs-3\">\n                            <a class=\"btn update_canvas_size col-xs-12\" data-dimension=\"500:400\" href=\"javascript:template.update_canvas_size('500:400');\">5:4</a>\n                        </div>\n                        <div class=\"quote_image_share col-xs-3\">\n                            <a class=\"btn update_canvas_size col-xs-12\" data-dimension=\"400:300\" href=\"javascript:template.update_canvas_size('400:300');\">4:3</a>\n                        </div>\n                        <div class=\"quote_image_share col-xs-3\">\n                            <a class=\"btn update_canvas_size col-xs-12\" data-dimension=\"300:200\" href=\"javascript:template.update_canvas_size('300:200');\">3:2</a>\n                        </div>\n                        <div class=\"quote_image_share col-xs-3\">\n                            <a class=\"btn update_canvas_size col-xs-12\" data-dimension=\"800:500\" href=\"javascript:template.update_canvas_size('800:500');\">8:5</a>\n                        </div>\n                        <div class=\"quote_image_share col-xs-3\">\n                            <a class=\"btn update_canvas_size col-xs-12\" data-dimension=\"800:450\" href=\"javascript:template.update_canvas_size('800:450');\">16:9</a>\n                        </div>\n                        <div class=\"quote_image_share col-xs-3\">\n                            <a class=\"btn update_canvas_size col-xs-12\" data-dimension=\"780:780\" href=\"javascript:template.update_canvas_size('780:780');\"><i class=\"fa fa-facebook\"></i>FB</a>\n                        </div>\n                        <div class=\"seperator\"></div>\n\n                        <div class=\"col-xs-12\">\n                            <a href=\"javascript:template.changeBg('blankT');\" id=\"0\" class=\"blankT btn\">Blank</a>\n                            <a href=\"javascript:template.changeBg('CommonT');\" id=\"1\" class=\"CommonT btn\">Common</a>\n                            <a href=\"javascript:template.changeBg('FunT');\" id=\"2\" class=\"FunT btn\">Fun</a>\n                        </div>\n                        <div class=\"seperator\"></div>\n\n                        <div class=\"back-color-sec col-xs-7\"><a href=\"javascript:template.bgcolor();\" class=\"back-color btn\">Background-color</a></div>\n                        <!--<div class=\"overlay-sec col-xs-6\"><a href=\"javascript:template.addOverlay();\" class=\"overlay btn\">Add Overlay</a></div>-->\n                        <div class=\"opacity-sec col-xs-5\"><select onchange=\"template.opacity()\"><option value=\"www\">Opacity</option> <option value=\"0.1\">0.1</option><option value=\"0.3\">0.3</option><option value=\"0.5\">0.5</option><option value=\"0.8\">0.8</option><option value=\"1\">1</option></select></div>\n                        <!--<div class=\"opacity-sec\"><select onchange=\"template.opacity()\"><option value=\"www\">Opacity</option> </select></div>-->\n\n                    </section>\n    "
-        })
+            template: " \n                 <section class=\"TemplateModule col-xs-12 p-0 module\">\n                        <h5 class=\"option-heading col-xs-12 m-0 p-0\">Template Setting</h5>\n                        <div class=\"seperator\"></div>\n\n                        <div class=\"col-xs-12 mt-10\">\n                            <span>Size</span>\n                            <input type=\"text\" class=\"width\"><input type=\"text\" class=\"height\">\n                            <a href=\"javascript:template.gosize();\" class=\"goSize btn\">Go</a>\n                        </div>\n                        <linkAsButton [parentClass]=\"'quote_image_share col-xs-3'\" [applyClass]=\"'btn update_canvas_size col-xs-12'\" [btnText]=\"'1:1'\" (click)=setTemplateSize($event)></linkAsButton>\n                        <linkAsButton [parentClass]=\"'quote_image_share col-xs-3'\" [applyClass]=\"'btn update_canvas_size col-xs-12'\" [btnText]=\"'5:4'\" (click)=setTemplateSize($event)></linkAsButton>\n                        <linkAsButton [parentClass]=\"'quote_image_share col-xs-3'\" [applyClass]=\"'btn update_canvas_size col-xs-12'\" [btnText]=\"'4:3'\" (click)=setTemplateSize($event)></linkAsButton>\n                        <linkAsButton [parentClass]=\"'quote_image_share col-xs-3'\" [applyClass]=\"'btn update_canvas_size col-xs-12'\" [btnText]=\"'3:2'\" (click)=setTemplateSize($event)></linkAsButton>\n                        <linkAsButton [parentClass]=\"'quote_image_share col-xs-3'\" [applyClass]=\"'btn update_canvas_size col-xs-12'\" [btnText]=\"'8:5'\" (click)=setTemplateSize($event)></linkAsButton>\n                        <linkAsButton [parentClass]=\"'quote_image_share col-xs-3'\" [applyClass]=\"'btn update_canvas_size col-xs-12'\" [btnText]=\"'16:9'\" (click)=setTemplateSize($event)></linkAsButton>\n                        <linkAsButton [parentClass]=\"'quote_image_share col-xs-3'\" [applyClass]=\"'btn update_canvas_size col-xs-12'\" [btnText]=\"'FB'\" (click)=setTemplateSize($event)></linkAsButton>\n\n                        <div class=\"seperator\"></div>\n\n                        <div class=\"col-xs-12\">\n                         <linkAsButton [parentClass]=\"''\" [applyClass]=\"'blankT btn'\" [btnText]=\"'Blank'\" (click)=setTemplateBg($event)></linkAsButton>\n                         <linkAsButton [parentClass]=\"''\" [applyClass]=\"'CommonT btn'\" [btnText]=\"'Common'\" (click)=setTemplateBg($event)></linkAsButton>\n                         <linkAsButton [parentClass]=\"''\" [applyClass]=\"'FunT btn'\" [btnText]=\"'Fun'\" (click)=setTemplateBg($event)></linkAsButton>\n                        </div>\n                        <div class=\"seperator\"></div>\n                         <linkAsButton [parentClass]=\"'back-color-sec col-xs-7'\" [applyClass]=\"'back-color btn'\" [btnText]=\"'Background-color'\" (click)=setTemplateBgcolor($event)></linkAsButton>\n                        <select-box [parentClass]=\"'opacity-sec col-xs-5'\" [defaultOptionValue]=\"'Opacity'\" (change)=\"updateOpacity($event)\"></select-box>\n                    </section>\n    "
+        }),
+        __metadata("design:paramtypes", [text_service_1.TextService])
     ], templateModuleComponent);
     return templateModuleComponent;
 }());

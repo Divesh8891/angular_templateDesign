@@ -22,11 +22,12 @@
             '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
             '@angular/http/testing': 'npm:@angular/http/bundles/http-testing.umd.js',
             '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
-            '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
-            'angular2-grid': 'npm:angular2-grid/bundles/NgGrid.umd.min.js',
 
+            '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
+            'angular-resizable-element': 'npm:angular-resizable-element/dist/umd/angular-resizable-element.js',
             // other libraries
-            'rxjs': 'npm:rxjs'
+            'rxjs': 'npm:rxjs',
+            'html2canvas': 'npm:html2canvas'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -35,6 +36,10 @@
                 defaultExtension: 'js'
             },
             rxjs: {
+                defaultExtension: 'js'
+            },
+            html2canvas: {
+                main: './dist/html2canvas.js',
                 defaultExtension: 'js'
             }
         }

@@ -1,11 +1,11 @@
-import { Component, ViewChild ,Input} from '@angular/core';
+import { Component, ViewChild, Input } from '@angular/core';
 import { TextService } from '../../service/text.service';
 
 
 @Component({
   selector: 'color-box',
   template: `
-  <ul class="custom-color-picker" data-call="dasd" #colorBox>
+  <ul class="custom-color-picker" data-call="dasd" data-module="" #colorBox>
     <li *ngFor="let colorVal of colorArray">
       <span [style.backgroundColor]="colorVal"  (click)="pickcolor($event)"></span>
     </li>
@@ -22,26 +22,33 @@ export class colorBoxComponent {
   colorArray: any[];
   currentObj: any;
   colorBoxObj: any;
-     
+  designcontainerRef: any;
 
   @ViewChild('colorBox') elements: any;
 
   pickcolor(event: any) {
     this.currentObj = this._textService.currentObj;
-
     let styleProp = this.elements.nativeElement.dataset['call'];
     let pickedColorValue = event.target.style.backgroundColor
+    if (this.elements.nativeElement.dataset['module'] === "") {
 
-    if (styleProp === 'textShadow') {
-      this.elements.nativeElement.dataset['textShadow'] = pickedColorValue
-      // console.log(this.currentObj)
-      // console.log(this.currentObj.nativeElement.style['strokeWidth'])
-      this.currentObj.nativeElement.style[styleProp] = this.elements.nativeElement.dataset['textShadow'] + ' 0px 0px ' + this.currentObj.nativeElement.style['strokeWidth'];
+      if (styleProp === 'textShadow') {
+        this.elements.nativeElement.dataset['textShadow'] = pickedColorValue
+        this.currentObj.nativeElement.style[styleProp] = this.elements.nativeElement.dataset['textShadow'] + ' 0px 0px ' + this.currentObj.nativeElement.style['strokeWidth'];
+      }
+      else {
+        this.currentObj.nativeElement.style[styleProp] = pickedColorValue;
+      }
+      event.target.offsetParent.style.display = 'none'
+
     }
     else {
-      this.currentObj.nativeElement.style[styleProp] = pickedColorValue;
+      this.designcontainerRef = this._textService.designcontainerRef;
+      this.designcontainerRef.nativeElement.firstElementChild.attributes['data-bg'].value = '';
+      this.designcontainerRef.nativeElement.style[styleProp] = pickedColorValue;
+      this.elements.nativeElement.dataset['module'] = '';
     }
-    event.target.offsetParent.style.display = 'none'
+      this.closeColorBox();
   }
 
   closeColorBox() {

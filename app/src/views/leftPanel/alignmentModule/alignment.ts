@@ -58,8 +58,9 @@ export class alignmentModuleComponent {
     setwidth() {
         this.currentObj = this._textService.currentObj;
         this.handlerRef = this._textService.handlerRef;
-        this.currentObj.nativeElement.style['width'] = this.inputWidthValue;
-        this.handlerRef.nativeElement.style['width'] = this.inputWidthValue + 5 + 'px';
+
+        this.currentObj.nativeElement.style['width'] = this.inputWidthValue + 'px';
+        this.handlerRef.nativeElement.style['width'] = parseInt(this.inputWidthValue) + 5 + 'px';
 
     }
     updateCurrentObj(propertyArray: any) {
@@ -71,6 +72,8 @@ export class alignmentModuleComponent {
         this.currentObj.nativeElement.style['transform'] = propertyArray.transform;
         this.handlerRef.nativeElement.style.left = propertyArray.left;
         this.handlerRef.nativeElement.style.right = propertyArray.right;
+        this.handlerRef.nativeElement.style['transform'] = propertyArray.transform;
+        
         this.inputLeftValue = propertyArray.left;
         this.inputTopValue = this.currentObj.nativeElement.style.top;
     }

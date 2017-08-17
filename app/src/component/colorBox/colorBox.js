@@ -19,16 +19,23 @@ var colorBoxComponent = (function () {
         this.currentObj = this._textService.currentObj;
         var styleProp = this.elements.nativeElement.dataset['call'];
         var pickedColorValue = event.target.style.backgroundColor;
-        if (styleProp === 'textShadow') {
-            this.elements.nativeElement.dataset['textShadow'] = pickedColorValue;
-            // console.log(this.currentObj)
-            // console.log(this.currentObj.nativeElement.style['strokeWidth'])
-            this.currentObj.nativeElement.style[styleProp] = this.elements.nativeElement.dataset['textShadow'] + ' 0px 0px ' + this.currentObj.nativeElement.style['strokeWidth'];
+        if (this.elements.nativeElement.dataset['module'] === "") {
+            if (styleProp === 'textShadow') {
+                this.elements.nativeElement.dataset['textShadow'] = pickedColorValue;
+                this.currentObj.nativeElement.style[styleProp] = this.elements.nativeElement.dataset['textShadow'] + ' 0px 0px ' + this.currentObj.nativeElement.style['strokeWidth'];
+            }
+            else {
+                this.currentObj.nativeElement.style[styleProp] = pickedColorValue;
+            }
+            event.target.offsetParent.style.display = 'none';
         }
         else {
-            this.currentObj.nativeElement.style[styleProp] = pickedColorValue;
+            this.designcontainerRef = this._textService.designcontainerRef;
+            this.designcontainerRef.nativeElement.firstElementChild.attributes['data-bg'].value = '';
+            this.designcontainerRef.nativeElement.style[styleProp] = pickedColorValue;
+            this.elements.nativeElement.dataset['module'] = '';
         }
-        event.target.offsetParent.style.display = 'none';
+        this.closeColorBox();
     };
     colorBoxComponent.prototype.closeColorBox = function () {
         this.colorBoxObj = this._textService.colorBoxRef;
@@ -45,7 +52,7 @@ var colorBoxComponent = (function () {
     colorBoxComponent = __decorate([
         core_1.Component({
             selector: 'color-box',
-            template: "\n  <ul class=\"custom-color-picker\" data-call=\"dasd\" #colorBox>\n    <li *ngFor=\"let colorVal of colorArray\">\n      <span [style.backgroundColor]=\"colorVal\"  (click)=\"pickcolor($event)\"></span>\n    </li>\n    <li>\n      <a href=\"javascript:text.openColorPicker()\" class=\"more-color pull-right\">More color</a>\n      <a class=\"default pull-left\" href=\"javascript:void(0)\" (click)=\"closeColorBox()\">No color</a>\n    </li>\n  </ul>\n                    \n     "
+            template: "\n  <ul class=\"custom-color-picker\" data-call=\"dasd\" data-module=\"\" #colorBox>\n    <li *ngFor=\"let colorVal of colorArray\">\n      <span [style.backgroundColor]=\"colorVal\"  (click)=\"pickcolor($event)\"></span>\n    </li>\n    <li>\n      <a href=\"javascript:text.openColorPicker()\" class=\"more-color pull-right\">More color</a>\n      <a class=\"default pull-left\" href=\"javascript:void(0)\" (click)=\"closeColorBox()\">No color</a>\n    </li>\n  </ul>\n                    \n     "
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], colorBoxComponent);
