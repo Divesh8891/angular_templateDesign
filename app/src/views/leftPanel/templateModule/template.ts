@@ -10,8 +10,9 @@ import { TextService } from '../../../service/text.service';
 
                         <div class="col-xs-12 mt-10">
                             <span>Size</span>
-                            <input type="text" class="width"><input type="text" class="height">
-                            <a href="javascript:template.gosize();" class="goSize btn">Go</a>
+                            <input type="text" class="width" [(ngModel)]="tempWidth"><input type="text" class="height" [(ngModel)]="tempHeight">
+                            <linkAsButton [parentClass]="'col-xs-3 pull-right m-0'" [applyClass]="'goSize btn'" [btnText]="'Go'" (click)=setTemplateDimension($event)></linkAsButton>
+
                         </div>
                         <linkAsButton [parentClass]="'quote_image_share col-xs-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'1:1'" (click)=setTemplateSize($event)></linkAsButton>
                         <linkAsButton [parentClass]="'quote_image_share col-xs-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'5:4'" (click)=setTemplateSize($event)></linkAsButton>
@@ -24,9 +25,9 @@ import { TextService } from '../../../service/text.service';
                         <div class="seperator"></div>
 
                         <div class="col-xs-12">
-                         <linkAsButton [parentClass]="''" [applyClass]="'blankT btn'" [btnText]="'Blank'" (click)=setTemplateBg($event)></linkAsButton>
-                         <linkAsButton [parentClass]="''" [applyClass]="'CommonT btn'" [btnText]="'Common'" (click)=setTemplateBg($event)></linkAsButton>
-                         <linkAsButton [parentClass]="''" [applyClass]="'FunT btn'" [btnText]="'Fun'" (click)=setTemplateBg($event)></linkAsButton>
+                         <linkAsButton [parentClass]="'col-xs-3'" [applyClass]="'blankT btn'" [btnText]="'Blank'" (click)=setTemplateBg($event)></linkAsButton>
+                         <linkAsButton [parentClass]="'col-xs-4 ml5'" [applyClass]="'CommonT btn'" [btnText]="'Common'" (click)=setTemplateBg($event)></linkAsButton>
+                         <linkAsButton [parentClass]="'col-xs-4 ml5'" [applyClass]="'FunT btn'" [btnText]="'Fun'" (click)=setTemplateBg($event)></linkAsButton>
                         </div>
                         <div class="seperator"></div>
                          <linkAsButton [parentClass]="'back-color-sec col-xs-7'" [applyClass]="'back-color btn'" [btnText]="'Background-color'" (click)=setTemplateBgcolor($event)></linkAsButton>
@@ -39,6 +40,8 @@ export class templateModuleComponent {
     tempatePanelTitle = "Text";
     designcontainerRef: any;
     colorBoxRef: any;
+    tempWidth: any;
+    tempHeight: any;
 
     setTemplateSize(event: any) {
         this.getDesignContainerRef();
@@ -81,19 +84,26 @@ export class templateModuleComponent {
     setTemplateBg(event: any) {
         this.getDesignContainerRef();
         this.designcontainerRef.nativeElement.firstElementChild.attributes['data-bg'].value = event.target.innerHTML.toLowerCase();
+
     }
     getDesignContainerRef() {
+
         this.designcontainerRef = this._textService.designcontainerRef;
+
     }
     setTemplateBgcolor() {
         this.colorBoxRef = this._textService.colorBoxRef;
         this.colorBoxRef.nativeElement.dataset['call'] = 'backgroundColor';
         this.colorBoxRef.nativeElement.dataset['module'] = 'template';
-
         this.colorBoxRef.nativeElement.style.display = 'block';
     }
-    updateOpacity(event:any) {
+    updateOpacity(event: any) {
         this.designcontainerRef.nativeElement.style['opacity'] = event.target.value;
+    }
+    setTemplateDimension(event: any) {
+        this.getDesignContainerRef();
+        this.designcontainerRef.nativeElement.style['width'] = this.tempWidth+'px';
+        this.designcontainerRef.nativeElement.style['height'] = this.tempHeight+'px';
 
     }
     constructor(private _textService: TextService) { }

@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
     selector: 'image-module',
     template: ` 
                   <section class="ImageModule col-xs-12 p-0 module">
-                        <h5 class="option-heading col-xs-12 m-0 p-0">imagePanelTitle</h5>
+                        <h5 class="option-heading col-xs-12 m-0 p-0">{{imagePanelTitle}}</h5>
                         <div class="seperator"></div>
                         <div class="col-xs-12"><a class="upload btn btn-lrg">Upload 
                                     <input type="file" id="file" class="upload-image-btn" name="file_upload" onchange="image.upload(this)"></a>
@@ -17,5 +17,5 @@ import { Component } from '@angular/core';
 })
 
 export class imageModuleComponent {
-   imagePanelTitle = "Text";
+   imagePanelTitle = "Image";
 }

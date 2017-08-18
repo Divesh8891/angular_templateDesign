@@ -2,6 +2,7 @@
 .bgWhite{background-color:#fff;}
 .text-white{color: #fff;}
 .m-0{margin: 0!important;}
+.ml5{margin-left: 5px}
 .mt-10{margin-top: 10px;}
 .p-0{padding:0;}
 .pr-0{padding-right: 0;}
@@ -51,7 +52,7 @@ input{width: 60px;margin:0 0 0 5px;height: 25px;}
 #img-out img{width:60%;}
 #canvasPNG,.imageGen,.downloadImgCont{display:none;}
 .seperator{width: 105%;border: 1px solid #ddd;float: left;margin: 0 -5px;}
-.popup-body{    position: absolute;
+.popup-body{    position: absolute;    z-index: -1;
     top: 100px;
     width: 400px;
     height: 400px;}

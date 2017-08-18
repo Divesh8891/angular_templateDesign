@@ -23,11 +23,10 @@ import { ResizableModule } from 'angular-resizable-element'
 export class designContainer {
     textAreaVal: any;
     public currentObj: any;
-    modalImgSrc:any;
+    modalImgSrc: any;
 
     @ViewChild('handler') public textHandler: any;
     @ViewChild('designTooSec') public designTooSec: any;
-    
     @ViewChildren('xyz') elements: any;
 
     ngOnInit() {
@@ -42,7 +41,6 @@ export class designContainer {
     textNodeEvent(event: any) {
         this.textHandler.nativeElement.style.display = 'block';
         for (let i = 0; i < this.elements._results.length; i++) {
-            console.log(this.elements._results[i].nativeElement.id)
             if (event.target.id === this.elements._results[i].nativeElement.id) {
                 this.currentObj = this.elements._results[i];
             }
@@ -52,14 +50,13 @@ export class designContainer {
         this.textHandler.nativeElement.style.left = event.target.offsetLeft - 5 + 'px';
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
         this._textService.setCurrentObj(this.currentObj, this.textHandler);
-        console.log(this._textService.setHtml2Canvas())
     }
     getPos(event: any) {
         this.currentObj.nativeElement.style.left = event.left + 5 + 'px'
-        this.currentObj.nativeElement.style.top = event.top + 5 + 'px'
+        this.currentObj.nativeElement.style.top = event.top + 5 + 'px';
     }
-     onResizeEnd(event: any): void {
-    console.log('Element was resized', event);
-  }
+    onResizeEnd(event: any): void {
+        console.log('Element was resized', event);
+    }
     constructor(private _textService: TextService) { }
 }

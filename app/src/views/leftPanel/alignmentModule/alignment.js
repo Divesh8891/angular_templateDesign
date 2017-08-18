@@ -14,7 +14,7 @@ var text_service_1 = require("../../../service/text.service");
 var alignmentModuleComponent = (function () {
     function alignmentModuleComponent(_textService) {
         this._textService = _textService;
-        this.AlignmnetPanelTitle = "Text";
+        this.AlignmnetPanelTitle = "Alignment";
     }
     alignmentModuleComponent.prototype.leftAlignment = function (event) {
         this.updateCurrentObj({ 'left': '0px', 'right': 'auto', 'transform': '' });

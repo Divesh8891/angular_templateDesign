@@ -75,6 +75,7 @@ var textModuleComponent = (function () {
         this.colorBoxRef = this._textService.colorBoxRef;
         this.colorBoxRef.nativeElement.dataset['call'] = property;
         this.colorBoxRef.nativeElement.style.display = 'block';
+        this._textService.setHtml2Canvas();
     };
     textModuleComponent.prototype.updateTextcurrentObj = function (property, value) {
         this.currentObj = this._textService.currentObj;
@@ -82,6 +83,7 @@ var textModuleComponent = (function () {
         this.currentObj.nativeElement.style[property] = value;
         this.handlerRef.nativeElement.style.width = this.currentObj.nativeElement.offsetWidth + 10 + 'px';
         this.handlerRef.nativeElement.style.height = this.currentObj.nativeElement.offsetHeight + 10 + 'px';
+        this._textService.setHtml2Canvas();
     };
     textModuleComponent = __decorate([
         core_1.Component({

@@ -26,7 +26,7 @@ import { TextService } from '../../../service/text.service';
 })
 
 export class alignmentModuleComponent {
-    AlignmnetPanelTitle = "Text";
+    AlignmnetPanelTitle = "Alignment";
     currentObj: any;
     handlerRef: any;
     inputLeftValue: any;
@@ -52,8 +52,6 @@ export class alignmentModuleComponent {
         this.currentObj.nativeElement.style['right'] = 'auto';
         this.handlerRef.nativeElement.style.left = this.inputLeftValue;
         this.handlerRef.nativeElement.style.top = this.inputTopValue;
-
-
     }
     setwidth() {
         this.currentObj = this._textService.currentObj;
@@ -73,9 +71,10 @@ export class alignmentModuleComponent {
         this.handlerRef.nativeElement.style.left = propertyArray.left;
         this.handlerRef.nativeElement.style.right = propertyArray.right;
         this.handlerRef.nativeElement.style['transform'] = propertyArray.transform;
-        
+
         this.inputLeftValue = propertyArray.left;
         this.inputTopValue = this.currentObj.nativeElement.style.top;
+
     }
 
     constructor(private _textService: TextService) {

@@ -9,12 +9,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var imageModuleComponent = (function () {
     function imageModuleComponent() {
-        this.imagePanelTitle = "Text";
+        this.imagePanelTitle = "Image";
     }
     imageModuleComponent = __decorate([
         core_1.Component({
             selector: 'image-module',
-            template: " \n                  <section class=\"ImageModule col-xs-12 p-0 module\">\n                        <h5 class=\"option-heading col-xs-12 m-0 p-0\">imagePanelTitle</h5>\n                        <div class=\"seperator\"></div>\n                        <div class=\"col-xs-12\"><a class=\"upload btn btn-lrg\">Upload \n                                    <input type=\"file\" id=\"file\" class=\"upload-image-btn\" name=\"file_upload\" onchange=\"image.upload(this)\"></a>\n                        </div>\n                        <div class=\"col-xs-12\">\n                            <a href=\"javascript:commonoption.setAspectRatio();\" class=\"set-aspect-ratio btn btn-lrg\">Set Aspect Ratio</a>\n                        </div>\n                    </section>\n    "
+            template: " \n                  <section class=\"ImageModule col-xs-12 p-0 module\">\n                        <h5 class=\"option-heading col-xs-12 m-0 p-0\">{{imagePanelTitle}}</h5>\n                        <div class=\"seperator\"></div>\n                        <div class=\"col-xs-12\"><a class=\"upload btn btn-lrg\">Upload \n                                    <input type=\"file\" id=\"file\" class=\"upload-image-btn\" name=\"file_upload\" onchange=\"image.upload(this)\"></a>\n                        </div>\n                        <div class=\"col-xs-12\">\n                            <a href=\"javascript:commonoption.setAspectRatio();\" class=\"set-aspect-ratio btn btn-lrg\">Set Aspect Ratio</a>\n                        </div>\n                    </section>\n    "
         })
     ], imageModuleComponent);
     return imageModuleComponent;

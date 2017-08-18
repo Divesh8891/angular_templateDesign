@@ -25,7 +25,6 @@ var designContainer = (function () {
     designContainer.prototype.textNodeEvent = function (event) {
         this.textHandler.nativeElement.style.display = 'block';
         for (var i = 0; i < this.elements._results.length; i++) {
-            console.log(this.elements._results[i].nativeElement.id);
             if (event.target.id === this.elements._results[i].nativeElement.id) {
                 this.currentObj = this.elements._results[i];
             }
@@ -35,7 +34,6 @@ var designContainer = (function () {
         this.textHandler.nativeElement.style.left = event.target.offsetLeft - 5 + 'px';
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
         this._textService.setCurrentObj(this.currentObj, this.textHandler);
-        console.log(this._textService.setHtml2Canvas());
     };
     designContainer.prototype.getPos = function (event) {
         this.currentObj.nativeElement.style.left = event.left + 5 + 'px';
