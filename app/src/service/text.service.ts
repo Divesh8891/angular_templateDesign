@@ -3,7 +3,10 @@ import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class TextService {
+
     public dataStringSource = new Subject();
+    public sliderMinValue = new Subject();
+    public sliderMaxValue = new Subject();
     currentObj: any;
     nodeArray: any;
     colorBoxRef: any;
@@ -12,7 +15,8 @@ export class TextService {
     canvasElem: any;
     canvasImageSrc: any;
 
-     users: User[] = [];
+
+    users: User[] = [];
     setTextValue(data: any) {
         let me = this;
         this.users.push(new User(data.text, data.randomNumber, data.imgSrc));
@@ -21,6 +25,21 @@ export class TextService {
     }
     getTextValue() {
         return this.dataStringSource.asObservable();
+    }
+    setSliderValue(data: any, type: any) {
+        if (type === 'minV') {
+            this.sliderMinValue.next(data);
+        }
+        if (type === 'maxV') {
+            this.sliderMaxValue.next(data);
+        }
+
+    }
+    getSliderMinValue() {
+        return this.sliderMinValue.asObservable();
+    }
+    getSliderMaxValue() {
+        return  this.sliderMaxValue.asObservable();
     }
     setCurrentObj(currentObjData: any, handlerData: any) {
         this.currentObj = currentObjData;
@@ -52,6 +71,8 @@ export class TextService {
         this.handlerRef.nativeElement.style.height = parseInt($currentObj.nativeElement.style["height"]) + 10 + 'px';
 
     }
+
+
 
 }
 export class User {

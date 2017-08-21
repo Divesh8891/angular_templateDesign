@@ -11,6 +11,8 @@ var Subject_1 = require("rxjs/Subject");
 var TextService = (function () {
     function TextService() {
         this.dataStringSource = new Subject_1.Subject();
+        this.sliderMinValue = new Subject_1.Subject();
+        this.sliderMaxValue = new Subject_1.Subject();
         this.users = [];
     }
     TextService.prototype.setTextValue = function (data) {
@@ -21,6 +23,20 @@ var TextService = (function () {
     };
     TextService.prototype.getTextValue = function () {
         return this.dataStringSource.asObservable();
+    };
+    TextService.prototype.setSliderValue = function (data, type) {
+        if (type === 'minV') {
+            this.sliderMinValue.next(data);
+        }
+        if (type === 'maxV') {
+            this.sliderMaxValue.next(data);
+        }
+    };
+    TextService.prototype.getSliderMinValue = function () {
+        return this.sliderMinValue.asObservable();
+    };
+    TextService.prototype.getSliderMaxValue = function () {
+        return this.sliderMaxValue.asObservable();
     };
     TextService.prototype.setCurrentObj = function (currentObjData, handlerData) {
         this.currentObj = currentObjData;

@@ -15,9 +15,21 @@ var alignmentModuleComponent = (function () {
     function alignmentModuleComponent(_textService) {
         this._textService = _textService;
         this.maxSlidervalue = 100;
-        this.minSlidervalue = 1;
+        this.minSlidervalue = 0;
+        this.defaultsliderValue = 0;
         this.AlignmnetPanelTitle = "Alignment";
     }
+    alignmentModuleComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this._textService.getSliderMaxValue().subscribe(function (data) {
+            _this.maxSlidervalue = data;
+            _this.inputMaxWidthValue = data;
+        });
+        this._textService.getSliderMinValue().subscribe(function (data) {
+            _this.defaultsliderValue = data;
+            _this.inputMinWidthValue = data;
+        });
+    };
     alignmentModuleComponent.prototype.leftAlignment = function (event) {
         this.updateCurrentObj({ 'left': '0px', 'right': 'auto', 'transform': '' });
         console.log(this.slider);
@@ -40,7 +52,7 @@ var alignmentModuleComponent = (function () {
     };
     alignmentModuleComponent.prototype.setwidth = function () {
         this.currentObj = this._textService.currentObj;
-        this.currentObj.nativeElement.style['width'] = this.inputWidthValue + 'px';
+        this.currentObj.nativeElement.style['width'] = this.inputMinWidthValue + 'px';
         this._textService.setAspectRaion();
     };
     alignmentModuleComponent.prototype.updateCurrentObj = function (propertyArray) {
@@ -56,7 +68,14 @@ var alignmentModuleComponent = (function () {
         this.inputTopValue = this.currentObj.nativeElement.style.top;
     };
     alignmentModuleComponent.prototype.onRangeChanged = function (event) {
-        this.inputWidthValue = event.value;
+        this.handlerRef = this._textService.handlerRef;
+        this.currentObj = this._textService.currentObj;
+        if (this.currentObj != undefined) {
+            this.inputMinWidthValue = event.value;
+            this.currentObj.nativeElement.style['width'] = event.value + 'px';
+            this.handlerRef.nativeElement.style.width = event.value + 10 + 'px';
+            this.handlerRef.nativeElement.style.height = this.currentObj.nativeElement.height + 10 + 'px';
+        }
     };
     __decorate([
         core_1.ViewChild('slider'),
@@ -65,7 +84,7 @@ var alignmentModuleComponent = (function () {
     alignmentModuleComponent = __decorate([
         core_1.Component({
             selector: 'alignment-module',
-            template: " \n                <section class=\"AlignmentModule col-xs-12 p-0 module\">\n                        <h5 class=\"option-heading col-xs-12 m-0 p-0\">{{AlignmnetPanelTitle}}</h5>\n                        <div class=\"seperator\"></div> \n                        <linkAsButton [parentClass]=\"'l align-opt col-xs-4'\" [applyClass]=\"'leftA btn btn-lrg'\" [btnText]=\"'L'\" (click)=leftAlignment($event)></linkAsButton>\n                        <linkAsButton [parentClass]=\"'m align-opt col-xs-4'\" [applyClass]=\"'mid btn btn-lrg'\" [btnText]=\"'M'\" (click)=middleAlignment($event)></linkAsButton>\n                        <linkAsButton [parentClass]=\"'r align-opt col-xs-4'\" [applyClass]=\"'right btn btn-lrg'\" [btnText]=\"'R'\" (click)=rightAlignment($event)></linkAsButton>\n                        <div class=\"seperator\"></div>\n                        <div class=\"col-xs-12\">\n                            <label>L : </label><input type=\"text\" class=\"leftP\" [(ngModel)]=\"inputLeftValue\" ><label>T : </label><input type=\"text\" class=\"topP\" [(ngModel)]=\"inputTopValue\">\n                            <linkAsButton [parentClass]=\"'col-xs-3 pull-right m-0'\" [applyClass]=\"'goSize btn'\" [btnText]=\"'GO'\" (click)=setAlignment($event)></linkAsButton>\n                        </div>\n                        <div class=\"seperator\"></div>\n                        <div class=\"col-xs-12\">\n                            <label>w : </label><input type=\"text\" class=\"widthA\" [(ngModel)]=\"inputWidthValue\">\n                            <linkAsButton [parentClass]=\"'col-xs-3 pull-right m-0'\" [applyClass]=\"'goSize btn'\" [btnText]=\"'GO'\" (click)=setwidth($event)></linkAsButton>\n                        </div>\n                           <md-slider (input)=\"onRangeChanged($event)\"  min=\"{{minSliderValue}}\" max=\"{{maxSlidervalue}}\"></md-slider>\n                    </section>\n    "
+            template: " \n                <section class=\"AlignmentModule col-xs-12 p-0 module\">\n                        <h5 class=\"option-heading col-xs-12 m-0 p-0\">{{AlignmnetPanelTitle}}</h5>\n                        <div class=\"seperator\"></div> \n                        <linkAsButton [parentClass]=\"'l align-opt col-xs-4'\" [applyClass]=\"'leftA btn btn-lrg'\" [btnText]=\"'L'\" (click)=leftAlignment($event)></linkAsButton>\n                        <linkAsButton [parentClass]=\"'m align-opt col-xs-4'\" [applyClass]=\"'mid btn btn-lrg'\" [btnText]=\"'M'\" (click)=middleAlignment($event)></linkAsButton>\n                        <linkAsButton [parentClass]=\"'r align-opt col-xs-4'\" [applyClass]=\"'right btn btn-lrg'\" [btnText]=\"'R'\" (click)=rightAlignment($event)></linkAsButton>\n                        <div class=\"seperator\"></div>\n                        <div class=\"col-xs-12\">\n                            <label>L : </label><input type=\"text\" class=\"leftP\" [(ngModel)]=\"inputLeftValue\" ><label>T : </label><input type=\"text\" class=\"topP\" [(ngModel)]=\"inputTopValue\">\n                            <linkAsButton [parentClass]=\"'col-xs-3 pull-right m-0'\" [applyClass]=\"'goSize btn'\" [btnText]=\"'GO'\" (click)=setAlignment($event)></linkAsButton>\n                        </div>\n                        <div class=\"seperator\"></div>\n                        <div class=\"col-xs-12\"  [attr.data-min]=\"inputWidthValue\" [attr.data-max]=\"inputMaxWidthValue\">\n                            <label>Width: </label>\n                            <md-slider (input)=\"onRangeChanged($event)\"  min=\"{{minSliderValue}}\" max=\"{{maxSlidervalue}}\" value=\"{{defaultsliderValue}}\"></md-slider>\n                            <label>Min: </label><input type=\"text\" class=\"widthA\" [(ngModel)]=\"inputMinWidthValue\" value={{inputMinWidthValue}}>\n                            <label>Max: </label><input type=\"text\" class=\"widthA\" [(ngModel)]=\"inputMaxWidthValue\" value={{inputMaxWidthValue}}>\n                            <linkAsButton [parentClass]=\"'col-xs-12 m-0'\" [applyClass]=\"'goSize btn btn-lrg mt-10'\" [btnText]=\"'GO'\" (click)=setwidth($event)></linkAsButton>\n                        </div>\n                    </section>\n    "
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], alignmentModuleComponent);

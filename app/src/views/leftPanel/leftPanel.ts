@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild,ElementRef } from '@angular/core';
 
 @Component({
     selector: 'left-panel',
@@ -7,13 +7,16 @@ import { Component } from '@angular/core';
                     <text-module></text-module>
                     <image-module></image-module>
                     <template-module></template-module>
-                    <alignment-module></alignment-module>
+                    <alignment-module #alignment></alignment-module>
                     <color-box></color-box>
                 </section>
             `
 })
 
 export class leftPanelComponent {
-   childTitle:string = 'This text is passed to child';
-
+    childTitle: string = 'This text is passed to child';
+    @ViewChild('alignment', { read: ElementRef }) alignmentRef: ElementRef;
+    ngAfterViewInit(){
+        console.log(this.alignmentRef)
+    }
 }

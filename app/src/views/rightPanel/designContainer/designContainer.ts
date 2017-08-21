@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewChildren, Input, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, ViewChild, ViewChildren } from '@angular/core';
 import { TextService } from '../../../service/text.service';
 
 @Component({
@@ -8,8 +8,8 @@ import { TextService } from '../../../service/text.service';
                     <div class="desgin-tool-sec" style="width: 780px; height: 780px;" #designTooSec>
                         <section class="desgin-inner" data-bg="blank">
                         <ng-container *ngFor="let text of textAreaVal">
-                          <p #xyz *ngIf="text.text!=''" class="textNative" data-type="text" id="{{text.randomNumber}}" (click)="textNodeEvent($event,text)" style="font-size: 18px;" >{{text.text}}</p>
-                         <img #xyz *ngIf="text.src!=''" class="imgNative" data-type="image" data-ratio=""  id="{{text.randomNumber}}" (click)="imgNodeEvent($event,img)" src={{text.src}}/>
+                          <p #xyz *ngIf="text.text!=''" class="textNative" data-max="" data-type="text" id="{{text.randomNumber}}" (click)="textNodeEvent($event,text)" style="font-size: 18px;" >{{text.text}}</p>
+                         <img #xyz *ngIf="text.src!=''" class="imgNative" data-max="" data-type="image" data-ratio=""  id="{{text.randomNumber}}" (click)="imgNodeEvent($event,img)" src={{text.src}}/>
                         </ng-container>
                         </section>
                         <div class="handler cube" #handler  [ng2-draggable]="true" (handlerClick)="onhandlerClick($event)" (postions)=getPos($event)></div>
@@ -48,7 +48,6 @@ export class designContainer {
         for (let i = 0; i < this.elements._results.length; i++) {
             console.log(event.target.id, this.elements._results[i].nativeElement.id)
             if (event.target.id === this.elements._results[i].nativeElement.id) {
-
                 this.currentObj = this.elements._results[i];
             }
         }
@@ -57,6 +56,10 @@ export class designContainer {
         this.textHandler.nativeElement.style.left = event.target.offsetLeft - 5 + 'px';
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
         this._textService.setCurrentObj(this.currentObj, this.textHandler);
+        this._textService.setSliderValue(parseInt(this.designTooSec.nativeElement.style.width), 'maxV');
+        this._textService.setSliderValue(parseInt(this.currentObj.nativeElement.offsetWidth), 'minV');
+
+
     }
     imgNodeEvent(event: any) {
         this.textHandler.nativeElement.style.display = 'block';
@@ -71,6 +74,9 @@ export class designContainer {
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
         this._textService.setCurrentObj(this.currentObj, this.textHandler);
         this.setImageDimension();
+        this._textService.setSliderValue(parseInt(this.designTooSec.nativeElement.style.width), 'maxV');
+        this._textService.setSliderValue(parseInt(this.currentObj.nativeElement.offsetWidth), 'minV');
+
 
     }
     getPos(event: any) {

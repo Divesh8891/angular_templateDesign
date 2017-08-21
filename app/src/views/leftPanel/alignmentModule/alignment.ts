@@ -16,27 +16,46 @@ import { TextService } from '../../../service/text.service';
                             <linkAsButton [parentClass]="'col-xs-3 pull-right m-0'" [applyClass]="'goSize btn'" [btnText]="'GO'" (click)=setAlignment($event)></linkAsButton>
                         </div>
                         <div class="seperator"></div>
-                        <div class="col-xs-12">
-                            <label>w : </label><input type="text" class="widthA" [(ngModel)]="inputWidthValue">
-                            <linkAsButton [parentClass]="'col-xs-3 pull-right m-0'" [applyClass]="'goSize btn'" [btnText]="'GO'" (click)=setwidth($event)></linkAsButton>
+                        <div class="col-xs-12"  [attr.data-min]="inputWidthValue" [attr.data-max]="inputMaxWidthValue">
+                            <label>Width: </label>
+                            <md-slider (input)="onRangeChanged($event)"  min="{{minSliderValue}}" max="{{maxSlidervalue}}" value="{{defaultsliderValue}}"></md-slider>
+                            <label>Min: </label><input type="text" class="widthA" [(ngModel)]="inputMinWidthValue" value={{inputMinWidthValue}}>
+                            <label>Max: </label><input type="text" class="widthA" [(ngModel)]="inputMaxWidthValue" value={{inputMaxWidthValue}}>
+                            <linkAsButton [parentClass]="'col-xs-12 m-0'" [applyClass]="'goSize btn btn-lrg mt-10'" [btnText]="'GO'" (click)=setwidth($event)></linkAsButton>
                         </div>
-                           <md-slider (input)="onRangeChanged($event)"  min="{{minSliderValue}}" max="{{maxSlidervalue}}"></md-slider>
                     </section>
     `
 })
 
 export class alignmentModuleComponent {
-    maxSlidervalue: number = 100;
-    minSlidervalue: number = 1;
-
+    maxSlidervalue: any = 100;
+    minSlidervalue: any = 0;
+    defaultsliderValue: any = 0;
     AlignmnetPanelTitle = "Alignment";
     currentObj: any;
     handlerRef: any;
     inputLeftValue: any;
     inputTopValue: any;
-    inputWidthValue: any;
+    inputMinWidthValue: any;
+    inputMaxWidthValue: any;
+
 
     @ViewChild('slider') public slider: any;
+
+    ngOnInit() {
+        this._textService.getSliderMaxValue().subscribe(
+            data => {
+                this.maxSlidervalue = data;
+                this.inputMaxWidthValue = data;
+            });
+        this._textService.getSliderMinValue().subscribe(
+            data => {
+                this.defaultsliderValue = data;
+                this.inputMinWidthValue = data;
+            });
+
+    }
+
     leftAlignment(event: any) {
         this.updateCurrentObj({ 'left': '0px', 'right': 'auto', 'transform': '' });
         console.log(this.slider)
@@ -62,7 +81,7 @@ export class alignmentModuleComponent {
     setwidth() {
         this.currentObj = this._textService.currentObj;
 
-        this.currentObj.nativeElement.style['width'] = this.inputWidthValue + 'px';
+        this.currentObj.nativeElement.style['width'] = this.inputMinWidthValue + 'px';
         this._textService.setAspectRaion();
     }
     updateCurrentObj(propertyArray: any) {
@@ -81,8 +100,17 @@ export class alignmentModuleComponent {
 
     }
     onRangeChanged(event: any) {
-        this.inputWidthValue = event.value;
+        this.handlerRef = this._textService.handlerRef;
+        this.currentObj = this._textService.currentObj;
+
+        if (this.currentObj != undefined) {
+            this.inputMinWidthValue = event.value;
+            this.currentObj.nativeElement.style['width'] = event.value + 'px';
+            this.handlerRef.nativeElement.style.width = event.value + 10 + 'px';
+            this.handlerRef.nativeElement.style.height = this.currentObj.nativeElement.height + 10 + 'px';
+        }
     }
+
     constructor(private _textService: TextService) {
     }
 }

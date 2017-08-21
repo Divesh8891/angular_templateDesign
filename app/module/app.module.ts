@@ -32,7 +32,7 @@ import { colorBoxComponent } from '../src/component/colorBox/colorBox';
 
 
 @NgModule({
-  imports: [BrowserModule, FormsModule,  ImageUploadModule.forRoot(),MdSliderModule.forRoot()],
+  imports: [BrowserModule, FormsModule,  ImageUploadModule.forRoot(),MdSliderModule],
   declarations: [AppComponent, headerComponent, leftPanelComponent, rightPanelComponent, textModuleComponent, imageModuleComponent, templateModuleComponent, alignmentModuleComponent, colorBoxComponent, designContainer, textAreaComponent, selectBoxComponent, buttonComponent, Draggable],
   bootstrap: [AppComponent],
   providers: [TextService]
