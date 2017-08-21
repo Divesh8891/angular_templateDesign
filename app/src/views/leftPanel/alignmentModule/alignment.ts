@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { TextService } from '../../../service/text.service';
-
 
 @Component({
     selector: 'alignment-module',
@@ -21,19 +20,26 @@ import { TextService } from '../../../service/text.service';
                             <label>w : </label><input type="text" class="widthA" [(ngModel)]="inputWidthValue">
                             <linkAsButton [parentClass]="'col-xs-3 pull-right m-0'" [applyClass]="'goSize btn'" [btnText]="'GO'" (click)=setwidth($event)></linkAsButton>
                         </div>
+                           <md-slider (input)="onRangeChanged($event)"  min="{{minSliderValue}}" max="{{maxSlidervalue}}"></md-slider>
                     </section>
     `
 })
 
 export class alignmentModuleComponent {
+    maxSlidervalue: number = 100;
+    minSlidervalue: number = 1;
+
     AlignmnetPanelTitle = "Alignment";
     currentObj: any;
     handlerRef: any;
     inputLeftValue: any;
     inputTopValue: any;
     inputWidthValue: any;
+
+    @ViewChild('slider') public slider: any;
     leftAlignment(event: any) {
         this.updateCurrentObj({ 'left': '0px', 'right': 'auto', 'transform': '' });
+        console.log(this.slider)
     }
     middleAlignment(event: any) {
         this.updateCurrentObj({ 'left': '50%', 'right': 'auto', 'transform': 'translateX(-50%)' });
@@ -55,11 +61,9 @@ export class alignmentModuleComponent {
     }
     setwidth() {
         this.currentObj = this._textService.currentObj;
-        this.handlerRef = this._textService.handlerRef;
 
         this.currentObj.nativeElement.style['width'] = this.inputWidthValue + 'px';
-        this.handlerRef.nativeElement.style['width'] = parseInt(this.inputWidthValue) + 5 + 'px';
-
+        this._textService.setAspectRaion();
     }
     updateCurrentObj(propertyArray: any) {
         this.currentObj = this._textService.currentObj;
@@ -76,7 +80,9 @@ export class alignmentModuleComponent {
         this.inputTopValue = this.currentObj.nativeElement.style.top;
 
     }
-
+    onRangeChanged(event: any) {
+        this.inputWidthValue = event.value;
+    }
     constructor(private _textService: TextService) {
     }
 }

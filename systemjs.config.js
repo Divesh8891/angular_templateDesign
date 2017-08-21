@@ -19,15 +19,13 @@
             '@angular/compiler': 'npm:@angular/compiler/bundles/compiler.umd.js',
             '@angular/platform-browser': 'npm:@angular/platform-browser/bundles/platform-browser.umd.js',
             '@angular/platform-browser-dynamic': 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
+            '@angular/animations': 'npm:@angular/animations/bundles/animations.umd.js',
+            '@angular/material': 'npm:@angular/material/bundles/material.umd.js',
             '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
-            '@angular/http/testing': 'npm:@angular/http/bundles/http-testing.umd.js',
-            '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
-
             '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
-            'angular-resizable-element': 'npm:angular-resizable-element/dist/umd/angular-resizable-element.js',
+            //'html2canvas': 'html2canvas',
             // other libraries
             'rxjs': 'npm:rxjs',
-            'html2canvas': 'npm:html2canvas'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -38,10 +36,11 @@
             rxjs: {
                 defaultExtension: 'js'
             },
-            html2canvas: {
-                main: './dist/html2canvas.js',
-                defaultExtension: 'js'
-            }
+            // html2canvas: {
+            //     main: './dist/html2canvas.js',
+            //     defaultExtension: 'js'
+            // },
+
         }
     });
 })(this);

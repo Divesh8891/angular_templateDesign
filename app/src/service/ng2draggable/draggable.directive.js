@@ -15,10 +15,12 @@ var Draggable = (function () {
         this.element = element;
         this._allowDrag = true;
         this.postions = new core_1.EventEmitter();
+        this.handlerClick = new core_1.EventEmitter();
     }
     Draggable.prototype.ngOnInit = function () {
         // css changes
         if (this._allowDrag) {
+            this.element.nativeElement.style.position = 'relative';
             this.element.nativeElement.className += ' cursor-draggable';
         }
     };
@@ -28,6 +30,7 @@ var Draggable = (function () {
         this.md = true;
         this.topStart = event.clientY - this.element.nativeElement.style.top.replace('px', '');
         this.leftStart = event.clientX - this.element.nativeElement.style.left.replace('px', '');
+        this.handlerClick.emit(event);
     };
     Draggable.prototype.onMouseUp = function (event) {
         this.md = false;
@@ -37,7 +40,7 @@ var Draggable = (function () {
         if (this.md && this._allowDrag) {
             this.element.nativeElement.style.top = (event.clientY - this.topStart) + 'px';
             this.element.nativeElement.style.left = (event.clientX - this.leftStart) + 'px';
-            this.postions.emit({ top: (event.clientY - this.topStart), left: (event.clientX - this.leftStart) });
+            this.postions.emit({ 'top': (event.clientY - this.topStart), 'left': (event.clientX - this.leftStart) });
         }
     };
     Draggable.prototype.onMouseLeave = function (event) {
@@ -82,6 +85,10 @@ var Draggable = (function () {
         core_1.Output(),
         __metadata("design:type", Object)
     ], Draggable.prototype, "postions", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", Object)
+    ], Draggable.prototype, "handlerClick", void 0);
     __decorate([
         core_1.HostListener('mousedown', ['$event']),
         __metadata("design:type", Function),

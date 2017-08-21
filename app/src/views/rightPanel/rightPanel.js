@@ -94,7 +94,7 @@ var rightPanelComponent = (function () {
         });
     };
     rightPanelComponent.prototype.deleteNode = function () {
-        this.userArray = this._textService.nodeArray;
+        this.userArray = this._textService.users;
         var currentObjElememtID = this._textService.currentObj.nativeElement.id;
         for (var j = 0; j < this.userArray.length; j++) {
             if (this.userArray[j].randomNumber == currentObjElememtID) {

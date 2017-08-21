@@ -16,13 +16,11 @@ var textAreaComponent = (function () {
         this._textService = _textService;
         this.textAreaClass = 'js-text-val text-val';
         this.textPlaceholder = 'Add Text';
-        this.users = [];
     }
     textAreaComponent.prototype.addtext = function (event) {
         var a = new Date();
         this.randomNumber = a.getTime();
-        this.users.push(new User(this.textAreaValue, this.randomNumber));
-        this.textAreaValue === '' ? alert(this.textAreaValue) : this._textService.setTextValue(this.users);
+        this.textAreaValue === '' ? alert(this.textAreaValue) : this._textService.setTextValue({ 'text': this.textAreaValue, 'randomNumber': this.randomNumber, 'imgSrc': '' });
     };
     textAreaComponent = __decorate([
         core_1.Component({
@@ -34,12 +32,4 @@ var textAreaComponent = (function () {
     return textAreaComponent;
 }());
 exports.textAreaComponent = textAreaComponent;
-var User = (function () {
-    function User(text, randomNumber) {
-        this.text = text;
-        this.randomNumber = randomNumber;
-    }
-    return User;
-}());
-exports.User = User;
 //# sourceMappingURL=textArea.js.map

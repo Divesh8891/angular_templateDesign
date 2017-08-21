@@ -1,0 +1,22 @@
+<div
+     fileDrop
+     [accept]="supportedExtensions"
+     (fileOver)="onFileOver($event)"
+     (fileDrop)="onFileChange($event)"
+     [ngClass]="cssClass"
+     [ngClass]="{'img-ul-file-is-over': fileOver}"     
+     [ngStyle]="style?.layout"
+>
+  <div class="img-ul-file-upload img-ul-hr-inline-group">    
+    <label class="img-ul-upload img-ul-button" [ngStyle]="style?.selectButton">
+      <span [innerText]="buttonCaption"></span>
+      <input
+        type="file"
+        [accept]="supportedExtensions"
+        multiple (change)="onFileChange(input.files)"
+        #input>
+    </label>
+   
+  </div>
+
+</div>

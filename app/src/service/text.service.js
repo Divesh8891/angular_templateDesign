@@ -11,10 +11,13 @@ var Subject_1 = require("rxjs/Subject");
 var TextService = (function () {
     function TextService() {
         this.dataStringSource = new Subject_1.Subject();
+        this.users = [];
     }
     TextService.prototype.setTextValue = function (data) {
-        this.nodeArray = data;
-        this.dataStringSource.next(data);
+        var me = this;
+        this.users.push(new User(data.text, data.randomNumber, data.imgSrc));
+        console.log(this.users);
+        this.dataStringSource.next(me.users);
     };
     TextService.prototype.getTextValue = function () {
         return this.dataStringSource.asObservable();
@@ -32,10 +35,34 @@ var TextService = (function () {
     TextService.prototype.setCanvasElem = function (data) {
         this.canvasElem = data;
     };
+    TextService.prototype.setAspectRaion = function () {
+        var $container = this.designcontainerRef.nativeElement;
+        var $containerW = parseInt($container.style["width"]);
+        var $containerH = parseInt($container.style["height"]);
+        var $currentObj = this.currentObj;
+        var $currentObjRatio = parseFloat($currentObj.nativeElement.dataset['ratio']);
+        console.log($containerW, $containerH, $currentObjRatio);
+        if ($containerW > $containerH) {
+            $currentObj.nativeElement.style["width"] = $containerH + 'px';
+        }
+        console.log($currentObj.nativeElement.style["width"], $currentObjRatio);
+        $currentObj.nativeElement.style["height"] = parseInt($currentObj.nativeElement.style["width"]) / $currentObjRatio + 'px';
+        this.handlerRef.nativeElement.style.width = parseInt($currentObj.nativeElement.style["width"]) + 10 + 'px';
+        this.handlerRef.nativeElement.style.height = parseInt($currentObj.nativeElement.style["height"]) + 10 + 'px';
+    };
     TextService = __decorate([
         core_1.Injectable()
     ], TextService);
     return TextService;
 }());
 exports.TextService = TextService;
+var User = (function () {
+    function User(text, randomNumber, src) {
+        this.text = text;
+        this.randomNumber = randomNumber;
+        this.src = src;
+    }
+    return User;
+}());
+exports.User = User;
 //# sourceMappingURL=text.service.js.map

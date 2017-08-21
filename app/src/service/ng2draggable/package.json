@@ -1,15 +1,66 @@
 {
-  "name": "ng2draggable",
-  "version": "1.3.2",
+  "_args": [
+    [
+      {
+        "raw": "ng2draggable",
+        "scope": null,
+        "escapedName": "ng2draggable",
+        "name": "ng2draggable",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "F:\\wamp\\www\\angular\\angular 2\\Template tool\\trunk"
+    ]
+  ],
+  "_from": "ng2draggable@latest",
+  "_id": "ng2draggable@1.3.2",
+  "_inCache": true,
+  "_location": "/ng2draggable",
+  "_nodeVersion": "7.6.0",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/ng2draggable-1.3.2.tgz_1489785448740_0.313510830514133"
+  },
+  "_npmUser": {
+    "name": "cedvdb",
+    "email": "cedvandenbosch@gmail.com"
+  },
+  "_npmVersion": "4.1.2",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "ng2draggable",
+    "scope": null,
+    "escapedName": "ng2draggable",
+    "name": "ng2draggable",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/ng2draggable/-/ng2draggable-1.3.2.tgz",
+  "_shasum": "422a0418d2de9cd85920e5123e90f1698c236308",
+  "_shrinkwrap": null,
+  "_spec": "ng2draggable",
+  "_where": "F:\\wamp\\www\\angular\\angular 2\\Template tool\\trunk",
+  "author": {
+    "name": "cedvdb"
+  },
+  "bugs": {
+    "url": "https://github.com/cedvdb/ng2draggable/issues"
+  },
+  "dependencies": {},
   "description": "angular 2 draggable directive to move components around",
-  "main": "draggable.directive.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "422a0418d2de9cd85920e5123e90f1698c236308",
+    "tarball": "https://registry.npmjs.org/ng2draggable/-/ng2draggable-1.3.2.tgz"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cedvdb/ng2draggable.git"
-  },
+  "gitHead": "cd865c6aaf7ae92e90028b7abdac13e70758b69d",
+  "homepage": "https://github.com/cedvdb/ng2draggable#readme",
   "keywords": [
     "angular",
     "2",
@@ -20,39 +71,23 @@
     "drag",
     "element"
   ],
-  "author": {
-    "name": "cedvdb"
-  },
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/cedvdb/ng2draggable/issues"
-  },
-  "homepage": "https://github.com/cedvdb/ng2draggable#readme",
-  "gitHead": "cd865c6aaf7ae92e90028b7abdac13e70758b69d",
-  "_id": "ng2draggable@1.3.2",
-  "_shasum": "422a0418d2de9cd85920e5123e90f1698c236308",
-  "_from": "ng2draggable@latest",
-  "_npmVersion": "4.1.2",
-  "_nodeVersion": "7.6.0",
-  "_npmUser": {
-    "name": "cedvdb",
-    "email": "cedvandenbosch@gmail.com"
-  },
-  "dist": {
-    "shasum": "422a0418d2de9cd85920e5123e90f1698c236308",
-    "tarball": "https://registry.npmjs.org/ng2draggable/-/ng2draggable-1.3.2.tgz"
-  },
+  "main": "draggable.directive.ts",
   "maintainers": [
     {
       "name": "cedvdb",
       "email": "cedvandenbosch@gmail.com"
     }
   ],
-  "_npmOperationalInternal": {
-    "host": "packages-18-east.internal.npmjs.com",
-    "tmp": "tmp/ng2draggable-1.3.2.tgz_1489785448740_0.313510830514133"
+  "name": "ng2draggable",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cedvdb/ng2draggable.git"
   },
-  "directories": {},
-  "_resolved": "https://registry.npmjs.org/ng2draggable/-/ng2draggable-1.3.2.tgz",
-  "readme": "ERROR: No README data found!"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.3.2"
 }

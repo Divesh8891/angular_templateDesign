@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { TextService } from '../../service/text.service';
-
 @Component({
     selector: 'right-panel',
     template: ` 
@@ -128,7 +127,7 @@ export class rightPanelComponent {
 
     }
     deleteNode() {
-        this.userArray = this._textService.nodeArray;
+        this.userArray = this._textService.users;
         let currentObjElememtID = this._textService.currentObj.nativeElement.id;
         for (let j = 0; j < this.userArray.length; j++) {
             if (this.userArray[j].randomNumber == currentObjElememtID) {

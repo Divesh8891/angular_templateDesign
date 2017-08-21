@@ -5,6 +5,7 @@ import { TextService } from '../service/text.service';
 @Component({
     selector: 'my-app',
     template: ` 
+
     <div class="wrapper container">
         <custom-header></custom-header>
         <div class="wrapper-inner col-xs-12" style="min-height: 891px;">
@@ -28,6 +29,7 @@ export class AppComponent {
     ngOnInit() {
         this._textService.setCanvasElem(this.canvasElemRef)
     }
+    
     constructor(private _textService: TextService) { }
 
 }

@@ -8,7 +8,7 @@
 .pr-0{padding-right: 0;}
 .ptb-20{padding-bottom: 20px;padding-top: 20px;}
 
-.btn,.btn:hover,.btn:focus{background-color: #9f9fa3;color: #000;font-size:12px;line-height: 8px;}
+.btn,.btn:hover,.btn:focus{background-color: #33CC99;color: #000;font-size:12px;line-height: 15px;}
 .btn-lrg{display: block;width: 100%;}
 
 
@@ -22,10 +22,11 @@ input{width: 60px;margin:0 0 0 5px;height: 25px;}
 
 #textValhidden{opacity:0;visibility:hidden;display:inline-block;font-size:18px;position:absolute;white-space:nowrap;}
 .module{border: 1px solid #eee;padding: 10px;margin-bottom: 10px;background-color: #eee;}
-.module div{margin-top:5px;margin-bottom: 5px;padding: 0 5px;}
+.module > div{margin-top:5px;margin-bottom: 5px;padding: 0 5px;}
 .option-heading{color: #000;font-weight: 700;}
 .text-val{width: 100%;}
 .upload.btn input{opacity:0;width:100%;line-height:0;position:absolute;top:0;height:29px;left:0;}
+.custom-image{float: left;padding: 0;}
 .desgin-tool-sec {position:relative;}
 .desgin-tool-sec > section{height:100%;}
 .desgin-tool-sec > section.desgin-inner[data-bg="common"]{background-image:url(../ImageLibrary/common_bg-1.jpg);background-size: cover;background-repeat: no-repeat;}
@@ -52,7 +53,7 @@ input{width: 60px;margin:0 0 0 5px;height: 25px;}
 #img-out img{width:60%;}
 #canvasPNG,.imageGen,.downloadImgCont{display:none;}
 .seperator{width: 105%;border: 1px solid #ddd;float: left;margin: 0 -5px;}
-.popup-body{    position: absolute;    z-index: -1;
-    top: 100px;
-    width: 400px;
-    height: 400px;}
+.popup-body{position: absolute;    z-index: -1;    top: 100px;    width: 400px;    height: 400px;}
+
+   md-slider {width: 100%;}
+.mat-slider-horizontal .mat-slider-track-wrapper{background-color: #ddd}

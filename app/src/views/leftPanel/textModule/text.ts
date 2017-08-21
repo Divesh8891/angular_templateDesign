@@ -99,7 +99,6 @@ export class textModuleComponent {
         this.colorBoxRef = this._textService.colorBoxRef;
         this.colorBoxRef.nativeElement.dataset['call'] = property;
         this.colorBoxRef.nativeElement.style.display = 'block';
-        this._textService.setHtml2Canvas();
     }
     updateTextcurrentObj(property: any, value: any) {
         this.currentObj = this._textService.currentObj;
@@ -108,7 +107,6 @@ export class textModuleComponent {
         this.currentObj.nativeElement.style[property] = value;
         this.handlerRef.nativeElement.style.width = this.currentObj.nativeElement.offsetWidth + 10 + 'px';
         this.handlerRef.nativeElement.style.height = this.currentObj.nativeElement.offsetHeight + 10 + 'px';
-        this._textService.setHtml2Canvas();
     }
     constructor(private _textService: TextService) {
     }
