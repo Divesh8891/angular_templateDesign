@@ -66,6 +66,9 @@ var TextService = (function () {
         this.handlerRef.nativeElement.style.width = parseInt($currentObj.nativeElement.style["width"]) + 10 + 'px';
         this.handlerRef.nativeElement.style.height = parseInt($currentObj.nativeElement.style["height"]) + 10 + 'px';
     };
+    TextService.prototype.pixelToPercentage = function (objVal, containerVal) {
+        return (((parseInt(objVal) / parseInt(containerVal)) * 100).toFixed(1)) + '%';
+    };
     TextService = __decorate([
         core_1.Injectable()
     ], TextService);

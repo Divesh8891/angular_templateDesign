@@ -71,6 +71,9 @@ export class TextService {
         this.handlerRef.nativeElement.style.height = parseInt($currentObj.nativeElement.style["height"]) + 10 + 'px';
 
     }
+    pixelToPercentage(objVal:any,containerVal:any){
+        return (((parseInt(objVal) / parseInt(containerVal)) * 100).toFixed(1))+'%';
+    }
 
 
 

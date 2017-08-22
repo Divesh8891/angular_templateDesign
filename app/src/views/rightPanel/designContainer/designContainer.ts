@@ -68,12 +68,14 @@ export class designContainer {
                 this.currentObj = this.elements._results[i];
             }
         }
+        console.log(event.target.offsetWidth)
         this.textHandler.nativeElement.style.width = event.target.offsetWidth + 10 + 'px';
         this.textHandler.nativeElement.style.height = event.target.offsetHeight + 10 + 'px';
         this.textHandler.nativeElement.style.left = event.target.offsetLeft - 5 + 'px';
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
         this._textService.setCurrentObj(this.currentObj, this.textHandler);
         this.setImageDimension();
+        this.currentObj.nativeElement.style.width = this._textService.pixelToPercentage(this.currentObj.nativeElement.offsetWidth, this.designTooSec.nativeElement.style["width"]);
         this._textService.setSliderValue(parseInt(this.designTooSec.nativeElement.style.width), 'maxV');
         this._textService.setSliderValue(parseInt(this.currentObj.nativeElement.offsetWidth), 'minV');
 
@@ -82,8 +84,8 @@ export class designContainer {
     getPos(event: any) {
         let handlerRef = this.textHandler.nativeElement.style.display;
         if (handlerRef == 'block') {
-            this.currentObj.nativeElement.style.left = event.left + 5 + 'px'
-            this.currentObj.nativeElement.style.top = event.top + 5 + 'px';
+            this.currentObj.nativeElement.style.left = this._textService.pixelToPercentage((event.left + 5), this.designTooSec.nativeElement.style["width"]);
+            this.currentObj.nativeElement.style.top = this._textService.pixelToPercentage((event.top + 5), this.designTooSec.nativeElement.style["height"]);
         }
     }
     onhandlerClick(event: any) {
@@ -104,14 +106,14 @@ export class designContainer {
         // console.log(maxWidth,maxHeight)
         console.log(this.currentObj)
         var ratio = 0;  // Used for aspect ratio
-        var width = this.currentObj.nativeElement["width"];    // Current image width
-        var height = this.currentObj.nativeElement["height"];  // Current image height
+        var width = this.currentObj.nativeElement.offsetWidth;    // Current image width
+        var height = this.currentObj.nativeElement.offsetHeight;  // Current image height
         this.currentObj.nativeElement.dataset['ratio'] = width / height;
         // console.log((maxWidth), maxHeight, width, height);
         if (width > maxWidth) {
             ratio = maxWidth / width;   // get ratio for scaling image
-            this.currentObj.nativeElement.style["width"] = maxWidth + 'px';
-            this.currentObj.nativeElement.style["height"] = height * ratio + 'px';
+            this.currentObj.nativeElement.style["width"] = this._textService.pixelToPercentage(maxWidth, this.designTooSec.nativeElement.style["width"]);
+            this.currentObj.nativeElement.style["height"] = this._textService.pixelToPercentage((height * ratio), this.designTooSec.nativeElement.style["height"]);
             height = height * ratio;    // Reset height to match scaled image
             width = width * ratio;    // Reset width to match scaled image
         }
@@ -119,13 +121,13 @@ export class designContainer {
         // Check if current height is larger than max
         if (height > maxHeight) {
             ratio = maxHeight / height; // get ratio for scaling image
-            this.currentObj.nativeElement.style["width"] = width * ratio + 'px'
-            this.currentObj.nativeElement.style["height"] = maxHeight + 'px';
+            this.currentObj.nativeElement.style["width"] = this._textService.pixelToPercentage((width * ratio), this.designTooSec.nativeElement.style["width"]);
+            this.currentObj.nativeElement.style["height"] = this._textService.pixelToPercentage(maxHeight, this.designTooSec.nativeElement.style["height"]);
             width = width * ratio;    // Reset width to match scaled image
             height = height * ratio;    // Reset height to match scaled image
         }
-        this.textHandler.nativeElement.style.width = parseInt(this.currentObj.nativeElement.style["width"]) + 10 + 'px';
-        this.textHandler.nativeElement.style.height = parseInt(this.currentObj.nativeElement.style["height"]) + 10 + 'px';
+        this.textHandler.nativeElement.style.width = parseInt(this.currentObj.nativeElement.offsetWidth) + 10 + 'px';
+        this.textHandler.nativeElement.style.height = parseInt(this.currentObj.nativeElement.offsetHeight) + 10 + 'px';
 
     };
     constructor(private _textService: TextService) { }
