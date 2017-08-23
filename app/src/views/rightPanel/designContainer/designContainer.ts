@@ -9,7 +9,7 @@ import { TextService } from '../../../service/text.service';
                         <section class="desgin-inner" data-bg="blank">
                         <ng-container *ngFor="let text of textAreaVal">
                           <p #xyz *ngIf="text.text!=''" class="textNative" data-max="" data-type="text" id="{{text.randomNumber}}" (click)="textNodeEvent($event,text)" style="font-size: 18px;" >{{text.text}}</p>
-                         <img #xyz *ngIf="text.src!=''" class="imgNative" data-max="" data-type="image" data-ratio=""  id="{{text.randomNumber}}" (click)="imgNodeEvent($event,img)" src={{text.src}}/>
+                         <img #xyz *ngIf="text.src!=''" class="imgNative" data-max="" [attr.data-width]="text.width" [attr.data-height]="text.height" data-type="image" [attr.data-ratio]="text.ratio"  id="{{text.randomNumber}}" (click)="imgNodeEvent($event,img)" src={{text.src}}/>
                         </ng-container>
                         </section>
                         <div class="handler cube" #handler  [ng2-draggable]="true" (handlerClick)="onhandlerClick($event)" (postions)=getPos($event)></div>
@@ -33,12 +33,14 @@ export class designContainer {
     @ViewChildren('xyz') elements: any;
 
 
+
     ngOnInit() {
         this._textService.getTextValue().subscribe(
             data => {
                 this.textAreaVal = data;
             });
         this._textService.setDesigncontainerRef(this.designTooSec);
+      
 
     }
 
@@ -56,8 +58,7 @@ export class designContainer {
         this.textHandler.nativeElement.style.left = event.target.offsetLeft - 5 + 'px';
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
         this._textService.setCurrentObj(this.currentObj, this.textHandler);
-        this._textService.setSliderValue(parseInt(this.designTooSec.nativeElement.style.width), 'maxV');
-        this._textService.setSliderValue(parseInt(this.currentObj.nativeElement.offsetWidth), 'minV');
+       
 
 
     }
@@ -75,11 +76,6 @@ export class designContainer {
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
         this._textService.setCurrentObj(this.currentObj, this.textHandler);
         this.setImageDimension();
-        this.currentObj.nativeElement.style.width = this._textService.pixelToPercentage(this.currentObj.nativeElement.offsetWidth, this.designTooSec.nativeElement.style["width"]);
-        this._textService.setSliderValue(parseInt(this.designTooSec.nativeElement.style.width), 'maxV');
-        this._textService.setSliderValue(parseInt(this.currentObj.nativeElement.offsetWidth), 'minV');
-
-
     }
     getPos(event: any) {
         let handlerRef = this.textHandler.nativeElement.style.display;
@@ -108,7 +104,6 @@ export class designContainer {
         var ratio = 0;  // Used for aspect ratio
         var width = this.currentObj.nativeElement.offsetWidth;    // Current image width
         var height = this.currentObj.nativeElement.offsetHeight;  // Current image height
-        this.currentObj.nativeElement.dataset['ratio'] = width / height;
         // console.log((maxWidth), maxHeight, width, height);
         if (width > maxWidth) {
             ratio = maxWidth / width;   // get ratio for scaling image

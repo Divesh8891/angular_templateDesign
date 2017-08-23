@@ -70,6 +70,12 @@ var ImageUploadComponent = (function () {
     ImageUploadComponent.prototype.fileOver = function (isOver) {
         this.isFileOver = isOver;
     };
+    ImageUploadComponent.prototype.onLoadFile = function (event) {
+        var img = new Image();
+        img.onload = function (scope) {
+        };
+        //img.src = event.target.result;
+    };
     ImageUploadComponent.prototype.uploadFiles = function (files, filesToUploadNum) {
         var _this = this;
         var _loop_1 = function (i) {
@@ -96,6 +102,7 @@ var ImageUploadComponent = (function () {
     ImageUploadComponent.prototype.onResponse = function (response, fileHolder) {
         fileHolder.serverResponse = response;
         fileHolder.pending = false;
+        console.log("51");
         this.onFileUploadFinish.emit(fileHolder);
         if (--this.pendingFilesCounter == 0) {
             this.isPending.emit(false);
@@ -114,6 +121,7 @@ var ImageUploadComponent = (function () {
             });
         }
         else {
+            console.log("6");
             this.onFileUploadFinish.emit(fileHolder);
         }
     };

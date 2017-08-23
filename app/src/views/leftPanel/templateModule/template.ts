@@ -85,25 +85,42 @@ export class templateModuleComponent {
     }
     updateDesignObj(newW: any, newH: any) {
         this.getDesignContainerRef();
+        console.log(323)
+
         let oldW = parseInt(this.designcontainerRef.nativeElement.style['width']);
         let designObjs = this.designcontainerRef.nativeElement.children[0].children;
+
         let me = this;
         for (let i = 0; i < designObjs.length; i++) {
-            let fontSize: any = ((parseInt(designObjs[i].style['fontSize']) / oldW) * 100).toFixed(1);
-            designObjs[i].style['fontSize'] = (fontSize * newW) / 100 + 'px';
             if (designObjs[i].dataset['type'] === 'image') {
-                console.log(designObjs[i].offsetWidth);
-                designObjs[i].style['height'] = (designObjs[i].offsetWidth * parseInt(designObjs[i].dataset['ratio'])) + 'px';
+                console.log(i)
+                let wwidth = ((parseInt(designObjs[i].dataset['width']) / oldW) * newW);
+                let imgRatio = parseInt(designObjs[i].dataset['ratio']);
+                // console.log(wwidth,designObjs[i].dataset['ratio'])
+                designObjs[i].dataset['width'] = Math.round(wwidth);
+                designObjs[i].style['width'] = this._textService.pixelToPercentage(wwidth, newW);
+                designObjs[i].dataset['height'] = Math.round(wwidth * parseInt(designObjs[i].dataset['ratio']));
+                designObjs[i].style['height'] = (wwidth * imgRatio) + 'px';
+                console.log(newH,wwidth * imgRatio);
+                (newH < wwidth * designObjs[i].dataset['height']) && this._textService.setAspectRaion(designObjs[i], newW, newH);
+                (newW < wwidth) && this._textService.setAspectRaion(designObjs[i], newW, newH);
+
+            }
+            else {
+                let fontSize: any = ((parseInt(designObjs[i].style['fontSize']) / oldW) * 100).toFixed(1);
+                designObjs[i].style['fontSize'] = (fontSize * newW) / 100 + 'px';
             }
         }
         setTimeout(function () {
+
             me.currentObj = me._textService.currentObj;
             me.handlerRef = me._textService.handlerRef;
-            me.handlerRef.nativeElement.style.width = me.currentObj.nativeElement.offsetWidth + 10 + 'px';
-            me.handlerRef.nativeElement.style.height = me.currentObj.nativeElement.offsetHeight + 10 + 'px';
-            me.handlerRef.nativeElement.style.left = parseInt(me.currentObj.nativeElement.offsetLeft) - 5 + 'px';
-            me.handlerRef.nativeElement.style.top = parseInt(me.currentObj.nativeElement.offsetTop) - 5 + 'px';
-
+            if (me.currentObj != undefined) {
+                me.handlerRef.nativeElement.style.width = me.currentObj.nativeElement.offsetWidth + 10 + 'px';
+                me.handlerRef.nativeElement.style.height = me.currentObj.nativeElement.offsetHeight + 10 + 'px';
+                me.handlerRef.nativeElement.style.left = parseInt(me.currentObj.nativeElement.offsetLeft) - 5 + 'px';
+                me.handlerRef.nativeElement.style.top = parseInt(me.currentObj.nativeElement.offsetTop) - 5 + 'px';
+            }
         }, 100)
 
     }
@@ -128,7 +145,7 @@ export class templateModuleComponent {
     }
     setTemplateDimension(event: any) {
         this.getDesignContainerRef();
-        
+
         this.designcontainerRef.nativeElement.style['width'] = this.tempWidth + 'px';
         this.designcontainerRef.nativeElement.style['height'] = this.tempHeight + 'px';
 

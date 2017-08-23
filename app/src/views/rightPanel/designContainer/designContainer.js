@@ -23,7 +23,6 @@ var designContainer = (function () {
             var ratio = 0; // Used for aspect ratio
             var width = this.currentObj.nativeElement.offsetWidth; // Current image width
             var height = this.currentObj.nativeElement.offsetHeight; // Current image height
-            this.currentObj.nativeElement.dataset['ratio'] = width / height;
             // console.log((maxWidth), maxHeight, width, height);
             if (width > maxWidth) {
                 ratio = maxWidth / width; // get ratio for scaling image
@@ -64,8 +63,6 @@ var designContainer = (function () {
         this.textHandler.nativeElement.style.left = event.target.offsetLeft - 5 + 'px';
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
         this._textService.setCurrentObj(this.currentObj, this.textHandler);
-        this._textService.setSliderValue(parseInt(this.designTooSec.nativeElement.style.width), 'maxV');
-        this._textService.setSliderValue(parseInt(this.currentObj.nativeElement.offsetWidth), 'minV');
     };
     designContainer.prototype.imgNodeEvent = function (event) {
         this.textHandler.nativeElement.style.display = 'block';
@@ -81,9 +78,6 @@ var designContainer = (function () {
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
         this._textService.setCurrentObj(this.currentObj, this.textHandler);
         this.setImageDimension();
-        this.currentObj.nativeElement.style.width = this._textService.pixelToPercentage(this.currentObj.nativeElement.offsetWidth, this.designTooSec.nativeElement.style["width"]);
-        this._textService.setSliderValue(parseInt(this.designTooSec.nativeElement.style.width), 'maxV');
-        this._textService.setSliderValue(parseInt(this.currentObj.nativeElement.offsetWidth), 'minV');
     };
     designContainer.prototype.getPos = function (event) {
         var handlerRef = this.textHandler.nativeElement.style.display;
@@ -122,7 +116,7 @@ var designContainer = (function () {
     designContainer = __decorate([
         core_1.Component({
             selector: 'designContainer',
-            template: " \n                <section class=\"design-section col-xs-12\">\n                    <div class=\"desgin-tool-sec\" style=\"width: 780px; height: 780px;\" #designTooSec>\n                        <section class=\"desgin-inner\" data-bg=\"blank\">\n                        <ng-container *ngFor=\"let text of textAreaVal\">\n                          <p #xyz *ngIf=\"text.text!=''\" class=\"textNative\" data-max=\"\" data-type=\"text\" id=\"{{text.randomNumber}}\" (click)=\"textNodeEvent($event,text)\" style=\"font-size: 18px;\" >{{text.text}}</p>\n                         <img #xyz *ngIf=\"text.src!=''\" class=\"imgNative\" data-max=\"\" data-type=\"image\" data-ratio=\"\"  id=\"{{text.randomNumber}}\" (click)=\"imgNodeEvent($event,img)\" src={{text.src}}/>\n                        </ng-container>\n                        </section>\n                        <div class=\"handler cube\" #handler  [ng2-draggable]=\"true\" (handlerClick)=\"onhandlerClick($event)\" (postions)=getPos($event)></div>\n                     </div>\n                </section>\n             \n                \n              \n                \n    "
+            template: " \n                <section class=\"design-section col-xs-12\">\n                    <div class=\"desgin-tool-sec\" style=\"width: 780px; height: 780px;\" #designTooSec>\n                        <section class=\"desgin-inner\" data-bg=\"blank\">\n                        <ng-container *ngFor=\"let text of textAreaVal\">\n                          <p #xyz *ngIf=\"text.text!=''\" class=\"textNative\" data-max=\"\" data-type=\"text\" id=\"{{text.randomNumber}}\" (click)=\"textNodeEvent($event,text)\" style=\"font-size: 18px;\" >{{text.text}}</p>\n                         <img #xyz *ngIf=\"text.src!=''\" class=\"imgNative\" data-max=\"\" [attr.data-width]=\"text.width\" [attr.data-height]=\"text.height\" data-type=\"image\" [attr.data-ratio]=\"text.ratio\"  id=\"{{text.randomNumber}}\" (click)=\"imgNodeEvent($event,img)\" src={{text.src}}/>\n                        </ng-container>\n                        </section>\n                        <div class=\"handler cube\" #handler  [ng2-draggable]=\"true\" (handlerClick)=\"onhandlerClick($event)\" (postions)=getPos($event)></div>\n                     </div>\n                </section>\n             \n                \n              \n                \n    "
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], designContainer);

@@ -51,24 +51,38 @@ var templateModuleComponent = (function () {
     };
     templateModuleComponent.prototype.updateDesignObj = function (newW, newH) {
         this.getDesignContainerRef();
+        console.log(323);
         var oldW = parseInt(this.designcontainerRef.nativeElement.style['width']);
         var designObjs = this.designcontainerRef.nativeElement.children[0].children;
         var me = this;
         for (var i = 0; i < designObjs.length; i++) {
-            var fontSize = ((parseInt(designObjs[i].style['fontSize']) / oldW) * 100).toFixed(1);
-            designObjs[i].style['fontSize'] = (fontSize * newW) / 100 + 'px';
             if (designObjs[i].dataset['type'] === 'image') {
-                console.log(designObjs[i].offsetWidth);
-                designObjs[i].style['height'] = (designObjs[i].offsetWidth * parseInt(designObjs[i].dataset['ratio'])) + 'px';
+                console.log(i);
+                var wwidth = ((parseInt(designObjs[i].dataset['width']) / oldW) * newW);
+                var imgRatio = parseInt(designObjs[i].dataset['ratio']);
+                // console.log(wwidth,designObjs[i].dataset['ratio'])
+                designObjs[i].dataset['width'] = Math.round(wwidth);
+                designObjs[i].style['width'] = this._textService.pixelToPercentage(wwidth, newW);
+                designObjs[i].dataset['height'] = Math.round(wwidth * parseInt(designObjs[i].dataset['ratio']));
+                designObjs[i].style['height'] = (wwidth * imgRatio) + 'px';
+                console.log(newH, wwidth * imgRatio);
+                (newH < wwidth * designObjs[i].dataset['height']) && this._textService.setAspectRaion(designObjs[i], newW, newH);
+                (newW < wwidth) && this._textService.setAspectRaion(designObjs[i], newW, newH);
+            }
+            else {
+                var fontSize = ((parseInt(designObjs[i].style['fontSize']) / oldW) * 100).toFixed(1);
+                designObjs[i].style['fontSize'] = (fontSize * newW) / 100 + 'px';
             }
         }
         setTimeout(function () {
             me.currentObj = me._textService.currentObj;
             me.handlerRef = me._textService.handlerRef;
-            me.handlerRef.nativeElement.style.width = me.currentObj.nativeElement.offsetWidth + 10 + 'px';
-            me.handlerRef.nativeElement.style.height = me.currentObj.nativeElement.offsetHeight + 10 + 'px';
-            me.handlerRef.nativeElement.style.left = parseInt(me.currentObj.nativeElement.offsetLeft) - 5 + 'px';
-            me.handlerRef.nativeElement.style.top = parseInt(me.currentObj.nativeElement.offsetTop) - 5 + 'px';
+            if (me.currentObj != undefined) {
+                me.handlerRef.nativeElement.style.width = me.currentObj.nativeElement.offsetWidth + 10 + 'px';
+                me.handlerRef.nativeElement.style.height = me.currentObj.nativeElement.offsetHeight + 10 + 'px';
+                me.handlerRef.nativeElement.style.left = parseInt(me.currentObj.nativeElement.offsetLeft) - 5 + 'px';
+                me.handlerRef.nativeElement.style.top = parseInt(me.currentObj.nativeElement.offsetTop) - 5 + 'px';
+            }
         }, 100);
     };
     templateModuleComponent.prototype.setTemplateBg = function (event) {

@@ -17,8 +17,7 @@ var TextService = (function () {
     }
     TextService.prototype.setTextValue = function (data) {
         var me = this;
-        this.users.push(new User(data.text, data.randomNumber, data.imgSrc));
-        console.log(this.users);
+        this.users.push(new User(data.text, data.randomNumber, data.imgSrc, data.width, data.height, data.ratio));
         this.dataStringSource.next(me.users);
     };
     TextService.prototype.getTextValue = function () {
@@ -51,20 +50,26 @@ var TextService = (function () {
     TextService.prototype.setCanvasElem = function (data) {
         this.canvasElem = data;
     };
-    TextService.prototype.setAspectRaion = function () {
-        var $container = this.designcontainerRef.nativeElement;
-        var $containerW = parseInt($container.style["width"]);
-        var $containerH = parseInt($container.style["height"]);
-        var $currentObj = this.currentObj;
-        var $currentObjRatio = parseFloat($currentObj.nativeElement.dataset['ratio']);
-        console.log($containerW, $containerH, $currentObjRatio);
+    TextService.prototype.setAspectRaion = function (currentObj, containerW, containerH) {
+        console.log("setAspectRatio");
+        // let $container = this.designcontainerRef.nativeElement;
+        // let $currentObj = this.currentObj.nativeElement;
+        var $currentObj = currentObj;
+        var $containerW = parseInt(containerW);
+        var $containerH = parseInt(containerH);
+        var $currentObjRatio = parseFloat($currentObj.dataset['ratio']);
+        // console.log($containerW, $containerH, $currentObjRatio)
         if ($containerW > $containerH) {
-            $currentObj.nativeElement.style["width"] = $containerH + 'px';
+            $currentObj.style["width"] = this.pixelToPercentage($containerH, $containerW);
+            $currentObj.dataset["width"] = $containerH;
         }
-        console.log($currentObj.nativeElement.style["width"], $currentObjRatio);
-        $currentObj.nativeElement.style["height"] = parseInt($currentObj.nativeElement.style["width"]) / $currentObjRatio + 'px';
-        this.handlerRef.nativeElement.style.width = parseInt($currentObj.nativeElement.style["width"]) + 10 + 'px';
-        this.handlerRef.nativeElement.style.height = parseInt($currentObj.nativeElement.style["height"]) + 10 + 'px';
+        var objW = ((parseFloat($currentObj.style.width) * $containerW) / 100).toFixed(1);
+        $currentObj.style["height"] = objW / $currentObjRatio + 'px';
+        $currentObj.dataset["height"] = Math.round(objW / $currentObjRatio);
+        if (this.handlerRef != undefined) {
+            this.handlerRef.nativeElement.style.width = parseInt($currentObj.dataset["width"]) + 10 + 'px';
+            this.handlerRef.nativeElement.style.height = parseInt($currentObj.dataset["height"]) + 10 + 'px';
+        }
     };
     TextService.prototype.pixelToPercentage = function (objVal, containerVal) {
         return (((parseInt(objVal) / parseInt(containerVal)) * 100).toFixed(1)) + '%';
@@ -76,10 +81,13 @@ var TextService = (function () {
 }());
 exports.TextService = TextService;
 var User = (function () {
-    function User(text, randomNumber, src) {
+    function User(text, randomNumber, src, width, height, ratio) {
         this.text = text;
         this.randomNumber = randomNumber;
         this.src = src;
+        this.width = width;
+        this.height = height;
+        this.ratio = ratio;
     }
     return User;
 }());

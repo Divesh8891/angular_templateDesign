@@ -19,8 +19,7 @@ export class TextService {
     users: User[] = [];
     setTextValue(data: any) {
         let me = this;
-        this.users.push(new User(data.text, data.randomNumber, data.imgSrc));
-        console.log(this.users)
+        this.users.push(new User(data.text, data.randomNumber, data.imgSrc, data.width, data.height, data.ratio));
         this.dataStringSource.next(me.users);
     }
     getTextValue() {
@@ -39,7 +38,7 @@ export class TextService {
         return this.sliderMinValue.asObservable();
     }
     getSliderMaxValue() {
-        return  this.sliderMaxValue.asObservable();
+        return this.sliderMaxValue.asObservable();
     }
     setCurrentObj(currentObjData: any, handlerData: any) {
         this.currentObj = currentObjData;
@@ -54,25 +53,31 @@ export class TextService {
     setCanvasElem(data: any) {
         this.canvasElem = data;
     }
-    setAspectRaion() {
-        let $container = this.designcontainerRef.nativeElement;
-        let $containerW = parseInt($container.style["width"]);
-        let $containerH = parseInt($container.style["height"]);
+    setAspectRaion(currentObj: any, containerW: any, containerH: any) {
+        console.log("setAspectRatio")
+        // let $container = this.designcontainerRef.nativeElement;
+        // let $currentObj = this.currentObj.nativeElement;
+        let $currentObj = currentObj;
 
-        let $currentObj = this.currentObj;
-        let $currentObjRatio = parseFloat($currentObj.nativeElement.dataset['ratio']);
-        console.log($containerW, $containerH, $currentObjRatio)
+        let $containerW = parseInt(containerW);
+        let $containerH = parseInt(containerH);
+        let $currentObjRatio = parseFloat($currentObj.dataset['ratio']);
+        // console.log($containerW, $containerH, $currentObjRatio)
         if ($containerW > $containerH) {
-            $currentObj.nativeElement.style["width"] = $containerH + 'px'
-        }
-        console.log($currentObj.nativeElement.style["width"], $currentObjRatio)
-        $currentObj.nativeElement.style["height"] = parseInt($currentObj.nativeElement.style["width"]) / $currentObjRatio + 'px';
-        this.handlerRef.nativeElement.style.width = parseInt($currentObj.nativeElement.style["width"]) + 10 + 'px';
-        this.handlerRef.nativeElement.style.height = parseInt($currentObj.nativeElement.style["height"]) + 10 + 'px';
+            $currentObj.style["width"] = this.pixelToPercentage($containerH, $containerW);
+            $currentObj.dataset["width"] = $containerH;
 
+        }
+        let objW: any = ((parseFloat($currentObj.style.width) * $containerW) / 100).toFixed(1);
+        $currentObj.style["height"] = objW / $currentObjRatio + 'px';
+        $currentObj.dataset["height"] = Math.round(objW / $currentObjRatio);
+        if (this.handlerRef != undefined) {
+            this.handlerRef.nativeElement.style.width = parseInt($currentObj.dataset["width"]) + 10 + 'px';
+            this.handlerRef.nativeElement.style.height = parseInt($currentObj.dataset["height"]) + 10 + 'px';
+        }
     }
-    pixelToPercentage(objVal:any,containerVal:any){
-        return (((parseInt(objVal) / parseInt(containerVal)) * 100).toFixed(1))+'%';
+    pixelToPercentage(objVal: any, containerVal: any) {
+        return (((parseInt(objVal) / parseInt(containerVal)) * 100).toFixed(1)) + '%';
     }
 
 
@@ -82,7 +87,12 @@ export class User {
     constructor(
         public text: any,
         public randomNumber: number,
-        public src: any
+        public src: any,
+        public width: any,
+        public height: any,
+        public ratio: any,
+
+
     ) {
     }
 }

@@ -53,7 +53,7 @@ var alignmentModuleComponent = (function () {
     alignmentModuleComponent.prototype.setwidth = function () {
         this.currentObj = this._textService.currentObj;
         this.currentObj.nativeElement.style['width'] = this.inputMinWidthValue + 'px';
-        this._textService.setAspectRaion();
+        this._textService.setAspectRaion(this.currentObj.nativeElement, this._textService.designcontainerRef.nativeElement.style["width"], this._textService.designcontainerRef.nativeElement.style["height"]);
     };
     alignmentModuleComponent.prototype.updateCurrentObj = function (propertyArray) {
         this.currentObj = this._textService.currentObj;
@@ -72,9 +72,11 @@ var alignmentModuleComponent = (function () {
         this.currentObj = this._textService.currentObj;
         if (this.currentObj != undefined) {
             this.inputMinWidthValue = event.value;
-            this.currentObj.nativeElement.style['width'] = event.value + 'px';
-            this.handlerRef.nativeElement.style.width = event.value + 10 + 'px';
-            this.handlerRef.nativeElement.style.height = this.currentObj.nativeElement.height + 10 + 'px';
+            this.currentObj.nativeElement.style['width'] = this._textService.pixelToPercentage(event.value, this._textService.designcontainerRef.nativeElement.style["width"]);
+            this.currentObj.nativeElement.style['height'] = event.value * parseInt(this.currentObj.nativeElement.dataset['ratio']) + 'px';
+            this.currentObj.nativeElement.dataset['width'] = event.value;
+            this.handlerRef.nativeElement.style.width = this.currentObj.nativeElement.offsetWidth + 10 + 'px';
+            this.handlerRef.nativeElement.style.height = this.currentObj.nativeElement.offsetHeight + 10 + 'px';
         }
     };
     __decorate([

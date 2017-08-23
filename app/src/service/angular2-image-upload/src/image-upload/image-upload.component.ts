@@ -89,8 +89,14 @@ export class ImageUploadComponent implements OnInit {
     this.inputElement.nativeElement.value = '';
   }
 
-  fileOver(isOver:any) {
+  fileOver(isOver: any) {
     this.isFileOver = isOver;
+  }
+  onLoadFile(event:any) {
+    var img = new Image();
+    img.onload = function (scope) {
+    }
+    //img.src = event.target.result;
   }
 
   private uploadFiles(files: FileList, filesToUploadNum: number) {
@@ -106,9 +112,9 @@ export class ImageUploadComponent implements OnInit {
       img.src = window.URL.createObjectURL(file);
 
       let reader = new FileReader();
+
       reader.addEventListener('load', (event: any) => {
         let fileHolder: FileHolder = new FileHolder(event.target.result, file);
-
         this.uploadSingleFile(fileHolder);
 
         this.files.push(fileHolder);
@@ -120,12 +126,14 @@ export class ImageUploadComponent implements OnInit {
     }
   }
 
-  private onResponse(response:any, fileHolder: FileHolder) {
+  private onResponse(response: any, fileHolder: FileHolder) {
     fileHolder.serverResponse = response;
     fileHolder.pending = false;
+        console.log("51")
 
     this.onFileUploadFinish.emit(fileHolder);
 
+    
     if (--this.pendingFilesCounter == 0) {
       this.isPending.emit(false);
     }
@@ -139,13 +147,15 @@ export class ImageUploadComponent implements OnInit {
       this.imageService
         .postImage(this.url, fileHolder.file, this.headers, this.partName, this.withCredentials)
         .subscribe(
-          response => this.onResponse(response, fileHolder),
-          error => {
-            this.onResponse(error, fileHolder);
-            this.deleteFile(fileHolder);
-          }
+        response => this.onResponse(response, fileHolder),
+        error => {
+          this.onResponse(error, fileHolder);
+          this.deleteFile(fileHolder);
+        }
         );
     } else {
+             console.log("6")
+
       this.onFileUploadFinish.emit(fileHolder);
     }
   }
