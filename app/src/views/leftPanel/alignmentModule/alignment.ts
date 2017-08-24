@@ -20,7 +20,7 @@ import { TextService } from '../../../service/text.service';
                             <label>Width: </label>
                             <md-slider (input)="onRangeChanged($event)"  min="{{minSliderValue}}" max="{{maxSlidervalue}}" value="{{defaultsliderValue}}"></md-slider>
                             <label>Min: </label><input type="text" class="widthA" [(ngModel)]="inputMinWidthValue" value={{inputMinWidthValue}}>
-                            <label>Max: </label><input type="text" class="widthA" [(ngModel)]="inputMaxWidthValue" value={{inputMaxWidthValue}}>
+                            <label>Max: </label><input readonly type="text" class="widthA" [(ngModel)]="inputMaxWidthValue" value={{inputMaxWidthValue}}>
                             <linkAsButton [parentClass]="'col-xs-12 m-0'" [applyClass]="'goSize btn btn-lrg mt-10'" [btnText]="'GO'" (click)=setwidth($event)></linkAsButton>
                         </div>
                     </section>
@@ -53,19 +53,32 @@ export class alignmentModuleComponent {
                 this.defaultsliderValue = data;
                 this.inputMinWidthValue = data;
             });
+        this._textService.getLeftAlignment().subscribe(
+            data => {
+                this.inputLeftValue = data;
+            });
+        this._textService.getTopAlignment().subscribe(
+            data => {
+                this.inputTopValue = data;
+            });
+
 
     }
 
     leftAlignment(event: any) {
-        this.updateCurrentObj({ 'left': '0px', 'right': 'auto', 'transform': '' });
+        this.updateCurrentObj({ 'left': '0' });
         console.log(this.slider)
     }
     middleAlignment(event: any) {
-        this.updateCurrentObj({ 'left': '50%', 'right': 'auto', 'transform': 'translateX(-50%)' });
+        let currentObjW = parseInt(this._textService.currentObj.nativeElement.style['width'])
+        let objLet = Math.round((100 - currentObjW) / 2);
+        this.updateCurrentObj({ 'left': objLet });
 
     }
     rightAlignment(event: any) {
-        this.updateCurrentObj({ 'left': 'auto', 'right': '0', 'transform': '' });
+        let containerW = parseInt(this._textService.currentObj.nativeElement.style["width"]);
+        let objLet = (100 - containerW);
+        this.updateCurrentObj({ 'left': objLet });
     }
 
     setAlignment() {
@@ -79,23 +92,30 @@ export class alignmentModuleComponent {
         this.handlerRef.nativeElement.style.top = this.inputTopValue;
     }
     setwidth() {
-        this.currentObj = this._textService.currentObj;
-        this.currentObj.nativeElement.style['width'] = this.inputMinWidthValue + 'px';
-        this._textService.setAspectRaion(this.currentObj.nativeElement, this._textService.designcontainerRef.nativeElement.style["width"], this._textService.designcontainerRef.nativeElement.style["height"]);
+        let currentObj = this._textService.currentObj.nativeElement;
+        this.handlerRef = this._textService.handlerRef;
+
+        currentObj.style['width'] = this._textService.pixelToPercentage(this.inputMinWidthValue, this._textService.designcontainerRef.nativeElement.style["width"]);
+        this._textService.setSliderValue(this.inputMinWidthValue, 'minV');
+        let objArray = this._textService.objArray;
+        for (let j = 0; j < objArray.length; j++) {
+            if (objArray[j].id === parseInt(currentObj.id)) {
+                objArray[j].width = parseInt(this.inputMinWidthValue);
+                objArray[j].height = objArray[j].width * parseInt(objArray[j].ratio);
+                currentObj.style['height'] = objArray[j].height + 'px';
+                this.handlerRef.nativeElement.style.width = objArray[j].width + 10 + 'px';
+                this.handlerRef.nativeElement.style.height = objArray[j].height + 10 + 'px';
+            }
+        }
     }
     updateCurrentObj(propertyArray: any) {
         this.currentObj = this._textService.currentObj;
         this.handlerRef = this._textService.handlerRef;
 
-        this.currentObj.nativeElement.style['left'] = propertyArray.left;
-        this.currentObj.nativeElement.style['right'] = propertyArray.right;
-        this.currentObj.nativeElement.style['transform'] = propertyArray.transform;
-        this.handlerRef.nativeElement.style.left = propertyArray.left;
-        this.handlerRef.nativeElement.style.right = propertyArray.right;
-        this.handlerRef.nativeElement.style['transform'] = propertyArray.transform;
-
-        this.inputLeftValue = propertyArray.left;
-        this.inputTopValue = this.currentObj.nativeElement.style.top;
+        this.currentObj.nativeElement.style['left'] = propertyArray.left + '%';
+        this.inputLeftValue = Math.round((propertyArray.left * parseInt(this._textService.designcontainerRef.nativeElement.style["width"])) / 100);
+        this.inputTopValue = parseInt(this.handlerRef.nativeElement.style.top) + 5;
+        this.handlerRef.nativeElement.style.left = this.inputLeftValue - 5 + 'px';
 
     }
     onRangeChanged(event: any) {
@@ -104,9 +124,18 @@ export class alignmentModuleComponent {
 
         if (this.currentObj != undefined) {
             this.inputMinWidthValue = event.value;
+            let objArray = this._textService.objArray;
+            let currentObjElememtID = this._textService.currentObj.nativeElement.id;
             this.currentObj.nativeElement.style['width'] = this._textService.pixelToPercentage(event.value, this._textService.designcontainerRef.nativeElement.style["width"]);
-            this.currentObj.nativeElement.style['height'] = event.value * parseInt(this.currentObj.nativeElement.dataset['ratio']) + 'px';
-            this.currentObj.nativeElement.dataset['width'] = event.value;
+            for (let j = 0; j < objArray.length; j++) {
+                console.log(objArray[j].id, this.currentObj.nativeElement.id)
+                if (objArray[j].id === parseInt(this.currentObj.nativeElement.id)) {
+
+                    this.currentObj.nativeElement.style['height'] = event.value * objArray[j].ratio + 'px';
+                    objArray[j].width = event.value;
+                    objArray[j].height = event.value * objArray[j].ratio;
+                }
+            }
             this.handlerRef.nativeElement.style.width = this.currentObj.nativeElement.offsetWidth + 10 + 'px';
             this.handlerRef.nativeElement.style.height = this.currentObj.nativeElement.offsetHeight + 10 + 'px';
         }

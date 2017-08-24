@@ -16,6 +16,7 @@ var designContainer = (function () {
         this._textService = _textService;
         this.count = 0;
         this.setImageDimension = function () {
+            this._textService.setImageDimension();
             var maxWidth = parseInt(this.designTooSec.nativeElement.style["width"]); // Max width for the image
             var maxHeight = parseInt(this.designTooSec.nativeElement.style["height"]); // Max height for the image
             // console.log(maxWidth,maxHeight)
@@ -66,24 +67,35 @@ var designContainer = (function () {
     };
     designContainer.prototype.imgNodeEvent = function (event) {
         this.textHandler.nativeElement.style.display = 'block';
+        var objArray = this._textService.objArray;
+        var currentImagewidth = 0;
         for (var i = 0; i < this.elements._results.length; i++) {
             if (event.target.id === this.elements._results[i].nativeElement.id) {
                 this.currentObj = this.elements._results[i];
+                currentImagewidth = objArray[i].width;
             }
         }
-        console.log(event.target.offsetWidth);
         this.textHandler.nativeElement.style.width = event.target.offsetWidth + 10 + 'px';
         this.textHandler.nativeElement.style.height = event.target.offsetHeight + 10 + 'px';
         this.textHandler.nativeElement.style.left = event.target.offsetLeft - 5 + 'px';
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
         this._textService.setCurrentObj(this.currentObj, this.textHandler);
-        this.setImageDimension();
+        this.currentObj.nativeElement.style.width = this._textService.pixelToPercentage((event.target.offsetWidth), this.designTooSec.nativeElement.style["width"]);
+        this._textService.setSliderValue(currentImagewidth, 'minV');
+        this._textService.setAlignmentValue(event.target.offsetLeft, 'left');
+        this._textService.setAlignmentValue(event.target.offsetTop, 'top');
+        this._textService.setSliderValue(parseInt(this.designTooSec.nativeElement.style["width"]), 'maxV');
+        if (parseInt(this.designTooSec.nativeElement.style["width"]) > parseInt(this.designTooSec.nativeElement.style["height"])) {
+            this._textService.setSliderValue(parseInt(this.designTooSec.nativeElement.style["height"]), 'maxV');
+        }
     };
     designContainer.prototype.getPos = function (event) {
         var handlerRef = this.textHandler.nativeElement.style.display;
         if (handlerRef == 'block') {
             this.currentObj.nativeElement.style.left = this._textService.pixelToPercentage((event.left + 5), this.designTooSec.nativeElement.style["width"]);
             this.currentObj.nativeElement.style.top = this._textService.pixelToPercentage((event.top + 5), this.designTooSec.nativeElement.style["height"]);
+            this._textService.setAlignmentValue(event.left, 'left');
+            this._textService.setAlignmentValue(event.top, 'top');
         }
     };
     designContainer.prototype.onhandlerClick = function (event) {
@@ -116,7 +128,7 @@ var designContainer = (function () {
     designContainer = __decorate([
         core_1.Component({
             selector: 'designContainer',
-            template: " \n                <section class=\"design-section col-xs-12\">\n                    <div class=\"desgin-tool-sec\" style=\"width: 780px; height: 780px;\" #designTooSec>\n                        <section class=\"desgin-inner\" data-bg=\"blank\">\n                        <ng-container *ngFor=\"let text of textAreaVal\">\n                          <p #xyz *ngIf=\"text.text!=''\" class=\"textNative\" data-max=\"\" data-type=\"text\" id=\"{{text.randomNumber}}\" (click)=\"textNodeEvent($event,text)\" style=\"font-size: 18px;\" >{{text.text}}</p>\n                         <img #xyz *ngIf=\"text.src!=''\" class=\"imgNative\" data-max=\"\" [attr.data-width]=\"text.width\" [attr.data-height]=\"text.height\" data-type=\"image\" [attr.data-ratio]=\"text.ratio\"  id=\"{{text.randomNumber}}\" (click)=\"imgNodeEvent($event,img)\" src={{text.src}}/>\n                        </ng-container>\n                        </section>\n                        <div class=\"handler cube\" #handler  [ng2-draggable]=\"true\" (handlerClick)=\"onhandlerClick($event)\" (postions)=getPos($event)></div>\n                     </div>\n                </section>\n             \n                \n              \n                \n    "
+            template: " \n                <section class=\"design-section col-xs-12\">\n                    <div class=\"desgin-tool-sec\" style=\"width: 780px; height: 780px;\" #designTooSec>\n                        <section class=\"desgin-inner\" data-bg=\"blank\">\n                        <ng-container *ngFor=\"let text of textAreaVal\">\n                          <p #xyz *ngIf=\"text.text!=''\" class=\"textNative\" data-type=\"text\" id=\"{{text.randomNumber}}\" (click)=\"textNodeEvent($event,text)\" style=\"font-size: 18px;\" >{{text.text}}</p>\n                         <img #xyz *ngIf=\"text.src!=''\" class=\"imgNative\"  data-type=\"image\"   id=\"{{text.randomNumber}}\" (click)=\"imgNodeEvent($event,img)\" src={{text.src}}/>\n                        </ng-container>\n                        </section>\n                        <div class=\"handler cube\" #handler  [ng2-draggable]=\"true\" (handlerClick)=\"onhandlerClick($event)\" (postions)=getPos($event)></div>\n                     </div>\n                </section>\n             \n                \n              \n                \n    "
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], designContainer);

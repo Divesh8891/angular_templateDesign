@@ -52,26 +52,39 @@ var templateModuleComponent = (function () {
     templateModuleComponent.prototype.updateDesignObj = function (newW, newH) {
         this.getDesignContainerRef();
         console.log(323);
+        this.tempWidth = newW;
+        this.tempHeight = newH;
+        var userArray = this._textService.objArray;
         var oldW = parseInt(this.designcontainerRef.nativeElement.style['width']);
         var designObjs = this.designcontainerRef.nativeElement.children[0].children;
+        console.log(userArray);
         var me = this;
         for (var i = 0; i < designObjs.length; i++) {
-            if (designObjs[i].dataset['type'] === 'image') {
-                console.log(i);
-                var wwidth = ((parseInt(designObjs[i].dataset['width']) / oldW) * newW);
-                var imgRatio = parseInt(designObjs[i].dataset['ratio']);
-                // console.log(wwidth,designObjs[i].dataset['ratio'])
-                designObjs[i].dataset['width'] = Math.round(wwidth);
-                designObjs[i].style['width'] = this._textService.pixelToPercentage(wwidth, newW);
-                designObjs[i].dataset['height'] = Math.round(wwidth * parseInt(designObjs[i].dataset['ratio']));
-                designObjs[i].style['height'] = (wwidth * imgRatio) + 'px';
-                console.log(newH, wwidth * imgRatio);
-                (newH < wwidth * designObjs[i].dataset['height']) && this._textService.setAspectRaion(designObjs[i], newW, newH);
-                (newW < wwidth) && this._textService.setAspectRaion(designObjs[i], newW, newH);
+            var currentObj = designObjs[i];
+            var imgWidth = userArray[i].width;
+            var imgRatio = parseFloat(userArray[i].ratio);
+            var calculatedW = Math.round((imgWidth / oldW) * newW);
+            // console.log(newH, calculatedW, imgRatio);
+            userArray[i].width = (calculatedW);
+            userArray[i].height = calculatedW * imgRatio;
+            if (currentObj.dataset['type'] === 'image') {
+                currentObj.style['width'] = this._textService.pixelToPercentage(userArray[i].width, newW);
+                currentObj.style['height'] = userArray[i].height + 'px';
+                if ((newH < userArray[i].height) || newW < calculatedW) {
+                    this._textService.setImageDimension(currentObj, newW, newH, userArray[i]);
+                }
             }
             else {
-                var fontSize = ((parseInt(designObjs[i].style['fontSize']) / oldW) * 100).toFixed(1);
-                designObjs[i].style['fontSize'] = (fontSize * newW) / 100 + 'px';
+                var fontSize = ((parseInt(currentObj.style['fontSize']) / oldW) * 100).toFixed(1);
+                currentObj.style['fontSize'] = (fontSize * newW) / 100 + 'px';
+            }
+            if (currentObj.id === userArray[i].id) {
+                this._textService.setSliderValue(calculatedW, 'minV');
+                this._textService.setSliderValue(newW, 'maxV');
+                var objLeft = currentObj.style['left'] === '' ? 0 : parseInt(currentObj.style['left']);
+                var objTop = currentObj.style['top'] === '' ? 0 : parseInt(currentObj.style['top']);
+                this._textService.setAlignmentValue(Math.round((objLeft * newW) / 100), 'left');
+                this._textService.setAlignmentValue(Math.round((objTop * newH) / 100), 'top');
             }
         }
         setTimeout(function () {
@@ -103,6 +116,7 @@ var templateModuleComponent = (function () {
     };
     templateModuleComponent.prototype.setTemplateDimension = function (event) {
         this.getDesignContainerRef();
+        this.updateDesignObj(this.tempWidth, this.tempHeight);
         this.designcontainerRef.nativeElement.style['width'] = this.tempWidth + 'px';
         this.designcontainerRef.nativeElement.style['height'] = this.tempHeight + 'px';
     };
