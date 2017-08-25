@@ -51,13 +51,11 @@ var templateModuleComponent = (function () {
     };
     templateModuleComponent.prototype.updateDesignObj = function (newW, newH) {
         this.getDesignContainerRef();
-        console.log(323);
         this.tempWidth = newW;
         this.tempHeight = newH;
         var userArray = this._textService.objArray;
         var oldW = parseInt(this.designcontainerRef.nativeElement.style['width']);
         var designObjs = this.designcontainerRef.nativeElement.children[0].children;
-        console.log(userArray);
         var me = this;
         for (var i = 0; i < designObjs.length; i++) {
             var currentObj = designObjs[i];
@@ -70,6 +68,12 @@ var templateModuleComponent = (function () {
             if (currentObj.dataset['type'] === 'image') {
                 currentObj.style['width'] = this._textService.pixelToPercentage(userArray[i].width, newW);
                 currentObj.style['height'] = userArray[i].height + 'px';
+                this._textService.setSliderValue(calculatedW, 'minV');
+                this._textService.setSliderValue(newW, 'maxV');
+                var objLeft = currentObj.style['left'] === '' ? 0 : parseInt(currentObj.style['left']);
+                var objTop = currentObj.style['top'] === '' ? 0 : parseInt(currentObj.style['top']);
+                this._textService.setAlignmentValue(Math.round((objLeft * newW) / 100), 'left');
+                this._textService.setAlignmentValue(Math.round((objTop * newH) / 100), 'top');
                 if ((newH < userArray[i].height) || newW < calculatedW) {
                     this._textService.setImageDimension(currentObj, newW, newH, userArray[i]);
                 }
@@ -77,14 +81,13 @@ var templateModuleComponent = (function () {
             else {
                 var fontSize = ((parseInt(currentObj.style['fontSize']) / oldW) * 100).toFixed(1);
                 currentObj.style['fontSize'] = (fontSize * newW) / 100 + 'px';
-            }
-            if (currentObj.id === userArray[i].id) {
                 this._textService.setSliderValue(calculatedW, 'minV');
                 this._textService.setSliderValue(newW, 'maxV');
                 var objLeft = currentObj.style['left'] === '' ? 0 : parseInt(currentObj.style['left']);
                 var objTop = currentObj.style['top'] === '' ? 0 : parseInt(currentObj.style['top']);
                 this._textService.setAlignmentValue(Math.round((objLeft * newW) / 100), 'left');
                 this._textService.setAlignmentValue(Math.round((objTop * newH) / 100), 'top');
+                console.log(this._textService.currentObj);
             }
         }
         setTimeout(function () {

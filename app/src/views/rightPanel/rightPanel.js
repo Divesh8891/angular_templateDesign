@@ -95,10 +95,12 @@ var rightPanelComponent = (function () {
     };
     rightPanelComponent.prototype.deleteNode = function () {
         this.userArray = this._textService.users;
+        var ObjArray = this._textService.objArray;
         var currentObjElememtID = this._textService.currentObj.nativeElement.id;
         for (var j = 0; j < this.userArray.length; j++) {
-            if (this.userArray[j].randomNumber == currentObjElememtID) {
+            if (this.userArray[j].randomNumber == currentObjElememtID && ObjArray[j].id == currentObjElememtID) {
                 this.userArray.splice(j, 1);
+                ObjArray.splice(j, 1);
                 break;
             }
         }

@@ -128,16 +128,19 @@ export class rightPanelComponent {
     }
     deleteNode() {
         this.userArray = this._textService.users;
+        let ObjArray = this._textService.objArray;
+
         let currentObjElememtID = this._textService.currentObj.nativeElement.id;
         for (let j = 0; j < this.userArray.length; j++) {
-            if (this.userArray[j].randomNumber == currentObjElememtID) {
+            if (this.userArray[j].randomNumber == currentObjElememtID && ObjArray[j].id == currentObjElememtID) {
                 this.userArray.splice(j, 1);
+                ObjArray.splice(j, 1);
                 break;
-            }
         }
+    }
         this.handlerRef = this._textService.handlerRef;
-        this.handlerRef.nativeElement.style.display = 'none';
+this.handlerRef.nativeElement.style.display = 'none';
     }
-    constructor(private _textService: TextService) {
-    }
+constructor(private _textService: TextService) {
+}
 }

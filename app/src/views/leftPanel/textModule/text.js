@@ -79,7 +79,10 @@ var textModuleComponent = (function () {
     textModuleComponent.prototype.updateTextcurrentObj = function (property, value) {
         this.currentObj = this._textService.currentObj;
         this.handlerRef = this._textService.handlerRef;
+        console.log(this.currentObj.nativeElement.style['width']);
         this.currentObj.nativeElement.style[property] = value;
+        console.log(this.currentObj.nativeElement.style['width']);
+        this._textService.setSliderValue(this.currentObj.nativeElement.offsetWidth, 'minV');
         this.handlerRef.nativeElement.style.width = this.currentObj.nativeElement.offsetWidth + 10 + 'px';
         this.handlerRef.nativeElement.style.height = this.currentObj.nativeElement.offsetHeight + 10 + 'px';
     };

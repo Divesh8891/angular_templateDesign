@@ -21,11 +21,21 @@ var textAreaComponent = (function () {
         var a = new Date();
         this.randomNumber = a.getTime();
         this.textAreaValue === '' ? alert(this.textAreaValue) : this._textService.setTextValue({ 'text': this.textAreaValue, 'randomNumber': this.randomNumber, 'imgSrc': '' });
+        var textWidth = this.dummyText.nativeElement.offsetWidth;
+        var textHeight = this.dummyText.nativeElement.offsetHeight;
+        var ratio = textWidth / textHeight;
+        this._textService.updateObjArray({ 'id': this.randomNumber, 'oriWidth': textWidth, 'oriHeight': textHeight, 'width': textWidth, 'height': textHeight, 'ratio': ratio });
+        this._textService.setSliderValue(textWidth, 'minV');
+        this._textService.setSliderValue(parseInt(this._textService.designcontainerRef.nativeElement.style.width), 'maxV');
     };
+    __decorate([
+        core_1.ViewChild('dummyText'),
+        __metadata("design:type", Object)
+    ], textAreaComponent.prototype, "dummyText", void 0);
     textAreaComponent = __decorate([
         core_1.Component({
             selector: 'my-textArea',
-            template: " <div class=\"col-xs-12\">\n                    <textarea [placeholder]=\"textPlaceholder\" [class]=\"textAreaClass\" [(ngModel)]= \"textAreaValue\"></textarea>\n                    <a href=\"javascript:void(0);\" class=\"btn btn-lrg\" (click)=\"addtext($event)\">Add</a>\n                </div>"
+            template: " <div class=\"col-xs-12\">\n                    <textarea [placeholder]=\"textPlaceholder\" [class]=\"textAreaClass\" [(ngModel)]= \"textAreaValue\"></textarea>\n                    <a href=\"javascript:void(0);\" class=\"btn btn-lrg\" (click)=\"addtext($event)\">Add</a>\n                    <p #dummyText style=\"visibility:hidden\">{{textAreaValue}}<p>\n                </div>"
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], textAreaComponent);

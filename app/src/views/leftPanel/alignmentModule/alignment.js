@@ -95,9 +95,11 @@ var alignmentModuleComponent = (function () {
             for (var j = 0; j < objArray.length; j++) {
                 console.log(objArray[j].id, this.currentObj.nativeElement.id);
                 if (objArray[j].id === parseInt(this.currentObj.nativeElement.id)) {
-                    this.currentObj.nativeElement.style['height'] = event.value * objArray[j].ratio + 'px';
+                    if (this.currentObj.nativeElement.dataset['type'] === 'image') {
+                        this.currentObj.nativeElement.style['height'] = event.value / objArray[j].ratio + 'px';
+                        objArray[j].height = event.value * objArray[j].ratio;
+                    }
                     objArray[j].width = event.value;
-                    objArray[j].height = event.value * objArray[j].ratio;
                 }
             }
             this.handlerRef.nativeElement.style.width = this.currentObj.nativeElement.offsetWidth + 10 + 'px';

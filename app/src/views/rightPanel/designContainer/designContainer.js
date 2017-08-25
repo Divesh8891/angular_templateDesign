@@ -52,11 +52,14 @@ var designContainer = (function () {
         this._textService.setDesigncontainerRef(this.designTooSec);
     };
     designContainer.prototype.textNodeEvent = function (event) {
+        var currentImagewidth = 0;
         this.textHandler.nativeElement.style.display = 'block';
+        var objArray = this._textService.objArray;
         for (var i = 0; i < this.elements._results.length; i++) {
             console.log(event.target.id, this.elements._results[i].nativeElement.id);
             if (event.target.id === this.elements._results[i].nativeElement.id) {
                 this.currentObj = this.elements._results[i];
+                currentImagewidth = objArray[i].width;
             }
         }
         this.textHandler.nativeElement.style.width = event.target.offsetWidth + 10 + 'px';
@@ -64,6 +67,10 @@ var designContainer = (function () {
         this.textHandler.nativeElement.style.left = event.target.offsetLeft - 5 + 'px';
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
         this._textService.setCurrentObj(this.currentObj, this.textHandler);
+        this.currentObj.nativeElement.style.width = this._textService.pixelToPercentage((event.target.offsetWidth), this.designTooSec.nativeElement.style["width"]);
+        this._textService.setSliderValue(currentImagewidth, 'minV');
+        this._textService.setAlignmentValue(event.target.offsetLeft, 'left');
+        this._textService.setAlignmentValue(event.target.offsetTop, 'top');
     };
     designContainer.prototype.imgNodeEvent = function (event) {
         this.textHandler.nativeElement.style.display = 'block';
