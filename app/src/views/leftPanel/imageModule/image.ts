@@ -2,14 +2,12 @@ import { Component } from '@angular/core';
 import { TextService } from '../../../service/text.service';
 
 @Component({
-    selector: 'image-module',
+    selector: '[imageModule]',
     template: ` 
-                  <section class="ImageModule col-xs-12 p-0 module">
                         <h5 class="option-heading col-xs-12 m-0 p-0">{{imagePanelTitle}}</h5>
                         <div class="seperator"></div>
                         <image-upload class={{customClass}} [max]="100" [buttonCaption]="'Select Images'" [extensions]="['jpeg','jpg','png','gif']" (onFileUploadFinish)="onUploadFinished($event)"></image-upload>
                          <!--linkAsButton [parentClass]="'col-xs-12'" [applyClass]="'set-aspect-ratio btn btn-lrg'" [btnText]="'Set Aspect Ratio'"  (click)=setAspectRaion($event)></linkAsButton-->
-                    </section>
     `
 })
 

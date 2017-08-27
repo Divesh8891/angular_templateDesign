@@ -2,9 +2,8 @@ import { Component, Output, EventEmitter, Input, ViewChildren } from '@angular/c
 import { TextService } from '../../../service/text.service';
 
 @Component({
-    selector: 'text-module',
+    selector: '[textModule]',
     template: ` 
-                  <section class="TextModule col-xs-12 p-0 module">
                         <h2 id="textValhidden">fsdfs</h2>
                         <h5 class="option-heading col-xs-12 m-0 p-0">{{textPanelTitle}}</h5>
                         <div class="seperator"></div>
@@ -23,7 +22,6 @@ import { TextService } from '../../../service/text.service';
                         <linkAsButton [parentClass]="'b align-opt col-xs-4'" [applyClass]="'bold btn btn-lrg'" [btnText]="'B'" (click)=applyBold($event)></linkAsButton>
                         <linkAsButton [parentClass]="'i align-opt col-xs-4'" [applyClass]="'italic btn btn-lrg'" [btnText]="'I'" (click)=applyItalic($event)></linkAsButton>
                         <linkAsButton [parentClass]="'u align-opt col-xs-4'" [applyClass]="'underline btn btn-lrg'" [btnText]="'U'" (click)=applyUnderline($event)></linkAsButton>
-                    </section>
     `
 })
 

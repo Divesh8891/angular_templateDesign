@@ -40,7 +40,7 @@
 .p-0{padding:0;}
 .pr-0{padding-right: 0;}
 .ptb-20{padding-bottom: 20px;padding-top: 20px;}
-
+.display-inline{display:inline-block}
 .btn,.btn:hover,.btn:focus{background-color: #ddd;color: #000;font-size:12px;line-height: 15px;}
 .btn-lrg{display: block;width: 100%;}
 
@@ -50,12 +50,19 @@ body{background-color: #f3fbff;}
 ul{list-style-type:none;margin:0;padding:0;}
 select{width: 100%;height: 22px;font-size: 12px;}
 input{width: 60px;margin:0 0 0 5px;height: 25px;}
-.option-panel{position:relative;}
+.option-panel{position:relative;max-width: 200px;float: left;}
 .heading{display: block;background-color: #eee;color: #000;}
 .wrapper-inner{margin-top: 10px;}
 #textValhidden{opacity:0;visibility:hidden;display:inline-block;font-size:18px;position:absolute;white-space:nowrap;}
 .module{border: 1px solid #eee;padding: 10px;margin-bottom: 10px;background-color: #eee;}
 .module  div{margin-top:5px;margin-bottom: 5px;padding: 0 5px;}
+.template-module{text-align: left;padding-bottom: 0;}
+.middle-section{max-width: 740px;float: left;margin: 0 10px;min-width: 740px;text-align: center;position: relative;}
+.inputSize{display: inline-block;float: left;margin:0}
+.template-module .quote_image_share{    display: inline-block;    float: left;}
+.alignment-module{max-width: 200px;float: left;}
+.temp-bg-setting{display: inline-block;margin: 0 !important;float: left;}
+.temp-bg-color{}
 .option-heading{color: #000;font-weight: 700;}
 .text-val{width: 100%;}
 .upload.btn input{opacity:0;width:100%;line-height:0;position:absolute;top:0;height:29px;left:0;}
@@ -85,9 +92,13 @@ input{width: 60px;margin:0 0 0 5px;height: 25px;}
 #img-out{text-align:center;}
 #img-out img{width:60%;}
 #canvasPNG,.imageGen,.downloadImgCont{display:none;}
-.seperator{width: 105%;border: 1px solid #ddd;float: left;margin: 0 -5px;}
+.seperator{width: 100%;border: 1px solid #ddd;float: left;margin: 0 -5px;}
 .popup-body{position: absolute;    z-index: -1;    top: 100px;    width: 400px;    height: 400px;}
 
    md-slider {width: 100%;}
 .mat-slider-horizontal .mat-slider-track-wrapper{background-color: #ddd;margin: 0;padding: 0}
 .image-upload[_ngcontent-c0]{--active-color:#ddd!important;}
+.zoom{width: 135px;display: inline-block;float: left;}
+.mat-slider-horizontal .mat-slider-wrapper{top:9px!important}
+.mat-slider-horizontal{height: 30px !important;}
+.leftSlider,.topSlider{width: 100px}

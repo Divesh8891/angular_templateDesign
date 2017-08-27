@@ -57,8 +57,8 @@ var imageModuleComponent = (function () {
     };
     imageModuleComponent = __decorate([
         core_1.Component({
-            selector: 'image-module',
-            template: " \n                  <section class=\"ImageModule col-xs-12 p-0 module\">\n                        <h5 class=\"option-heading col-xs-12 m-0 p-0\">{{imagePanelTitle}}</h5>\n                        <div class=\"seperator\"></div>\n                        <image-upload class={{customClass}} [max]=\"100\" [buttonCaption]=\"'Select Images'\" [extensions]=\"['jpeg','jpg','png','gif']\" (onFileUploadFinish)=\"onUploadFinished($event)\"></image-upload>\n                         <!--linkAsButton [parentClass]=\"'col-xs-12'\" [applyClass]=\"'set-aspect-ratio btn btn-lrg'\" [btnText]=\"'Set Aspect Ratio'\"  (click)=setAspectRaion($event)></linkAsButton-->\n                    </section>\n    "
+            selector: '[imageModule]',
+            template: " \n                        <h5 class=\"option-heading col-xs-12 m-0 p-0\">{{imagePanelTitle}}</h5>\n                        <div class=\"seperator\"></div>\n                        <image-upload class={{customClass}} [max]=\"100\" [buttonCaption]=\"'Select Images'\" [extensions]=\"['jpeg','jpg','png','gif']\" (onFileUploadFinish)=\"onUploadFinished($event)\"></image-upload>\n                         <!--linkAsButton [parentClass]=\"'col-xs-12'\" [applyClass]=\"'set-aspect-ratio btn btn-lrg'\" [btnText]=\"'Set Aspect Ratio'\"  (click)=setAspectRaion($event)></linkAsButton-->\n    "
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], imageModuleComponent);

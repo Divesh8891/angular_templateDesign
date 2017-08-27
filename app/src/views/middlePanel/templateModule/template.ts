@@ -2,36 +2,36 @@ import { Component } from '@angular/core';
 import { TextService } from '../../../service/text.service';
 
 @Component({
-    selector: 'template-module',
+    selector: '[templateModule]',
     template: ` 
-                 <section class="TemplateModule col-xs-12 p-0 module">
-                        <h5 class="option-heading col-xs-12 m-0 p-0">Template Setting</h5>
+                        <h5 class="option-heading m-0 p-0">Template Setting</h5>
                         <div class="seperator"></div>
 
-                        <div class="col-xs-12 mt-10">
+                        <div class="clearfix mt-10">
+                        <linkAsButton [parentClass]="'quote_image_share'" [applyClass]="'btn'" [btnText]="'Choose Bg Image'" (click)=chooseImageForBg($event)></linkAsButton>
+                        <div class="temp-bg-setting">
+                            <!--linkAsButton [parentClass]="''" [applyClass]="'blankT btn'" [btnText]="'Blank'" (click)=setTemplateBg($event)></linkAsButton>
+                            <linkAsButton [parentClass]="'ml5'" [applyClass]="'CommonT btn'" [btnText]="'Common'" (click)=setTemplateBg($event)></linkAsButton>
+                            <linkAsButton [parentClass]="'ml5'" [applyClass]="'FunT btn'" [btnText]="'Fun'" (click)=setTemplateBg($event)></linkAsButton-->
+                            <linkAsButton [parentClass]="'back-color-sec display-inline'" [applyClass]="'back-color btn'" [btnText]="'Bg Color'" (click)=setTemplateBgcolor($event)></linkAsButton>
+                            <select-box [parentClass]="'opacity-sec display-inline'" [defaultOptionValue]="'Opacity'" (change)="updateOpacity($event)"></select-box>
+                        </div>
+                        <!--div class="inputSize"> 
                             <span>Size</span>
                             <input type="text" class="width" [(ngModel)]="tempWidth"><input type="text" class="height" [(ngModel)]="tempHeight">
-                            <linkAsButton [parentClass]="'col-xs-3 pull-right m-0'" [applyClass]="'goSize btn'" [btnText]="'Go'" (click)=setTemplateDimension($event)></linkAsButton>
-
+                            <linkAsButton [parentClass]="'display-inline m-0'" [applyClass]="'goSize btn'" [btnText]="'Go'" (click)=setTemplateDimension($event)></linkAsButton>
+                        </div-->
+                        <linkAsButton [parentClass]="'quote_image_share col-xs1-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'1:1'" (click)=setTemplateSize($event)></linkAsButton>
+                        <linkAsButton [parentClass]="'quote_image_share col-xs1-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'5:4'" (click)=setTemplateSize($event)></linkAsButton>
+                        <linkAsButton [parentClass]="'quote_image_share col-xs1-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'4:3'" (click)=setTemplateSize($event)></linkAsButton>
+                        <linkAsButton [parentClass]="'quote_image_share col-xs1-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'3:2'" (click)=setTemplateSize($event)></linkAsButton>
+                        <!--linkAsButton [parentClass]="'quote_image_share col-xs1-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'8:5'" (click)=setTemplateSize($event)></linkAsButton-->
+                        <!--linkAsButton [parentClass]="'quote_image_share col-xs1-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'FB'" (click)=setTemplateSize($event)></linkAsButton-->
+                        <div class="zoom">
+                            <md-slider (input)="onRangeChanged($event)"  min="{{minSliderValue}}" max="{{maxSlidervalue}}" value="{{defaultsliderValue}}"></md-slider>
                         </div>
-                        <linkAsButton [parentClass]="'quote_image_share col-xs-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'1:1'" (click)=setTemplateSize($event)></linkAsButton>
-                        <linkAsButton [parentClass]="'quote_image_share col-xs-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'5:4'" (click)=setTemplateSize($event)></linkAsButton>
-                        <linkAsButton [parentClass]="'quote_image_share col-xs-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'4:3'" (click)=setTemplateSize($event)></linkAsButton>
-                        <linkAsButton [parentClass]="'quote_image_share col-xs-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'3:2'" (click)=setTemplateSize($event)></linkAsButton>
-                        <linkAsButton [parentClass]="'quote_image_share col-xs-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'8:5'" (click)=setTemplateSize($event)></linkAsButton>
-                        <linkAsButton [parentClass]="'quote_image_share col-xs-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'FB'" (click)=setTemplateSize($event)></linkAsButton>
-
-                        <div class="seperator"></div>
-
-                        <div class="col-xs-12">
-                         <linkAsButton [parentClass]="'col-xs-3'" [applyClass]="'blankT btn'" [btnText]="'Blank'" (click)=setTemplateBg($event)></linkAsButton>
-                         <linkAsButton [parentClass]="'col-xs-4 ml5'" [applyClass]="'CommonT btn'" [btnText]="'Common'" (click)=setTemplateBg($event)></linkAsButton>
-                         <linkAsButton [parentClass]="'col-xs-4 ml5'" [applyClass]="'FunT btn'" [btnText]="'Fun'" (click)=setTemplateBg($event)></linkAsButton>
                         </div>
-                        <div class="seperator"></div>
-                         <linkAsButton [parentClass]="'back-color-sec col-xs-7'" [applyClass]="'back-color btn'" [btnText]="'Background-color'" (click)=setTemplateBgcolor($event)></linkAsButton>
-                        <select-box [parentClass]="'opacity-sec col-xs-5'" [defaultOptionValue]="'Opacity'" (change)="updateOpacity($event)"></select-box>
-                    </section>
+
     `
 })
 

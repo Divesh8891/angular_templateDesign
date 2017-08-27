@@ -23,8 +23,8 @@ var leftPanelComponent = (function () {
     ], leftPanelComponent.prototype, "alignmentRef", void 0);
     leftPanelComponent = __decorate([
         core_1.Component({
-            selector: 'left-panel',
-            template: " \n                <section class=\"option-panel col-xs-3\">\n                    <text-module></text-module>\n                    <image-module></image-module>\n                    <template-module></template-module>\n                    <alignment-module #alignment></alignment-module>\n                    <color-box></color-box>\n                </section>\n            "
+            selector: '[leftPanel]',
+            template: " \n                <section class=\"ImageModule col-xs-12 p-0 module\" imageModule></section>\n                <section class=\"TextModule col-xs-12 p-0 module\" textModule></section>\n                <color-box></color-box>\n            "
         })
     ], leftPanelComponent);
     return leftPanelComponent;

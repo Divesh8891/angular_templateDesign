@@ -16,12 +16,13 @@ var text_service_1 = require("../src/service/text.service");
 var app_1 = require("../src/views/app");
 var header_1 = require("../src/views/header/header");
 var leftPanel_1 = require("../src/views/leftPanel/leftPanel");
+var MiddlePanel_1 = require("../src/views/MiddlePanel/MiddlePanel");
 var rightPanel_1 = require("../src/views/rightPanel/rightPanel");
 var text_1 = require("../src/views/leftPanel/textModule/text");
 var image_1 = require("../src/views/leftPanel/imageModule/image");
-var template_1 = require("../src/views/leftPanel/templateModule/template");
-var alignment_1 = require("../src/views/leftPanel/alignmentModule/alignment");
-var designContainer_1 = require("../src/views/rightPanel/designContainer/designContainer");
+var template_1 = require("../src/views/middlePanel/templateModule/template");
+var alignment_1 = require("../src/views/rightPanel/alignmentModule/alignment");
+var designContainer_1 = require("../src/views/middlePanel/designContainer/designContainer");
 var textArea_1 = require("../src/component/textArea/textArea");
 var selectBox_1 = require("../src/component/selectBox/selectBox");
 var button_1 = require("../src/component/button/button");
@@ -32,7 +33,7 @@ var AppModule = (function () {
     AppModule = __decorate([
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, index_1.ImageUploadModule.forRoot(), material_1.MdSliderModule],
-            declarations: [app_1.AppComponent, header_1.headerComponent, leftPanel_1.leftPanelComponent, rightPanel_1.rightPanelComponent, text_1.textModuleComponent, image_1.imageModuleComponent, template_1.templateModuleComponent, alignment_1.alignmentModuleComponent, colorBox_1.colorBoxComponent, designContainer_1.designContainer, textArea_1.textAreaComponent, selectBox_1.selectBoxComponent, button_1.buttonComponent, draggable_directive_1.Draggable],
+            declarations: [app_1.AppComponent, header_1.headerComponent, leftPanel_1.leftPanelComponent, MiddlePanel_1.MiddlePanelComponent, rightPanel_1.rightPanelComponent, text_1.textModuleComponent, image_1.imageModuleComponent, template_1.templateModuleComponent, alignment_1.alignmentModuleComponent, colorBox_1.colorBoxComponent, designContainer_1.designContainer, textArea_1.textAreaComponent, selectBox_1.selectBoxComponent, button_1.buttonComponent, draggable_directive_1.Draggable],
             bootstrap: [app_1.AppComponent],
             providers: [text_service_1.TextService]
         })

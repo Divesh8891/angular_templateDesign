@@ -1,19 +1,18 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { designContainer } from '../../src/views/rightPanel/designContainer/designContainer';
 import { TextService } from '../service/text.service';
 
 @Component({
     selector: 'my-app',
     template: ` 
 
-    <div class="wrapper container">
+    <div class="wrapper container p-0">
         <custom-header></custom-header>
         <div class="wrapper-inner col-xs-12" style="min-height: 891px;">
             <div class="row">
-                 <left-panel></left-panel>
-                 <right-panel></right-panel>
+                <section class="option-panel p-0" leftPanel></section>
+                <div class="middle-section" middlePanel></div>
+                <section class="alignment-module  p-0 module" alignmentModule></section>
             </div>
-            
         </div>
          <section class="imageGen" #imageGen>
              <img id="canvasPNG" class="downloadable">

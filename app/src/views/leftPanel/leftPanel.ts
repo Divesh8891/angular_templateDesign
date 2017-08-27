@@ -1,15 +1,11 @@
 import { Component,ViewChild,ElementRef } from '@angular/core';
 
 @Component({
-    selector: 'left-panel',
+    selector: '[leftPanel]',
     template: ` 
-                <section class="option-panel col-xs-3">
-                    <text-module></text-module>
-                    <image-module></image-module>
-                    <template-module></template-module>
-                    <alignment-module #alignment></alignment-module>
-                    <color-box></color-box>
-                </section>
+                <section class="ImageModule col-xs-12 p-0 module" imageModule></section>
+                <section class="TextModule col-xs-12 p-0 module" textModule></section>
+                <color-box></color-box>
             `
 })
 

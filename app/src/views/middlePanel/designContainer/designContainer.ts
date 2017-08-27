@@ -2,10 +2,9 @@ import { Component, ViewChild, ViewChildren } from '@angular/core';
 import { TextService } from '../../../service/text.service';
 
 @Component({
-    selector: 'designContainer',
+    selector: '[designContainer]',
     template: ` 
-                <section class="design-section col-xs-12">
-                    <div class="desgin-tool-sec" style="width: 780px; height: 780px;" #designTooSec>
+                    <div class="desgin-tool-sec" style="width: 740px; height: 740px;" #designTooSec>
                         <section class="desgin-inner" data-bg="blank">
                         <ng-container *ngFor="let text of textAreaVal">
                           <p #xyz *ngIf="text.text!=''" class="textNative" data-type="text" id="{{text.randomNumber}}" (click)="textNodeEvent($event,text)" style="font-size: 18px;" >{{text.text}}</p>
@@ -14,7 +13,6 @@ import { TextService } from '../../../service/text.service';
                         </section>
                         <div class="handler cube" #handler  [ng2-draggable]="true" (handlerClick)="onhandlerClick($event)" (postions)=getPos($event)></div>
                      </div>
-                </section>
              
                 
               

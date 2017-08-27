@@ -2,28 +2,48 @@ import { Component, ViewChild } from '@angular/core';
 import { TextService } from '../../../service/text.service';
 
 @Component({
-    selector: 'alignment-module',
+    selector: '[alignmentModule]',
     template: ` 
-                <section class="AlignmentModule col-xs-12 p-0 module">
                         <h5 class="option-heading col-xs-12 m-0 p-0">{{AlignmnetPanelTitle}}</h5>
                         <div class="seperator"></div> 
                         <linkAsButton [parentClass]="'l align-opt col-xs-4'" [applyClass]="'leftA btn btn-lrg'" [btnText]="'L'" (click)=leftAlignment($event)></linkAsButton>
                         <linkAsButton [parentClass]="'m align-opt col-xs-4'" [applyClass]="'mid btn btn-lrg'" [btnText]="'M'" (click)=middleAlignment($event)></linkAsButton>
                         <linkAsButton [parentClass]="'r align-opt col-xs-4'" [applyClass]="'right btn btn-lrg'" [btnText]="'R'" (click)=rightAlignment($event)></linkAsButton>
                         <div class="seperator"></div>
-                        <div class="col-xs-12">
-                            <label>L : </label><input type="text" class="leftP" [(ngModel)]="inputLeftValue" ><label>T : </label><input type="text" class="topP" [(ngModel)]="inputTopValue">
-                            <linkAsButton [parentClass]="'col-xs-3 pull-right m-0'" [applyClass]="'goSize btn'" [btnText]="'GO'" (click)=setAlignment($event)></linkAsButton>
+                        <div class="leftAlign">
+                            <label>Left</label>
+                            <div class="leftSlider">
+                                <md-slider (input)="onRangeChanged($event)"  min="{{minSliderValue}}" max="{{maxSlidervalue}}" value="{{defaultsliderValue}}"></md-slider>
+                            </div>
+                            <input type="text" placeholder="Left" class="leftP" [(ngModel)]="inputLeftValue" >
+                        </div>
+                        <div class="topAlign">
+                            <label>Top</label>
+                            <div class="topSlider">
+                                <md-slider (input)="onRangeChanged($event)"  min="{{minSliderValue}}" max="{{maxSlidervalue}}" value="{{defaultsliderValue}}"></md-slider>
+                            </div>
+                            <input type="text" placeholder="top"class="topP" [(ngModel)]="inputTopValue">
                         </div>
                         <div class="seperator"></div>
                         <div class="col-xs-12"  [attr.data-min]="inputWidthValue" [attr.data-max]="inputMaxWidthValue">
                             <label>Width: </label>
                             <md-slider (input)="onRangeChanged($event)"  min="{{minSliderValue}}" max="{{maxSlidervalue}}" value="{{defaultsliderValue}}"></md-slider>
-                            <label>Min: </label><input type="text" class="widthA" [(ngModel)]="inputMinWidthValue" value={{inputMinWidthValue}}>
-                            <label>Max: </label><input readonly type="text" class="widthA" [(ngModel)]="inputMaxWidthValue" value={{inputMaxWidthValue}}>
+                            <input type="text" placeholder="Max" class="widthA" [(ngModel)]="inputMinWidthValue" value={{inputMinWidthValue}}>
+                            <input readonly placeholder="Min" type="text" class="widthA" [(ngModel)]="inputMaxWidthValue" value={{inputMaxWidthValue}}>
                             <linkAsButton [parentClass]="'col-xs-12 m-0'" [applyClass]="'goSize btn btn-lrg mt-10'" [btnText]="'GO'" (click)=setwidth($event)></linkAsButton>
                         </div>
-                    </section>
+                        <div class="seperator"></div>
+                        <div class="text-center ptb-20 col-xs-12">
+                            <ul class="list-inline">
+                                <li><linkAsButton [parentClass]="''" [applyClass]="'btn'" [btnText]="'SB'"  (click)=sendBack($event)></linkAsButton></li>
+                                <li><linkAsButton [parentClass]="''" [applyClass]="'btn'" [btnText]="'SF'"  (click)=bringFront($event)></linkAsButton></li>
+                                <li><linkAsButton [parentClass]="''" [applyClass]="'btn'" [btnText]="'SBck'"  (click)=sendforward($event)></linkAsButton></li>
+                                <li><linkAsButton [parentClass]="''" [applyClass]="'btn'" [btnText]="'SFrwd'"  (click)=bringForward($event)></linkAsButton></li>
+                                <li><linkAsButton [parentClass]="''" [applyClass]="'delete btn'" [btnText]="'Delete'"  (click)=deleteNode($event)></linkAsButton></li>
+                                <li><linkAsButton [parentClass]="''" [applyClass]="'preview btn'" [btnText]="'Preview'"  (click)=showPreview($event)></linkAsButton></li>
+                                <li><linkAsButton [parentClass]="''" [applyClass]="'save btn'" [btnText]="'Save'"  (click)=saveImage($event)></linkAsButton></li>
+                            </ul>
+                        </div>
     `
 })
 
