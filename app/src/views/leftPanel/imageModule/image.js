@@ -29,7 +29,7 @@ var imageModuleComponent = (function () {
     function imageModuleComponent(_textService) {
         this._textService = _textService;
         this.imagePanelTitle = "Image";
-        this.customClass = "custom-image col-xs-12";
+        this.customClass = "image-upload col-xs-12";
     }
     imageModuleComponent.prototype.onRemoved = function (event) {
         console.log(event);
@@ -58,7 +58,7 @@ var imageModuleComponent = (function () {
     imageModuleComponent = __decorate([
         core_1.Component({
             selector: '[imageModule]',
-            template: " \n                        <h5 class=\"option-heading col-xs-12 m-0 p-0\">{{imagePanelTitle}}</h5>\n                        <div class=\"seperator\"></div>\n                        <image-upload class={{customClass}} [max]=\"100\" [buttonCaption]=\"'Select Images'\" [extensions]=\"['jpeg','jpg','png','gif']\" (onFileUploadFinish)=\"onUploadFinished($event)\"></image-upload>\n                         <!--linkAsButton [parentClass]=\"'col-xs-12'\" [applyClass]=\"'set-aspect-ratio btn btn-lrg'\" [btnText]=\"'Set Aspect Ratio'\"  (click)=setAspectRaion($event)></linkAsButton-->\n    "
+            template: " \n                        <h5 class=\"heading\">{{imagePanelTitle}}</h5>\n                        <div class=\"seperator\"></div>\n                        <image-upload class={{customClass}} [max]=\"100\" [buttonCaption]=\"'Select Images'\" [extensions]=\"['jpeg','jpg','png','gif']\" (onFileUploadFinish)=\"onUploadFinished($event)\"></image-upload>\n    "
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], imageModuleComponent);

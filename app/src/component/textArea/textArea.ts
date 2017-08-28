@@ -2,12 +2,12 @@ import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { TextService } from '../../service/text.service';
 
 @Component({
-    selector: 'my-textArea',
-    template: ` <div class="col-xs-12">
+    selector: '[textArea]',
+    template: ` 
                     <textarea [placeholder]="textPlaceholder" [class]="textAreaClass" [(ngModel)]= "textAreaValue"></textarea>
-                    <a href="javascript:void(0);" class="btn btn-lrg" (click)="addtext($event)">Add</a>
-                    <p #dummyText style="visibility:hidden">{{textAreaValue}}<p>
-                </div>`
+                    <button class="btn btn-lrg" (click)="addtext($event)">Add</button>
+                    <p #dummyText style="visibility:hidden">{{textAreaValue}}</p>
+                `
 })
 
 export class textAreaComponent {

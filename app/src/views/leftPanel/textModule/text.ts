@@ -5,23 +5,23 @@ import { TextService } from '../../../service/text.service';
     selector: '[textModule]',
     template: ` 
                         <h2 id="textValhidden">fsdfs</h2>
-                        <h5 class="option-heading col-xs-12 m-0 p-0">{{textPanelTitle}}</h5>
+                        <h5 class="heading">{{textPanelTitle}}</h5>
                         <div class="seperator"></div>
-                        <my-textArea></my-textArea>
+                        <div textArea></div>
                         <div class="seperator"></div>
-                        <select-box [parentClass]="'font-sec col-xs-6'" [defaultOptionValue]="'Font-size'" (change)="updateFontS($event)"></select-box>
-                        <select-box [parentClass]="'line-height-sec col-xs-6'" [defaultOptionValue]="'line-height'" (change)="updateLineHeight($event)"></select-box>
-                        <select-box [parentClass]="'font-famliy-sec col-xs-6'" [defaultOptionValue]="'Font-famliy'" (change)="updateFontFamliy($event)"></select-box>
-                        <select-box [parentClass]="'stroke-width-sec col-xs-6'" [defaultOptionValue]="'stroke-width'" (change)="updateStrokeWidth($event)"></select-box>
+                        <div selectBox class="font-sec select-box" [defaultOptionValue]="'Font-size'" (change)="updateFontS($event)"></div>
+                        <div selectBox class="line-height-sec select-box ml5" [defaultOptionValue]="'line-height'" (change)="updateLineHeight($event)"></div>
+                        <div selectBox class="font-famliy-sec select-box "  [defaultOptionValue]="'Font-famliy'" (change)="updateFontFamliy($event)"></div>
+                        <div selectBox class="stroke-width-sec select-box ml5" [defaultOptionValue]="'stroke-width'" (change)="updateStrokeWidth($event)"></div>
                         <div class="seperator"></div>
-                        <linkAsButton [parentClass]="'color-sec col-xs-6'" [applyClass]="'color btn btn-lrg'" [btnText]="'Color'" (click)=applyColor($event)></linkAsButton>
-                        <linkAsButton [parentClass]="'stroke-color-sec col-xs-6'" [applyClass]="'stroke-color btn btn-lrg'" [btnText]="'Stroke color'" (click)=applyStrokeColor($event)></linkAsButton>
-                        <linkAsButton [parentClass]="'back-color-sec col-xs-6'" [applyClass]="'back-color btn btn-lrg'" [btnText]="'Background color'" (click)=applyBgColor($event)></linkAsButton>
-                        <select-box [parentClass]="'opacity-width-sec col-xs-5'" [defaultOptionValue]="'Opacity'" (change)="updateOpacity($event)"></select-box>
+                        <button class="color btn icon" (click)=applyColor($event)><i  class="sprite-img"></i></button>
+                        <!--button class="stroke-color btn  icon" (click)=applyColor($event)>Stroke Color</button-->
+                        <button class="back-color btn  icon" (click)=applyBgColor($event)><i class="sprite-img"></i></button>
+                        <div selectBox class="opacity-width-sec select-box" [defaultOptionValue]="'Opacity'" (change)="updateOpacity($event)"></div>
                         <div class="seperator"></div>
-                        <linkAsButton [parentClass]="'b align-opt col-xs-4'" [applyClass]="'bold btn btn-lrg'" [btnText]="'B'" (click)=applyBold($event)></linkAsButton>
-                        <linkAsButton [parentClass]="'i align-opt col-xs-4'" [applyClass]="'italic btn btn-lrg'" [btnText]="'I'" (click)=applyItalic($event)></linkAsButton>
-                        <linkAsButton [parentClass]="'u align-opt col-xs-4'" [applyClass]="'underline btn btn-lrg'" [btnText]="'U'" (click)=applyUnderline($event)></linkAsButton>
+                        <button class="bold btn text-font-effect" (click)=applyBold($event)>B</button>
+                        <button class="italic btn text-font-effect" (click)=applyItalic($event)>I</button>
+                        <button class="underline btn text-font-effect" (click)=applyUnderline($event)>U</button>
     `
 })
 

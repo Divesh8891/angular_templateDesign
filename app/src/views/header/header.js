@@ -10,12 +10,12 @@ var core_1 = require("@angular/core");
 var headerComponent = (function () {
     function headerComponent() {
         this.headerHeading = "Template Design";
-        this.headerHeadingClassName = "heading m-0 ptb-20 text-white text-center";
+        this.headerHeadingClassName = "heading text-center";
     }
     headerComponent = __decorate([
         core_1.Component({
             selector: 'custom-header',
-            template: " \n              <header class=\"col-xs-12\">\n                 <h4 [class]=\"headerHeadingClassName\">{{headerHeading}}</h4>\n              </header>\n    "
+            template: " \n              <header class=\"header bg-grey\">\n                 <h4 [class]=\"headerHeadingClassName\">{{headerHeading}}</h4>\n              </header>\n    "
         })
     ], headerComponent);
     return headerComponent;

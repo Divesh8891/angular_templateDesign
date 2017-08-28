@@ -13,16 +13,6 @@ var core_1 = require("@angular/core");
 var selectBoxComponent = (function () {
     function selectBoxComponent() {
     }
-    selectBoxComponent.prototype.onFilterChange = function (event) {
-        if (this.defaultOptionValue == 'Font-size') {
-        }
-        if (this.defaultOptionValue == 'line-height') {
-        }
-        if (this.defaultOptionValue == 'font-famliy') {
-        }
-        if (this.defaultOptionValue == 'stroke-width') {
-        }
-    };
     selectBoxComponent.prototype.ngOnInit = function () {
         if (this.defaultOptionValue == 'Font-size') {
             this.optionArray = [12, 15, 18, 20, 24, 28, 30, 32, 35, 38, 40, 42, 45, 48, 50, 52, 55, 58, 60, 65];
@@ -54,8 +44,8 @@ var selectBoxComponent = (function () {
     ], selectBoxComponent.prototype, "defaultOptionValue", void 0);
     selectBoxComponent = __decorate([
         core_1.Component({
-            selector: 'select-box',
-            template: "\n    <div [class]=parentClass>\n      <select name=\"filter\" [ngModel]=\"textfilter\" (change)=\"onFilterChange($event)\">\n         <option value=\"0\">{{defaultOptionValue}}</option>\n         <option value=\"{{optionValue}}\" *ngFor=\"let optionValue of optionArray\">{{optionValue}}</option>\n      </select>\n    </div>\n     "
+            selector: '[selectBox]',
+            template: "\n      <select name=\"filter\" [ngModel]=\"textfilter\">\n         <option value=\"0\">{{defaultOptionValue}}</option>\n         <option value=\"{{optionValue}}\" *ngFor=\"let optionValue of optionArray\">{{optionValue}}</option>\n      </select>\n     "
         })
     ], selectBoxComponent);
     return selectBoxComponent;

@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { TextService } from '../../service/text.service';
 @Component({
-    selector: '[middlePanel]',
+    selector: '[middleModule]',
     template: ` 
-                <section class="template-module  p-0 module" templateModule></section>
+                <section class="template-module bg-grey" templateModule></section>
                 <section class="design-section display-inline" designContainer></section>
                 <div class="popup-body"><div id="img-out" #modal><img  src="{{modalImgSrc}}"/></div></div>
                 <section class="downloadImgCont" #downloadImgCont></section>

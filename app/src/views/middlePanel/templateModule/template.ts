@@ -4,29 +4,30 @@ import { TextService } from '../../../service/text.service';
 @Component({
     selector: '[templateModule]',
     template: ` 
-                        <h5 class="option-heading m-0 p-0">Template Setting</h5>
+                        <h5 class="heading">Template Setting</h5>
                         <div class="seperator"></div>
 
                         <div class="clearfix mt-10">
-                        <linkAsButton [parentClass]="'quote_image_share'" [applyClass]="'btn'" [btnText]="'Choose Bg Image'" (click)=chooseImageForBg($event)></linkAsButton>
-                        <div class="temp-bg-setting">
-                            <!--linkAsButton [parentClass]="''" [applyClass]="'blankT btn'" [btnText]="'Blank'" (click)=setTemplateBg($event)></linkAsButton>
+                        <button class="temp-back-color btn icon" (click)=setTemplateBgcolor($event)><i  class="sprite-img"></i></button>
+                        <div selectBox class="temp-opacity-sec" [defaultOptionValue]="'Opacity'" (change)="updateOpacity($event)"></div>
+                        <div class="vertical-seperator"></div>
+                        <button class="btn" (click)=chooseImageForBg($event)>Choose Bg Image</button>
+                        <div class="vertical-seperator"></div>
+                        <!--div class="temp-bg-setting">
+                            <linkAsButton [parentClass]="''" [applyClass]="'blankT btn'" [btnText]="'Blank'" (click)=setTemplateBg($event)></linkAsButton>
                             <linkAsButton [parentClass]="'ml5'" [applyClass]="'CommonT btn'" [btnText]="'Common'" (click)=setTemplateBg($event)></linkAsButton>
-                            <linkAsButton [parentClass]="'ml5'" [applyClass]="'FunT btn'" [btnText]="'Fun'" (click)=setTemplateBg($event)></linkAsButton-->
-                            <linkAsButton [parentClass]="'back-color-sec display-inline'" [applyClass]="'back-color btn'" [btnText]="'Bg Color'" (click)=setTemplateBgcolor($event)></linkAsButton>
-                            <select-box [parentClass]="'opacity-sec display-inline'" [defaultOptionValue]="'Opacity'" (change)="updateOpacity($event)"></select-box>
-                        </div>
+                            <linkAsButton [parentClass]="'ml5'" [applyClass]="'FunT btn'" [btnText]="'Fun'" (click)=setTemplateBg($event)></linkAsButton>
+                        </div-->
                         <!--div class="inputSize"> 
                             <span>Size</span>
                             <input type="text" class="width" [(ngModel)]="tempWidth"><input type="text" class="height" [(ngModel)]="tempHeight">
                             <linkAsButton [parentClass]="'display-inline m-0'" [applyClass]="'goSize btn'" [btnText]="'Go'" (click)=setTemplateDimension($event)></linkAsButton>
                         </div-->
-                        <linkAsButton [parentClass]="'quote_image_share col-xs1-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'1:1'" (click)=setTemplateSize($event)></linkAsButton>
-                        <linkAsButton [parentClass]="'quote_image_share col-xs1-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'5:4'" (click)=setTemplateSize($event)></linkAsButton>
-                        <linkAsButton [parentClass]="'quote_image_share col-xs1-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'4:3'" (click)=setTemplateSize($event)></linkAsButton>
-                        <linkAsButton [parentClass]="'quote_image_share col-xs1-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'3:2'" (click)=setTemplateSize($event)></linkAsButton>
-                        <!--linkAsButton [parentClass]="'quote_image_share col-xs1-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'8:5'" (click)=setTemplateSize($event)></linkAsButton-->
-                        <!--linkAsButton [parentClass]="'quote_image_share col-xs1-3'" [applyClass]="'btn update_canvas_size col-xs-12'" [btnText]="'FB'" (click)=setTemplateSize($event)></linkAsButton-->
+                        <button class="btn temp-aspect-ratio" (click)=setTemplateSize($event)>1:1</button>
+                        <button class="btn temp-aspect-ratio" (click)=setTemplateSize($event)>5:4</button>
+                        <button class="btn temp-aspect-ratio" (click)=setTemplateSize($event)>4:3</button>
+                        <button class="btn temp-aspect-ratio" (click)=setTemplateSize($event)>3:2</button>
+                        <div class="vertical-seperator"></div>
                         <div class="zoom">
                             <md-slider (input)="onRangeChanged($event)"  min="{{minSliderValue}}" max="{{maxSlidervalue}}" value="{{defaultsliderValue}}"></md-slider>
                         </div>

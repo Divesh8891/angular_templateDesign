@@ -25,7 +25,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: " \n\n    <div class=\"wrapper container p-0\">\n        <custom-header></custom-header>\n        <div class=\"wrapper-inner col-xs-12\" style=\"min-height: 891px;\">\n            <div class=\"row\">\n                <section class=\"option-panel p-0\" leftPanel></section>\n                <div class=\"middle-section\" middlePanel></div>\n                <section class=\"alignment-module  p-0 module\" alignmentModule></section>\n            </div>\n        </div>\n         <section class=\"imageGen\" #imageGen>\n             <img id=\"canvasPNG\" class=\"downloadable\">\n         </section>\n    </div>\n    "
+            template: " \n\n    <div class=\"wrapper\">\n        <custom-header></custom-header>\n        <div class=\"wrapper-inner\">\n            <section class=\"left-module\" leftModule></section>\n            <div class=\"middle-module\" middleModule></div>\n            <section class=\"right-module  bg-grey\" rightModule></section>\n        </div>\n         <section class=\"imageGen\" #imageGen>\n             <img id=\"canvasPNG\" class=\"downloadable\">\n         </section>\n    </div>\n    "
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], AppComponent);

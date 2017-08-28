@@ -5,14 +5,12 @@ import { TextService } from '../service/text.service';
     selector: 'my-app',
     template: ` 
 
-    <div class="wrapper container p-0">
+    <div class="wrapper">
         <custom-header></custom-header>
-        <div class="wrapper-inner col-xs-12" style="min-height: 891px;">
-            <div class="row">
-                <section class="option-panel p-0" leftPanel></section>
-                <div class="middle-section" middlePanel></div>
-                <section class="alignment-module  p-0 module" alignmentModule></section>
-            </div>
+        <div class="wrapper-inner">
+            <section class="left-module" leftModule></section>
+            <div class="middle-module" middleModule></div>
+            <section class="right-module  bg-grey" rightModule></section>
         </div>
          <section class="imageGen" #imageGen>
              <img id="canvasPNG" class="downloadable">

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'custom-header',
     template: ` 
-              <header class="col-xs-12">
+              <header class="header bg-grey">
                  <h4 [class]="headerHeadingClassName">{{headerHeading}}</h4>
               </header>
     `
@@ -11,5 +11,5 @@ import { Component } from '@angular/core';
 
 export class headerComponent {
     headerHeading = "Template Design";
-    headerHeadingClassName= "heading m-0 ptb-20 text-white text-center"
+    headerHeadingClassName= "heading text-center"
 }

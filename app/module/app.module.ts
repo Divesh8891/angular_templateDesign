@@ -18,7 +18,6 @@ import { rightPanelComponent } from '../src/views/rightPanel/rightPanel';
 import { textModuleComponent } from '../src/views/leftPanel/textModule/text';
 import { imageModuleComponent } from '../src/views/leftPanel/imageModule/image';
 import { templateModuleComponent } from '../src/views/middlePanel/templateModule/template';
-import { alignmentModuleComponent } from '../src/views/rightPanel/alignmentModule/alignment';
 
 
 
@@ -34,7 +33,7 @@ import { colorBoxComponent } from '../src/component/colorBox/colorBox';
 
 @NgModule({
   imports: [BrowserModule, FormsModule,  ImageUploadModule.forRoot(),MdSliderModule],
-  declarations: [AppComponent, headerComponent, leftPanelComponent,MiddlePanelComponent, rightPanelComponent, textModuleComponent, imageModuleComponent, templateModuleComponent, alignmentModuleComponent, colorBoxComponent, designContainer, textAreaComponent, selectBoxComponent, buttonComponent, Draggable],
+  declarations: [AppComponent, headerComponent, leftPanelComponent,MiddlePanelComponent, rightPanelComponent, textModuleComponent, imageModuleComponent, templateModuleComponent, colorBoxComponent, designContainer, textAreaComponent, selectBoxComponent, buttonComponent, Draggable],
   bootstrap: [AppComponent],
   providers: [TextService]
 })

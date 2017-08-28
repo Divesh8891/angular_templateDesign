@@ -4,16 +4,15 @@ import { TextService } from '../../../service/text.service';
 @Component({
     selector: '[imageModule]',
     template: ` 
-                        <h5 class="option-heading col-xs-12 m-0 p-0">{{imagePanelTitle}}</h5>
+                        <h5 class="heading">{{imagePanelTitle}}</h5>
                         <div class="seperator"></div>
                         <image-upload class={{customClass}} [max]="100" [buttonCaption]="'Select Images'" [extensions]="['jpeg','jpg','png','gif']" (onFileUploadFinish)="onUploadFinished($event)"></image-upload>
-                         <!--linkAsButton [parentClass]="'col-xs-12'" [applyClass]="'set-aspect-ratio btn btn-lrg'" [btnText]="'Set Aspect Ratio'"  (click)=setAspectRaion($event)></linkAsButton-->
     `
 })
 
 export class imageModuleComponent {
     imagePanelTitle = "Image";
-    customClass = "custom-image col-xs-12";
+    customClass = "image-upload col-xs-12";
     userArray: any;
     randomNumber: any;
     onRemoved(event: any) {
