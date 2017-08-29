@@ -27,10 +27,14 @@ import { TextService } from '../../../service/text.service';
                         <button class="btn temp-aspect-ratio" (click)=setTemplateSize($event)>5:4</button>
                         <button class="btn temp-aspect-ratio" (click)=setTemplateSize($event)>4:3</button>
                         <button class="btn temp-aspect-ratio" (click)=setTemplateSize($event)>3:2</button>
+                        <button class="btn temp-aspect-ratio" (click)=setTemplateSize($event)>2:5</button>
                         <div class="vertical-seperator"></div>
                         <div class="zoom">
+                            <label>Zoom</label>
                             <md-slider (input)="onRangeChanged($event)"  min="{{minSliderValue}}" max="{{maxSlidervalue}}" value="{{defaultsliderValue}}"></md-slider>
-                        </div>
+                            <input type="text" class="zoomInput" [(ngModel)]="tempZoomWidth">
+                         </div>
+                        <div class="vertical-seperator"></div>
                         </div>
 
     `
@@ -71,9 +75,9 @@ export class templateModuleComponent {
             this.designcontainerRef.nativeElement.style['height'] = '200px';
 
         }
-        if (event.target.innerHTML === "8:5") {
-            this.updateDesignObj(800, 500);
-            this.designcontainerRef.nativeElement.style['width'] = '800px';
+        if (event.target.innerHTML === "2:5") {
+            this.updateDesignObj(200, 500);
+            this.designcontainerRef.nativeElement.style['width'] = '200px';
             this.designcontainerRef.nativeElement.style['height'] = '500px';
 
         }
@@ -90,6 +94,7 @@ export class templateModuleComponent {
         this.tempHeight = newH;
         let userArray = this._textService.objArray;
         let oldW = parseInt(this.designcontainerRef.nativeElement.style['width']);
+        let oldH = parseInt(this.designcontainerRef.nativeElement.style["height"])
         let designObjs = this.designcontainerRef.nativeElement.children[0].children;
 
         let me = this;
@@ -109,11 +114,14 @@ export class templateModuleComponent {
                 this._textService.setSliderValue(newW, 'maxV');
                 let objLeft = currentObj.style['left'] === '' ? 0 : parseInt(currentObj.style['left'])
                 let objTop = currentObj.style['top'] === '' ? 0 : parseInt(currentObj.style['top'])
-                this._textService.setAlignmentValue(Math.round((objLeft * newW) / 100), 'left');
-                this._textService.setAlignmentValue(Math.round((objTop * newH) / 100), 'top');
+                console.log(newH,userArray[i].height,newW,calculatedW)
                 if ((newH < userArray[i].height) || newW < calculatedW) {
+                    
                     this._textService.setImageDimension(currentObj, newW, newH, userArray[i]);
                 }
+                this._textService.setAlignmentValue(Math.round((objLeft * newW) / 100), 'left');
+                this._textService.setAlignmentValue(Math.round((objTop * newH) / 100), 'top');
+
             }
             else {
                 let fontSize: any = ((parseInt(currentObj.style['fontSize']) / oldW) * 100).toFixed(1);
@@ -126,7 +134,13 @@ export class templateModuleComponent {
                 this._textService.setAlignmentValue(Math.round((objTop * newH) / 100), 'top');
                 console.log(this._textService.currentObj)
             }
-           
+
+            if (currentObj.id == userArray[i].id) {
+                if (newW > newH) {
+                    this._textService.setSliderValue(newH, 'maxV');
+                }
+            }
+
         }
         setTimeout(function () {
 

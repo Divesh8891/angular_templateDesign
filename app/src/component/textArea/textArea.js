@@ -35,7 +35,7 @@ var textAreaComponent = (function () {
     textAreaComponent = __decorate([
         core_1.Component({
             selector: '[textArea]',
-            template: " \n                    <textarea [placeholder]=\"textPlaceholder\" [class]=\"textAreaClass\" [(ngModel)]= \"textAreaValue\"></textarea>\n                    <button class=\"btn btn-lrg\" (click)=\"addtext($event)\">Add</button>\n                    <p #dummyText style=\"visibility:hidden\">{{textAreaValue}}</p>\n                "
+            template: " \n                    <textarea [placeholder]=\"textPlaceholder\" [class]=\"textAreaClass\" [(ngModel)]= \"textAreaValue\"></textarea>\n                    <button class=\"btn btn-lrg\" (click)=\"addtext($event)\">Add</button>\n                    <p #dummyText style=\"visibility:hidden;position:absolute;top:-100%\" class=\"m0\">{{textAreaValue}}</p>\n                "
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], textAreaComponent);

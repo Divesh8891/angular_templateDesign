@@ -6,7 +6,7 @@ import { TextService } from '../../service/text.service';
     template: ` 
                     <textarea [placeholder]="textPlaceholder" [class]="textAreaClass" [(ngModel)]= "textAreaValue"></textarea>
                     <button class="btn btn-lrg" (click)="addtext($event)">Add</button>
-                    <p #dummyText style="visibility:hidden">{{textAreaValue}}</p>
+                    <p #dummyText style="visibility:hidden;position:absolute;top:-100%" class="m0">{{textAreaValue}}</p>
                 `
 })
 

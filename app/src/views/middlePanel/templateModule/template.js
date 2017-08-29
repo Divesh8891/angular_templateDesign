@@ -38,9 +38,9 @@ var templateModuleComponent = (function () {
             this.designcontainerRef.nativeElement.style['width'] = '300px';
             this.designcontainerRef.nativeElement.style['height'] = '200px';
         }
-        if (event.target.innerHTML === "8:5") {
-            this.updateDesignObj(800, 500);
-            this.designcontainerRef.nativeElement.style['width'] = '800px';
+        if (event.target.innerHTML === "2:5") {
+            this.updateDesignObj(200, 500);
+            this.designcontainerRef.nativeElement.style['width'] = '200px';
             this.designcontainerRef.nativeElement.style['height'] = '500px';
         }
         if (event.target.innerHTML === "FB") {
@@ -55,6 +55,7 @@ var templateModuleComponent = (function () {
         this.tempHeight = newH;
         var userArray = this._textService.objArray;
         var oldW = parseInt(this.designcontainerRef.nativeElement.style['width']);
+        var oldH = parseInt(this.designcontainerRef.nativeElement.style["height"]);
         var designObjs = this.designcontainerRef.nativeElement.children[0].children;
         var me = this;
         for (var i = 0; i < designObjs.length; i++) {
@@ -72,11 +73,12 @@ var templateModuleComponent = (function () {
                 this._textService.setSliderValue(newW, 'maxV');
                 var objLeft = currentObj.style['left'] === '' ? 0 : parseInt(currentObj.style['left']);
                 var objTop = currentObj.style['top'] === '' ? 0 : parseInt(currentObj.style['top']);
-                this._textService.setAlignmentValue(Math.round((objLeft * newW) / 100), 'left');
-                this._textService.setAlignmentValue(Math.round((objTop * newH) / 100), 'top');
+                console.log(newH, userArray[i].height, newW, calculatedW);
                 if ((newH < userArray[i].height) || newW < calculatedW) {
                     this._textService.setImageDimension(currentObj, newW, newH, userArray[i]);
                 }
+                this._textService.setAlignmentValue(Math.round((objLeft * newW) / 100), 'left');
+                this._textService.setAlignmentValue(Math.round((objTop * newH) / 100), 'top');
             }
             else {
                 var fontSize = ((parseInt(currentObj.style['fontSize']) / oldW) * 100).toFixed(1);
@@ -88,6 +90,11 @@ var templateModuleComponent = (function () {
                 this._textService.setAlignmentValue(Math.round((objLeft * newW) / 100), 'left');
                 this._textService.setAlignmentValue(Math.round((objTop * newH) / 100), 'top');
                 console.log(this._textService.currentObj);
+            }
+            if (currentObj.id == userArray[i].id) {
+                if (newW > newH) {
+                    this._textService.setSliderValue(newH, 'maxV');
+                }
             }
         }
         setTimeout(function () {
@@ -126,7 +133,7 @@ var templateModuleComponent = (function () {
     templateModuleComponent = __decorate([
         core_1.Component({
             selector: '[templateModule]',
-            template: " \n                        <h5 class=\"heading\">Template Setting</h5>\n                        <div class=\"seperator\"></div>\n\n                        <div class=\"clearfix mt-10\">\n                        <button class=\"temp-back-color btn icon\" (click)=setTemplateBgcolor($event)><i  class=\"sprite-img\"></i></button>\n                        <div selectBox class=\"temp-opacity-sec\" [defaultOptionValue]=\"'Opacity'\" (change)=\"updateOpacity($event)\"></div>\n                        <div class=\"vertical-seperator\"></div>\n                        <button class=\"btn\" (click)=chooseImageForBg($event)>Choose Bg Image</button>\n                        <div class=\"vertical-seperator\"></div>\n                        <!--div class=\"temp-bg-setting\">\n                            <linkAsButton [parentClass]=\"''\" [applyClass]=\"'blankT btn'\" [btnText]=\"'Blank'\" (click)=setTemplateBg($event)></linkAsButton>\n                            <linkAsButton [parentClass]=\"'ml5'\" [applyClass]=\"'CommonT btn'\" [btnText]=\"'Common'\" (click)=setTemplateBg($event)></linkAsButton>\n                            <linkAsButton [parentClass]=\"'ml5'\" [applyClass]=\"'FunT btn'\" [btnText]=\"'Fun'\" (click)=setTemplateBg($event)></linkAsButton>\n                        </div-->\n                        <!--div class=\"inputSize\"> \n                            <span>Size</span>\n                            <input type=\"text\" class=\"width\" [(ngModel)]=\"tempWidth\"><input type=\"text\" class=\"height\" [(ngModel)]=\"tempHeight\">\n                            <linkAsButton [parentClass]=\"'display-inline m-0'\" [applyClass]=\"'goSize btn'\" [btnText]=\"'Go'\" (click)=setTemplateDimension($event)></linkAsButton>\n                        </div-->\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>1:1</button>\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>5:4</button>\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>4:3</button>\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>3:2</button>\n                        <div class=\"vertical-seperator\"></div>\n                        <div class=\"zoom\">\n                            <md-slider (input)=\"onRangeChanged($event)\"  min=\"{{minSliderValue}}\" max=\"{{maxSlidervalue}}\" value=\"{{defaultsliderValue}}\"></md-slider>\n                        </div>\n                        </div>\n\n    "
+            template: " \n                        <h5 class=\"heading\">Template Setting</h5>\n                        <div class=\"seperator\"></div>\n\n                        <div class=\"clearfix mt-10\">\n                        <button class=\"temp-back-color btn icon\" (click)=setTemplateBgcolor($event)><i  class=\"sprite-img\"></i></button>\n                        <div selectBox class=\"temp-opacity-sec\" [defaultOptionValue]=\"'Opacity'\" (change)=\"updateOpacity($event)\"></div>\n                        <div class=\"vertical-seperator\"></div>\n                        <button class=\"btn\" (click)=chooseImageForBg($event)>Choose Bg Image</button>\n                        <div class=\"vertical-seperator\"></div>\n                        <!--div class=\"temp-bg-setting\">\n                            <linkAsButton [parentClass]=\"''\" [applyClass]=\"'blankT btn'\" [btnText]=\"'Blank'\" (click)=setTemplateBg($event)></linkAsButton>\n                            <linkAsButton [parentClass]=\"'ml5'\" [applyClass]=\"'CommonT btn'\" [btnText]=\"'Common'\" (click)=setTemplateBg($event)></linkAsButton>\n                            <linkAsButton [parentClass]=\"'ml5'\" [applyClass]=\"'FunT btn'\" [btnText]=\"'Fun'\" (click)=setTemplateBg($event)></linkAsButton>\n                        </div-->\n                        <!--div class=\"inputSize\"> \n                            <span>Size</span>\n                            <input type=\"text\" class=\"width\" [(ngModel)]=\"tempWidth\"><input type=\"text\" class=\"height\" [(ngModel)]=\"tempHeight\">\n                            <linkAsButton [parentClass]=\"'display-inline m-0'\" [applyClass]=\"'goSize btn'\" [btnText]=\"'Go'\" (click)=setTemplateDimension($event)></linkAsButton>\n                        </div-->\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>1:1</button>\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>5:4</button>\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>4:3</button>\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>3:2</button>\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>2:5</button>\n                        <div class=\"vertical-seperator\"></div>\n                        <div class=\"zoom\">\n                            <label>Zoom</label>\n                            <md-slider (input)=\"onRangeChanged($event)\"  min=\"{{minSliderValue}}\" max=\"{{maxSlidervalue}}\" value=\"{{defaultsliderValue}}\"></md-slider>\n                            <input type=\"text\" class=\"zoomInput\" [(ngModel)]=\"tempZoomWidth\">\n                         </div>\n                        <div class=\"vertical-seperator\"></div>\n                        </div>\n\n    "
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], templateModuleComponent);

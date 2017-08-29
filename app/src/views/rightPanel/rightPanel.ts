@@ -9,59 +9,70 @@ import { TextService } from '../../service/text.service';
                         <linkAsButton [parentClass]="'m align-opt col-xs-4'" [applyClass]="'mid btn btn-lrg'" [btnText]="'M'" (click)=middleAlignment($event)></linkAsButton>
                         <linkAsButton [parentClass]="'r align-opt col-xs-4'" [applyClass]="'right btn btn-lrg'" [btnText]="'R'" (click)=rightAlignment($event)></linkAsButton-->
                         <div class="left-align">
-                            <label>Left</label>
+                            <h5 class="m0">Left</h5>
                             <div class="leftSlider">
-                                <md-slider class="custom-slider" (input)="onRangeChanged($event)"  min="{{minSliderValue}}" max="{{maxSlidervalue}}" value="{{defaultsliderValue}}"></md-slider>
+                                <md-slider class="custom-slider" (input)="onLeftChanged($event)"  min="{{minLeftSlidervalue}}" max="{{maxLeftSlidervalue}}" value="{{inputLeftValue}}"></md-slider>
                             </div>
-                            <input type="text" placeholder="Left" class="leftP" [(ngModel)]="inputLeftValue" >
+                            <input type="text" placeholder="Left" (input)="onLeftChangedFromInput($event)" class="leftP" [(ngModel)]="inputLeftValue" >
                         </div>
                         <div class="top-align">
-                            <label>Top</label>
+                            <h5 class="m0">Top</h5>
                             <div class="topSlider">
-                                <md-slider (input)="onRangeChanged($event)"  min="{{minSliderValue}}" max="{{maxSlidervalue}}" value="{{defaultsliderValue}}"></md-slider>
+                                <md-slider class="custom-slider" (input)="onTopChanged($event)"  min="{{minTopSliderValue}}" max="{{maxTopSlidervalue}}" value="{{inputTopValue}}"></md-slider>
                             </div>
-                            <input type="text" placeholder="top"class="topP" [(ngModel)]="inputTopValue">
+                            <input type="text" placeholder="top"class="topP" (input)="onTopChangedFromInput($event)" [(ngModel)]="inputTopValue">
                         </div>
                         <div class="text-center align-center">
-                         <linkAsButton [parentClass]="'display-inline'" [applyClass]="'btn'" [btnText]="'HCenter'" (click)=horizontalC($event)></linkAsButton>
-                         <linkAsButton [parentClass]="'display-inline'" [applyClass]="'btn'" [btnText]="'VCenter'" (click)=verticallyC($event)></linkAsButton>
+                            <button class="btn" (click)=horizontalC($event)>HCenter</button>
+                            <button class="btn" (click)=verticallyC($event)>VCenter</button>
                         </div>
                         <div class="seperator"></div>
                         <div class="width-align"  [attr.data-min]="inputWidthValue" [attr.data-max]="inputMaxWidthValue">
-                            <h5>Width </h5>
-                            <input type="text" placeholder="Min" class="widthA" [(ngModel)]="inputMinWidthValue" value={{inputMinWidthValue}}>
+                            <h5  class="m0">Width </h5>
                              <div class="widthSlider">
-                                <md-slider (input)="onRangeChanged($event)"  min="{{minSliderValue}}" max="{{maxSlidervalue}}" value="{{defaultsliderValue}}"></md-slider>
+                                <md-slider (input)="onWidthChanged($event)"  min="{{minWidthSlidervalue}}" max="{{maxWidthSlidervalue}}" value="{{inputMinWidthValue}}"></md-slider>
                             </div>     
-                            <input readonly placeholder="Max" type="text" class="widthA" [(ngModel)]="inputMaxWidthValue" value={{inputMaxWidthValue}}>
+                            <div class="text-center">
+                                <input type="text" (input)="onWidthChangedFromInput($event)" placeholder="Min" class="widthA" [(ngModel)]="inputMinWidthValue" value={{inputMinWidthValue}}>
+                                <input readonly placeholder="Max" type="text" class="widthA" [(ngModel)]="inputMaxWidthValue" value={{inputMaxWidthValue}}>
+                            </div>
                         </div>
                         <div class="seperator"></div>
                             <ul class="list-inline align-action">
-                                <li><linkAsButton [parentClass]="''" [applyClass]="'btn'" [btnText]="'Send Back'"  (click)=sendBack($event)></linkAsButton></li>
-                                <li><linkAsButton [parentClass]="''" [applyClass]="'btn'" [btnText]="'Send Backward'"  (click)=sendforward($event)></linkAsButton></li>
-                                <li><linkAsButton [parentClass]="''" [applyClass]="'btn'" [btnText]="'Bring front'"  (click)=bringFront($event)></linkAsButton></li>
-                                <li><linkAsButton [parentClass]="''" [applyClass]="'btn'" [btnText]="'Bring Backward'"  (click)=bringForward($event)></linkAsButton></li>
+                                <li><button class="btn" (click)=sendBack($event)>Send Back</button></li>
+                                <li><button class="btn" (click)=sendforward($event)>Send Backward</button></li>
+                                <li><button class="btn" (click)=bringFront($event)>Bring front</button></li>
+                                <li><button class="btn" (click)=bringForward($event)>Send Backward</button></li>
                              </ul>
                         <div class="seperator"></div>
                         <ul class="list-inline obj-action">
-                                <li><linkAsButton [parentClass]="''" [applyClass]="'delete btn'" [btnText]="'Delete'"  (click)=deleteNode($event)></linkAsButton></li>
-                                <li><linkAsButton [parentClass]="''" [applyClass]="'preview btn'" [btnText]="'Preview'"  (click)=showPreview($event)></linkAsButton></li>
-                                <li><linkAsButton [parentClass]="''" [applyClass]="'save btn'" [btnText]="'Save'"  (click)=saveImage($event)></linkAsButton></li>
+                            <li><button class="delete btn" (click)=deleteNode($event)>Delete</button></li>
+                            <li><button class="preview btn" (click)=showPreview($event)>Preview</button></li>
+                            <li><button class="save btn" (click)=saveImage($event)>Save</button></li>
                         </ul>
     `
 })
 
 export class rightPanelComponent {
-    maxSlidervalue: any = 100;
-    minSlidervalue: any = 0;
+    inputMinWidthValue: any;
+    inputMaxWidthValue: any;
+    minWidthSlidervalue: any = 0;
+    maxWidthSlidervalue: any = 100;
     defaultsliderValue: any = 0;
+
+    inputLeftValue: any;
+    minLeftSlidervalue: any = 0;
+    maxLeftSlidervalue: any = 100;
+    defaultLeftSlidervalue: any = this.inputLeftValue;
+
+    inputTopValue: any;
+    minTopSlidervalue: any = 0;
+    maxTopSlidervalue: any = 100;
+    defaultTopSlidervalue: any = this.inputTopValue;
+
     AlignmnetPanelTitle = "Alignment";
     currentObj: any;
     handlerRef: any;
-    inputLeftValue: any;
-    inputTopValue: any;
-    inputMinWidthValue: any;
-    inputMaxWidthValue: any;
 
 
     @ViewChild('slider') public slider: any;
@@ -69,7 +80,7 @@ export class rightPanelComponent {
     ngOnInit() {
         this._textService.getSliderMaxValue().subscribe(
             data => {
-                this.maxSlidervalue = data;
+                this.maxWidthSlidervalue = data;
                 this.inputMaxWidthValue = data;
             });
         this._textService.getSliderMinValue().subscribe(
@@ -79,11 +90,29 @@ export class rightPanelComponent {
             });
         this._textService.getLeftAlignment().subscribe(
             data => {
-                this.inputLeftValue = data;
+                // console.log((this._textService.designcontainerRef))
+
+                // console.log(parseInt(this._textService.designcontainerRef.nativeElement.offsetWidth),parseInt(this._textService.currentObj.nativeElement.offsetWidth))
+                let me = this;
+                setTimeout(function () {
+                    me.inputLeftValue = data;
+                    console.log(me._textService.designcontainerRef)
+                    console.log(me._textService.currentObj)
+
+                    me.maxLeftSlidervalue = parseInt(me._textService.designcontainerRef.nativeElement.offsetWidth) - parseInt(me._textService.currentObj.nativeElement.offsetWidth);
+                    console.log(this.maxLeftSlidervalue)
+                }, 100)
             });
         this._textService.getTopAlignment().subscribe(
             data => {
-                this.inputTopValue = data;
+                let me = this;
+
+                // console.log(parseInt(this._textService.designcontainerRef.nativeElement.offsetHeight), parseInt(this._textService.currentObj.nativeElement.offsetHeight))
+                setTimeout(function () {
+                    me.inputTopValue = data;
+                    me.maxTopSlidervalue = parseInt(me._textService.designcontainerRef.nativeElement.offsetHeight) - parseInt(me._textService.currentObj.nativeElement.offsetHeight);
+                    console.log(this.maxTopSlidervalue)
+                }, 100)
             });
 
 
@@ -142,7 +171,7 @@ export class rightPanelComponent {
         this.handlerRef.nativeElement.style.left = this.inputLeftValue - 5 + 'px';
 
     }
-    onRangeChanged(event: any) {
+    onWidthChanged(event: any) {
         this.handlerRef = this._textService.handlerRef;
         this.currentObj = this._textService.currentObj;
 
@@ -157,15 +186,83 @@ export class rightPanelComponent {
                     if (this.currentObj.nativeElement.dataset['type'] === 'image') {
                         this.currentObj.nativeElement.style['height'] = event.value / objArray[j].ratio + 'px';
                         objArray[j].height = event.value * objArray[j].ratio;
+                        console.log(this._textService.designcontainerRef.nativeElement.style["width"], event.value)
+                        // this.maxLeftSlidervalue = parseInt(this._textService.designcontainerRef.nativeElement.style["width"]) - event.value;
+                        // this.maxTopSlidervalue = parseInt(this._textService.designcontainerRef.nativeElement.style["height"]) - (event.value / objArray[j].ratio);
+                        this._textService.setAlignmentValue(event.value, 'left');
+                        this._textService.setAlignmentValue((event.value / objArray[j].ratio), 'top');
+
                     }
                     objArray[j].width = event.value;
                 }
             }
             this.handlerRef.nativeElement.style.width = this.currentObj.nativeElement.offsetWidth + 10 + 'px';
             this.handlerRef.nativeElement.style.height = this.currentObj.nativeElement.offsetHeight + 10 + 'px';
+
         }
     }
+    onWidthChangedFromInput(event: any) {
+        this.handlerRef = this._textService.handlerRef;
+        this.currentObj = this._textService.currentObj;
+        if (this.currentObj != undefined) {
+            this.currentObj.nativeElement.style['width'] = this._textService.pixelToPercentage((event.value), this._textService.designcontainerRef.nativeElement.offsetWidth);
+            this.handlerRef.nativeElement.style.left = this.currentObj.nativeElement.offsetLeft - 5 + 'px';
+        }
 
+    }
+    onLeftChanged(event: any) {
+        this.handlerRef = this._textService.handlerRef;
+        this.currentObj = this._textService.currentObj;
+        if (this.currentObj != undefined) {
+            this.inputLeftValue = event.value;
+            console.log(event.value, this._textService.designcontainerRef.nativeElement.offsetWidth)
+            this.currentObj.nativeElement.style['left'] = this._textService.pixelToPercentage((event.value), this._textService.designcontainerRef.nativeElement.offsetWidth);
+            this.handlerRef.nativeElement.style.left = this.currentObj.nativeElement.offsetLeft - 5 + 'px';
+        }
+    }
+    onLeftChangedFromInput(event: any) {
+        this.handlerRef = this._textService.handlerRef;
+        this.currentObj = this._textService.currentObj;
+        if (this.currentObj != undefined) {
+            if (event.target.value > this.maxLeftSlidervalue) {
+                this.currentObj.nativeElement.style['left'] = this._textService.pixelToPercentage((this.maxLeftSlidervalue), this._textService.designcontainerRef.nativeElement.offsetWidth);
+                this.inputLeftValue = this.maxLeftSlidervalue
+                alert("value cannot be exceed from container Height " + this._textService.designcontainerRef.nativeElement.offsetWidth);
+            }
+            else {
+                this.currentObj.nativeElement.style['left'] = this._textService.pixelToPercentage(event.target.value, this._textService.designcontainerRef.nativeElement.offsetWidth);
+            }
+            this.handlerRef.nativeElement.style.left = this.currentObj.nativeElement.offsetLeft - 5 + 'px';
+        }
+    }
+    onTopChangedFromInput(event: any) {
+        this.handlerRef = this._textService.handlerRef;
+        this.currentObj = this._textService.currentObj;
+        if (this.currentObj != undefined) {
+            let objH = this.currentObj.nativeElement.offsetHeight + 5;
+            let containerH = parseInt(this._textService.designcontainerRef.nativeElement.style["height"])
+            if (event.target.value > this.maxTopSlidervalue) {
+                this.currentObj.nativeElement.style['top'] = this._textService.pixelToPercentage((this.maxTopSlidervalue), containerH);
+                this.inputTopValue = this.maxTopSlidervalue
+                alert("value cannot be exceed from container Height " + this.maxTopSlidervalue);
+            }
+            else {
+                this.currentObj.nativeElement.style['top'] = this._textService.pixelToPercentage(event.target.value, containerH);
+            }
+            this.handlerRef.nativeElement.style.top = this.currentObj.nativeElement.offsetTop - 5 + 'px';
+        }
+    }
+    onTopChanged(event: any) {
+        this.handlerRef = this._textService.handlerRef;
+        this.currentObj = this._textService.currentObj;
+        if (this.currentObj != undefined) {
+            let containerH = parseInt(this._textService.designcontainerRef.nativeElement.style["height"])
+            this.inputTopValue = event.value;
+            let objH = this.currentObj.nativeElement.offsetHeight;
+            this.currentObj.nativeElement.style['top'] = this._textService.pixelToPercentage((event.value), containerH);
+            this.handlerRef.nativeElement.style.top = this.currentObj.nativeElement.offsetTop - 5 + 'px';
+        }
+    }
     constructor(private _textService: TextService) {
     }
 }

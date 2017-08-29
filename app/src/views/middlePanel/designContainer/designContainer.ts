@@ -88,11 +88,9 @@ export class designContainer {
 
         this.currentObj.nativeElement.style.width = this._textService.pixelToPercentage((event.target.offsetWidth), this.designTooSec.nativeElement.style["width"])
         this._textService.setSliderValue(currentImagewidth, 'minV');
-        this._textService.setAlignmentValue(event.target.offsetLeft, 'left');
-        this._textService.setAlignmentValue(event.target.offsetTop, 'top');
-
-
         this._textService.setSliderValue(parseInt(this.designTooSec.nativeElement.style["width"]), 'maxV');
+        // this._textService.setAlignmentValue(event.target.offsetLeft, 'left');
+        // this._textService.setAlignmentValue(event.target.offsetTop, 'top');
         if (parseInt(this.designTooSec.nativeElement.style["width"]) > parseInt(this.designTooSec.nativeElement.style["height"])) {
             this._textService.setSliderValue(parseInt(this.designTooSec.nativeElement.style["height"]), 'maxV');
         }

@@ -83,10 +83,14 @@ var TextService = (function () {
         }
     };
     TextService.prototype.setAlignmentValue = function (data, type) {
+        // let alignData = {}
+        // alignData[type] = data;
         if (type === 'left') {
+            // alignData["containerWidth"] = parseInt(this.designcontainerRef.nativeElement.style.width) - this.currentObj.nativeElement.offsetWidth;
             this.leftAlignmentValue.next(data);
         }
         if (type === 'top') {
+            // alignData["containerHeight"] = parseInt(this.designcontainerRef.nativeElement.style.height) - this.currentObj.nativeElement.offsetHeight;
             this.topAlignmentValue.next(data);
         }
     };

@@ -13,6 +13,9 @@ export class TextService {
     public leftAlignmentValue = new Subject();
     public topAlignmentValue = new Subject();
 
+
+
+
     currentObj: any;
     nodeArray: any;
     colorBoxRef: any;
@@ -44,6 +47,7 @@ export class TextService {
     }
     setSliderValue(data: any, type: any) {
         if (type === 'minV') {
+
             this.sliderMinValue.next(data);
         }
         if (type === 'maxV') {
@@ -52,10 +56,16 @@ export class TextService {
 
     }
     setAlignmentValue(data: any, type: any) {
+        // let alignData = {}
+        // alignData[type] = data;
         if (type === 'left') {
+            // alignData["containerWidth"] = parseInt(this.designcontainerRef.nativeElement.style.width) - this.currentObj.nativeElement.offsetWidth;
+
             this.leftAlignmentValue.next(data);
         }
         if (type === 'top') {
+            // alignData["containerHeight"] = parseInt(this.designcontainerRef.nativeElement.style.height) - this.currentObj.nativeElement.offsetHeight;
+
             this.topAlignmentValue.next(data);
         }
 
@@ -72,6 +82,7 @@ export class TextService {
     getTopAlignment() {
         return this.topAlignmentValue.asObservable();
     }
+
     setCurrentObj(currentObjData: any, handlerData: any) {
         this.currentObj = currentObjData;
         this.handlerRef = handlerData;
