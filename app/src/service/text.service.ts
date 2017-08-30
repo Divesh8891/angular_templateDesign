@@ -13,6 +13,9 @@ export class TextService {
     public leftAlignmentValue = new Subject();
     public topAlignmentValue = new Subject();
 
+    public temBgValue = new Subject();
+    public textBgValue = new Subject();
+
 
 
 
@@ -45,6 +48,16 @@ export class TextService {
     getObjArray() {
         return this.objArraySource.asObservable();
     }
+    hexToRgbA(hex: any, opacity: any) {
+        hex = hex.replace('#', '');
+        let r = parseInt(hex.substring(0, hex.length / 3), 16);
+        let g = parseInt(hex.substring(hex.length / 3, 2 * hex.length / 3), 16);
+        let b = parseInt(hex.substring(2 * hex.length / 3, 3 * hex.length / 3), 16);
+
+        let result = 'rgba(' + r + ',' + g + ',' + b + ',' + opacity / 100 + ')';
+        return result;
+    }
+
     setSliderValue(data: any, type: any) {
         if (type === 'minV') {
 

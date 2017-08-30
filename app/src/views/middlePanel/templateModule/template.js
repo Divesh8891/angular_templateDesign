@@ -65,7 +65,7 @@ var templateModuleComponent = (function () {
             var calculatedW = Math.round((imgWidth / oldW) * newW);
             // console.log(newH, calculatedW, imgRatio);
             userArray[i].width = (calculatedW);
-            userArray[i].height = calculatedW * imgRatio;
+            userArray[i].height = calculatedW / imgRatio;
             if (currentObj.dataset['type'] === 'image') {
                 currentObj.style['width'] = this._textService.pixelToPercentage(userArray[i].width, newW);
                 currentObj.style['height'] = userArray[i].height + 'px';
@@ -122,7 +122,7 @@ var templateModuleComponent = (function () {
         this.colorBoxRef.nativeElement.style.display = 'block';
     };
     templateModuleComponent.prototype.updateOpacity = function (event) {
-        this.designcontainerRef.nativeElement.style['opacity'] = event.target.value;
+        this._textService.designcontainerRef.nativeElement.style['background-color'] = this._textService.hexToRgbA(this._textService.colorBoxRef.nativeElement.dataset.cValue, parseFloat(event.target.value) * 100);
     };
     templateModuleComponent.prototype.setTemplateDimension = function (event) {
         this.getDesignContainerRef();

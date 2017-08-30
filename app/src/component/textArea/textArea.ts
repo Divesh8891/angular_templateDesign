@@ -29,6 +29,7 @@ export class textAreaComponent {
         this._textService.setSliderValue(textWidth, 'minV');
         this._textService.setSliderValue(parseInt(this._textService.designcontainerRef.nativeElement.style.width), 'maxV');
     }
+  
 
     constructor(private _textService: TextService) { }
 

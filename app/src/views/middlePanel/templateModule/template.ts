@@ -106,7 +106,7 @@ export class templateModuleComponent {
             // console.log(newH, calculatedW, imgRatio);
 
             userArray[i].width = (calculatedW);
-            userArray[i].height = calculatedW * imgRatio;
+            userArray[i].height = calculatedW / imgRatio;
             if (currentObj.dataset['type'] === 'image') {
                 currentObj.style['width'] = this._textService.pixelToPercentage(userArray[i].width, newW);
                 currentObj.style['height'] = userArray[i].height + 'px';
@@ -172,7 +172,7 @@ export class templateModuleComponent {
         this.colorBoxRef.nativeElement.style.display = 'block';
     }
     updateOpacity(event: any) {
-        this.designcontainerRef.nativeElement.style['opacity'] = event.target.value;
+        this._textService.designcontainerRef.nativeElement.style['background-color'] = this._textService.hexToRgbA(this._textService.colorBoxRef.nativeElement.dataset.cValue,parseFloat(event.target.value)*100);
     }
     setTemplateDimension(event: any) {
         this.getDesignContainerRef();

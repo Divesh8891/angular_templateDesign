@@ -15,6 +15,7 @@ var textModuleComponent = (function () {
     function textModuleComponent(_textService) {
         this._textService = _textService;
         this.textPanelTitle = "Text";
+        this.me = this;
     }
     textModuleComponent.prototype.updateFontS = function (event) {
         this.updateTextcurrentObj('fontSize', event.target.value + 'px');
@@ -23,14 +24,13 @@ var textModuleComponent = (function () {
         this.updateTextcurrentObj('lineHeight', event.target.value + 'px');
     };
     textModuleComponent.prototype.updateOpacity = function (event) {
-        this.updateTextcurrentObj('opacity', event.target.value);
+        this.updateTextcurrentObj('background-color', this._textService.hexToRgbA(this.colorBoxRef.dataset.cValue, parseFloat(event.target.value) * 100));
     };
     textModuleComponent.prototype.updateFontFamliy = function (event) {
         this.updateTextcurrentObj('fontFamily', event.target.value);
     };
     textModuleComponent.prototype.updateStrokeWidth = function (event) {
-        this.colorBoxRef = this._textService.colorBoxRef;
-        this.updateTextcurrentObj("textShadow", this.colorBoxRef.nativeElement.dataset['textShadow'] + ' 0px 0px ' + event.target.value + 'px');
+        this.updateTextcurrentObj("textShadow", this._textService.colorBoxRef.nativeElement.dataset['textShadow'] + ' 0px 0px ' + event.target.value + 'px');
     };
     textModuleComponent.prototype.applyColor = function (event) {
         this.updateColorBoxObj("color");
@@ -40,6 +40,10 @@ var textModuleComponent = (function () {
     };
     textModuleComponent.prototype.applyBgColor = function (event) {
         this.updateColorBoxObj("backgroundColor");
+    };
+    textModuleComponent.prototype.updateColorBoxObj = function (property) {
+        this._textService.colorBoxRef.nativeElement.dataset['call'] = property;
+        this._textService.colorBoxRef.nativeElement.style.display = 'block';
     };
     textModuleComponent.prototype.applyBold = function (event) {
         if (event.target.classList.contains('active')) {
@@ -71,20 +75,27 @@ var textModuleComponent = (function () {
             this.updateTextcurrentObj('textDecoration', 'underline');
         }
     };
-    textModuleComponent.prototype.updateColorBoxObj = function (property) {
-        this.colorBoxRef = this._textService.colorBoxRef;
-        this.colorBoxRef.nativeElement.dataset['call'] = property;
-        this.colorBoxRef.nativeElement.style.display = 'block';
-    };
     textModuleComponent.prototype.updateTextcurrentObj = function (property, value) {
-        this.currentObj = this._textService.currentObj;
-        this.handlerRef = this._textService.handlerRef;
-        console.log(this.currentObj.nativeElement.style['width']);
-        this.currentObj.nativeElement.style[property] = value;
-        console.log(this.currentObj.nativeElement.style['width']);
-        this._textService.setSliderValue(this.currentObj.nativeElement.offsetWidth, 'minV');
-        this.handlerRef.nativeElement.style.width = this.currentObj.nativeElement.offsetWidth + 10 + 'px';
-        this.handlerRef.nativeElement.style.height = this.currentObj.nativeElement.offsetHeight + 10 + 'px';
+        console.log(this._textService.currentObj);
+        var oldFontValue = parseInt(this._textService.currentObj.nativeElement.style[property]);
+        this._textService.currentObj.nativeElement.style[property] = value;
+        if (property == 'fontSize') {
+            var objWidth = Math.round((parseInt(this._textService.currentObj.nativeElement.style.width) * parseInt(this._textService.designcontainerRef.nativeElement.style.width)) / 100);
+            console.log(objWidth, oldFontValue);
+            var newWidthValue = this._textService.pixelToPercentage(((parseInt(value) * objWidth) / oldFontValue), this._textService.designcontainerRef.nativeElement.style["width"]);
+            console.log(newWidthValue);
+            this._textService.currentObj.nativeElement.style.width = newWidthValue;
+        }
+        this._textService.setSliderValue(this._textService.currentObj.nativeElement.offsetWidth, 'minV');
+        this._textService.handlerRef.nativeElement.style.width = this._textService.currentObj.nativeElement.offsetWidth + 10 + 'px';
+        this._textService.handlerRef.nativeElement.style.height = this._textService.currentObj.nativeElement.offsetHeight + 10 + 'px';
+    };
+    textModuleComponent.prototype.ngAfterViewChecked = function () {
+        //console.log(this._textService.currentObj)
+        // this.currentObj = this._textService.currentObj.nativeElement;
+        // this._textService.handlerRef.nativeElement = this._textService.handlerRef.nativeElement;
+        //this._textService.colorBoxRef.nativeElement = this._textService.colorBoxRef.nativeElement;
+        // this._textService.designcontainerRef.nativeElement = this._textService.designcontainerRef.nativeElement;
     };
     textModuleComponent = __decorate([
         core_1.Component({

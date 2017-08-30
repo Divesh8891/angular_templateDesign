@@ -31,22 +31,22 @@ export class textModuleComponent {
     currentObj: any;
     colorBoxRef: any;
     handlerRef: any;
+    containerRef :any;
+    me = this;
     updateFontS(event: any) {
         this.updateTextcurrentObj('fontSize', event.target.value + 'px');
-
     }
     updateLineHeight(event: any) {
         this.updateTextcurrentObj('lineHeight', event.target.value + 'px')
     }
     updateOpacity(event: any) {
-        this.updateTextcurrentObj('opacity', event.target.value)
+        this.updateTextcurrentObj('background-color', this._textService.hexToRgbA(this.colorBoxRef.dataset.cValue, parseFloat(event.target.value) * 100))
     }
     updateFontFamliy(event: any) {
         this.updateTextcurrentObj('fontFamily', event.target.value)
     }
     updateStrokeWidth(event: any) {
-        this.colorBoxRef = this._textService.colorBoxRef;
-        this.updateTextcurrentObj("textShadow", this.colorBoxRef.nativeElement.dataset['textShadow'] + ' 0px 0px ' + event.target.value + 'px')
+        this.updateTextcurrentObj("textShadow",this._textService.colorBoxRef.nativeElement.dataset['textShadow'] + ' 0px 0px ' + event.target.value + 'px')
     }
     applyColor(event: any) {
         this.updateColorBoxObj("color");
@@ -57,6 +57,10 @@ export class textModuleComponent {
 
     applyBgColor(event: any) {
         this.updateColorBoxObj("backgroundColor");
+    }
+    updateColorBoxObj(property: any) {
+       this._textService.colorBoxRef.nativeElement.dataset['call'] = property;
+       this._textService.colorBoxRef.nativeElement.style.display = 'block';
     }
 
     applyBold(event: any) {
@@ -70,7 +74,6 @@ export class textModuleComponent {
         }
 
     }
-
     applyItalic(event: any) {
         if (event.target.classList.contains('active')) {
             event.target.classList.remove('active')
@@ -82,7 +85,6 @@ export class textModuleComponent {
         }
 
     }
-
     applyUnderline(event: any) {
         if (event.target.classList.contains('active')) {
             event.target.classList.remove('active')
@@ -93,23 +95,30 @@ export class textModuleComponent {
             this.updateTextcurrentObj('textDecoration', 'underline')
         }
     }
-    updateColorBoxObj(property: any) {
-        this.colorBoxRef = this._textService.colorBoxRef;
-        this.colorBoxRef.nativeElement.dataset['call'] = property;
-        this.colorBoxRef.nativeElement.style.display = 'block';
-    }
     updateTextcurrentObj(property: any, value: any) {
-        this.currentObj = this._textService.currentObj;
-        this.handlerRef = this._textService.handlerRef;
-        console.log(this.currentObj.nativeElement.style['width'])
-        this.currentObj.nativeElement.style[property] = value;
-        console.log(this.currentObj.nativeElement.style['width'])
-
-        this._textService.setSliderValue(this.currentObj.nativeElement.offsetWidth, 'minV');
+        console.log(this._textService.currentObj)
+        let oldFontValue = parseInt(this._textService.currentObj.nativeElement.style[property])
+        this._textService.currentObj.nativeElement.style[property] = value;
+        if(property =='fontSize'){
+            let objWidth = Math.round((parseInt(this._textService.currentObj.nativeElement.style.width) * parseInt(this._textService.designcontainerRef.nativeElement.style.width))/100);
+            console.log(objWidth,oldFontValue)
+            let newWidthValue = this._textService.pixelToPercentage(((parseInt(value) * objWidth)/oldFontValue), this._textService.designcontainerRef.nativeElement.style["width"]);
+            console.log(newWidthValue)
+            this._textService.currentObj.nativeElement.style.width = newWidthValue
+        }
+        this._textService.setSliderValue(this._textService.currentObj.nativeElement.offsetWidth, 'minV');
+        this._textService.handlerRef.nativeElement.style.width = this._textService.currentObj.nativeElement.offsetWidth + 10 + 'px';
+        this._textService.handlerRef.nativeElement.style.height = this._textService.currentObj.nativeElement.offsetHeight + 10 + 'px';
+    }
+    
+    ngAfterViewChecked() {
+        //console.log(this._textService.currentObj)
+        // this.currentObj = this._textService.currentObj.nativeElement;
+        // this._textService.handlerRef.nativeElement = this._textService.handlerRef.nativeElement;
+       //this._textService.colorBoxRef.nativeElement = this._textService.colorBoxRef.nativeElement;
+        // this._textService.designcontainerRef.nativeElement = this._textService.designcontainerRef.nativeElement;
         
 
-        this.handlerRef.nativeElement.style.width = this.currentObj.nativeElement.offsetWidth + 10 + 'px';
-        this.handlerRef.nativeElement.style.height = this.currentObj.nativeElement.offsetHeight + 10 + 'px';
     }
     constructor(private _textService: TextService) {
     }

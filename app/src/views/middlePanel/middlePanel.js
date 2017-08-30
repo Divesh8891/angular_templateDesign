@@ -118,7 +118,7 @@ var MiddlePanelComponent = (function () {
     MiddlePanelComponent = __decorate([
         core_1.Component({
             selector: '[middleModule]',
-            template: " \n                <section class=\"template-module bg-grey\" templateModule></section>\n                <section class=\"design-section display-inline\" designContainer></section>\n                <div class=\"popup-body\"><div id=\"img-out\" #modal><img  src=\"{{modalImgSrc}}\"/></div></div>\n                <section class=\"downloadImgCont\" #downloadImgCont></section>\n        \n                        \n    "
+            template: " \n                <section class=\"template-module bg-grey\" templateModule></section>\n                <section class=\"design-section display-inline\" designContainer></section>\n              \n        \n                        \n    "
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], MiddlePanelComponent);

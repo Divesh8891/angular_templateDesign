@@ -17,8 +17,11 @@ var colorBoxComponent = (function () {
     }
     colorBoxComponent.prototype.pickcolor = function (event) {
         this.currentObj = this._textService.currentObj;
+        console.log(event);
         var styleProp = this.elements.nativeElement.dataset['call'];
-        var pickedColorValue = event.target.style.backgroundColor;
+        var pickedColorValue = this._textService.hexToRgbA(event.target.dataset['colorvalue'], 80);
+        this.elements.nativeElement.dataset['cValue'] = event.target.dataset['colorvalue'];
+        // console.log(pickedColorValue)
         if (this.elements.nativeElement.dataset['module'] === "") {
             if (styleProp === 'textShadow') {
                 this.elements.nativeElement.dataset['textShadow'] = pickedColorValue;
@@ -32,6 +35,7 @@ var colorBoxComponent = (function () {
         else {
             this.designcontainerRef = this._textService.designcontainerRef;
             this.designcontainerRef.nativeElement.firstElementChild.attributes['data-bg'].value = '';
+            // console.log(this.hexToRgbA(event.target.dataset['colorvalue']), styleProp)
             this.designcontainerRef.nativeElement.style[styleProp] = pickedColorValue;
             this.elements.nativeElement.dataset['module'] = '';
         }
@@ -52,7 +56,7 @@ var colorBoxComponent = (function () {
     colorBoxComponent = __decorate([
         core_1.Component({
             selector: 'color-box',
-            template: "\n  <ul class=\"custom-color-picker\" data-call=\"dasd\" data-module=\"\" #colorBox>\n    <li *ngFor=\"let colorVal of colorArray\">\n      <span [style.backgroundColor]=\"colorVal\"  (click)=\"pickcolor($event)\"></span>\n    </li>\n    <li>\n      <a href=\"javascript:text.openColorPicker()\" class=\"more-color pull-right\">More color</a>\n      <a class=\"default pull-left\" href=\"javascript:void(0)\" (click)=\"closeColorBox()\">No color</a>\n    </li>\n  </ul>\n                    \n     "
+            template: "\n  <ul class=\"custom-color-picker\" data-call=\"dasd\" data-module=\"\" data-cValue=\"\" #colorBox>\n    <li *ngFor=\"let colorVal of colorArray\">\n      <span [style.backgroundColor]=\"colorVal\"  [attr.data-colorValue]=\"colorVal\" (click)=\"pickcolor($event)\"></span>\n    </li>\n    <li>\n      <a href=\"javascript:text.openColorPicker()\" class=\"more-color pull-right\">More color</a>\n      <a class=\"default pull-left\" href=\"javascript:void(0)\" (click)=\"closeColorBox()\">No color</a>\n    </li>\n  </ul>\n                    \n     "
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], colorBoxComponent);

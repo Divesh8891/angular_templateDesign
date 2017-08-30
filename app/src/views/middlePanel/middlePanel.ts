@@ -5,8 +5,7 @@ import { TextService } from '../../service/text.service';
     template: ` 
                 <section class="template-module bg-grey" templateModule></section>
                 <section class="design-section display-inline" designContainer></section>
-                <div class="popup-body"><div id="img-out" #modal><img  src="{{modalImgSrc}}"/></div></div>
-                <section class="downloadImgCont" #downloadImgCont></section>
+              
         
                         
     `
