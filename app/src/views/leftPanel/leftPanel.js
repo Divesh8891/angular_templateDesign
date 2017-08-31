@@ -15,7 +15,7 @@ var leftPanelComponent = (function () {
         this.childTitle = 'This text is passed to child';
     }
     leftPanelComponent.prototype.ngAfterViewInit = function () {
-        console.log(this.alignmentRef);
+        // console.log(this.alignmentRef)
     };
     __decorate([
         core_1.ViewChild('alignment', { read: core_1.ElementRef }),

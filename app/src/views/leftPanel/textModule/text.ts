@@ -40,7 +40,7 @@ export class textModuleComponent {
         this.updateTextcurrentObj('lineHeight', event.target.value + 'px')
     }
     updateOpacity(event: any) {
-        this.updateTextcurrentObj('background-color', this._textService.hexToRgbA(this.colorBoxRef.dataset.cValue, parseFloat(event.target.value) * 100))
+        this.updateTextcurrentObj('background-color', this._textService.hexToRgbA(this._textService.colorBoxRef.nativeElement.dataset.cValue, parseFloat(event.target.value) * 100))
     }
     updateFontFamliy(event: any) {
         this.updateTextcurrentObj('fontFamily', event.target.value)
@@ -96,14 +96,14 @@ export class textModuleComponent {
         }
     }
     updateTextcurrentObj(property: any, value: any) {
-        console.log(this._textService.currentObj)
+        //console.log(this._textService.currentObj)
         let oldFontValue = parseInt(this._textService.currentObj.nativeElement.style[property])
         this._textService.currentObj.nativeElement.style[property] = value;
         if(property =='fontSize'){
             let objWidth = Math.round((parseInt(this._textService.currentObj.nativeElement.style.width) * parseInt(this._textService.designcontainerRef.nativeElement.style.width))/100);
-            console.log(objWidth,oldFontValue)
+            //console.log(objWidth,oldFontValue)
             let newWidthValue = this._textService.pixelToPercentage(((parseInt(value) * objWidth)/oldFontValue), this._textService.designcontainerRef.nativeElement.style["width"]);
-            console.log(newWidthValue)
+            //console.log(newWidthValue)
             this._textService.currentObj.nativeElement.style.width = newWidthValue
         }
         this._textService.setSliderValue(this._textService.currentObj.nativeElement.offsetWidth, 'minV');
@@ -112,7 +112,7 @@ export class textModuleComponent {
     }
     
     ngAfterViewChecked() {
-        //console.log(this._textService.currentObj)
+       // console.log(this._textService)
         // this.currentObj = this._textService.currentObj.nativeElement;
         // this._textService.handlerRef.nativeElement = this._textService.handlerRef.nativeElement;
        //this._textService.colorBoxRef.nativeElement = this._textService.colorBoxRef.nativeElement;

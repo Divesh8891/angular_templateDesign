@@ -58,20 +58,20 @@ var rightPanelComponent = (function () {
             }, 100);
         });
     };
-    rightPanelComponent.prototype.leftAlignment = function (event) {
-        this.updateCurrentObj({ 'left': '0' });
-        // console.log(this.slider)
-    };
-    rightPanelComponent.prototype.middleAlignment = function (event) {
-        var currentObjW = parseInt(this._textService.currentObj.nativeElement.style['width']);
-        var objLet = Math.round((100 - currentObjW) / 2);
-        this.updateCurrentObj({ 'left': objLet });
-    };
-    rightPanelComponent.prototype.rightAlignment = function (event) {
-        var containerW = parseInt(this._textService.currentObj.nativeElement.style["width"]);
-        var objLet = (100 - containerW);
-        this.updateCurrentObj({ 'left': objLet });
-    };
+    // leftAlignment(event: any) {
+    //     this.updateCurrentObj({ 'left': '0' });
+    //    // console.log(this.slider)
+    // }
+    // middleAlignment(event: any) {
+    //     let currentObjW = parseInt(this._textService.currentObj.nativeElement.style['width'])
+    //     let objLet = Math.round((100 - currentObjW) / 2);
+    //     this.updateCurrentObj({ 'left': objLet });
+    // }
+    // rightAlignment(event: any) {
+    //     let containerW = parseInt(this._textService.currentObj.nativeElement.style["width"]);
+    //     let objLet = (100 - containerW);
+    //     this.updateCurrentObj({ 'left': objLet });
+    // }
     rightPanelComponent.prototype.horizontalC = function () {
         var currentObjW = parseInt(this._textService.currentObj.nativeElement.style['width']);
         var objLet = Math.round((100 - currentObjW) / 2);
@@ -251,6 +251,7 @@ var rightPanelComponent = (function () {
         var me = this;
         me.handlerRef = this._textService.handlerRef;
         me.handlerRef.nativeElement.style.display = 'none';
+        console.log(this._textService.designcontainerRef.nativeElement);
         html2canvas(this._textService.designcontainerRef.nativeElement).then(function (canvas) {
             canvas.setAttribute("id", "canvas1");
             me._textService.canvasElem.nativeElement.appendChild(canvas);
@@ -265,6 +266,7 @@ var rightPanelComponent = (function () {
         me.handlerRef = this._textService.handlerRef;
         me.handlerRef.nativeElement.style.display = 'none';
         html2canvas(this._textService.designcontainerRef.nativeElement).then(function (canvas) {
+            canvas.backgroundColor = "rgba(19, 41, 75, 0.3)";
             canvas.setAttribute("id", "canvas1");
             me._textService.canvasElem.nativeElement.appendChild(canvas);
             me.canvasImageSrc = me._textService.canvasElem.nativeElement.children['canvas1'].toDataURL("image/jpeg");

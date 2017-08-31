@@ -21,7 +21,7 @@ var TextService = (function () {
         this.users = [];
         this.objArray = [];
         this.setImageDimension = function (currentObj, containerW, containerH, objArray) {
-            console.log("setdimension");
+            // console.log("setdimension")
             // console.log(currentObj, containerW, containerH, objArray)
             var maxWidth = parseInt(containerW); // Max width for the image
             var maxHeight = parseInt(containerH); // Max height for the image
@@ -52,7 +52,7 @@ var TextService = (function () {
                 width = width * ratio; // Reset width to match scaled image
                 height = height * ratio; // Reset height to match scaled image
             }
-            console.log(width, height);
+            //console.log(width, height)
             objArray.width = width;
             objArray.height = height;
             // this.textHandler.nativeElement.style.width = parseInt(localCurrentObj.offsetWidth) + 10 + 'px';
@@ -71,7 +71,7 @@ var TextService = (function () {
         var me = this;
         this.objArray.push(new objArray(data.id, data.oriWidth, data.oriHeight, data.oriWidth, data.oriHeight, data.ratio));
         this.objArraySource.next(me.objArray);
-        console.log(this.objArray);
+        //console.log(this.objArray)
     };
     TextService.prototype.getObjArray = function () {
         return this.objArraySource.asObservable();

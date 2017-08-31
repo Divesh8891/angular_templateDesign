@@ -124,21 +124,21 @@ export class rightPanelComponent {
 
     }
 
-    leftAlignment(event: any) {
-        this.updateCurrentObj({ 'left': '0' });
-       // console.log(this.slider)
-    }
-    middleAlignment(event: any) {
-        let currentObjW = parseInt(this._textService.currentObj.nativeElement.style['width'])
-        let objLet = Math.round((100 - currentObjW) / 2);
-        this.updateCurrentObj({ 'left': objLet });
+    // leftAlignment(event: any) {
+    //     this.updateCurrentObj({ 'left': '0' });
+    //    // console.log(this.slider)
+    // }
+    // middleAlignment(event: any) {
+    //     let currentObjW = parseInt(this._textService.currentObj.nativeElement.style['width'])
+    //     let objLet = Math.round((100 - currentObjW) / 2);
+    //     this.updateCurrentObj({ 'left': objLet });
 
-    }
-    rightAlignment(event: any) {
-        let containerW = parseInt(this._textService.currentObj.nativeElement.style["width"]);
-        let objLet = (100 - containerW);
-        this.updateCurrentObj({ 'left': objLet });
-    }
+    // }
+    // rightAlignment(event: any) {
+    //     let containerW = parseInt(this._textService.currentObj.nativeElement.style["width"]);
+    //     let objLet = (100 - containerW);
+    //     this.updateCurrentObj({ 'left': objLet });
+    // }
     horizontalC() {
         let currentObjW = parseInt(this._textService.currentObj.nativeElement.style['width'])
         let objLet = Math.round((100 - currentObjW) / 2);
@@ -230,7 +230,7 @@ export class rightPanelComponent {
         this.currentObj = this._textService.currentObj;
         if (this.currentObj != undefined) {
             this.inputLeftValue = event.value;
-           // console.log(event.value, this._textService.designcontainerRef.nativeElement.offsetWidth)
+            // console.log(event.value, this._textService.designcontainerRef.nativeElement.offsetWidth)
             this.currentObj.nativeElement.style['left'] = this._textService.pixelToPercentage((event.value), this._textService.designcontainerRef.nativeElement.offsetWidth);
             this.handlerRef.nativeElement.style.left = this.currentObj.nativeElement.offsetLeft - 5 + 'px';
         }
@@ -338,7 +338,7 @@ export class rightPanelComponent {
         let me = this;
         me.handlerRef = this._textService.handlerRef;
         me.handlerRef.nativeElement.style.display = 'none';
-
+        console.log(this._textService.designcontainerRef.nativeElement)
         html2canvas(this._textService.designcontainerRef.nativeElement).then(function (canvas: any) {
             canvas.setAttribute("id", "canvas1");
             me._textService.canvasElem.nativeElement.appendChild(canvas);
@@ -349,12 +349,13 @@ export class rightPanelComponent {
 
     }
     saveImage() {
-       // console.log("asdasdasd")
+        // console.log("asdasdasd")
         let me = this;
         me.handlerRef = this._textService.handlerRef;
         me.handlerRef.nativeElement.style.display = 'none';
 
         html2canvas(this._textService.designcontainerRef.nativeElement).then(function (canvas: any) {
+            canvas.backgroundColor = "rgba(19, 41, 75, 0.3)";
             canvas.setAttribute("id", "canvas1");
             me._textService.canvasElem.nativeElement.appendChild(canvas);
             me.canvasImageSrc = me._textService.canvasElem.nativeElement.children['canvas1'].toDataURL("image/jpeg");

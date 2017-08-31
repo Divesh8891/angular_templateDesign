@@ -11,10 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var text_service_1 = require("../../../service/text.service");
+var angular2_color_picker_1 = require("angular2-color-picker");
 var templateModuleComponent = (function () {
-    function templateModuleComponent(_textService) {
+    function templateModuleComponent(cpService, _textService) {
+        this.cpService = cpService;
         this._textService = _textService;
         this.tempatePanelTitle = "Text";
+        this.color = "#ddd";
     }
     templateModuleComponent.prototype.setTemplateSize = function (event) {
         this.getDesignContainerRef();
@@ -48,6 +51,11 @@ var templateModuleComponent = (function () {
             this.designcontainerRef.nativeElement.style['width'] = '768px';
             this.designcontainerRef.nativeElement.style['height'] = '768px';
         }
+    };
+    templateModuleComponent.prototype.closePicker = function (event) {
+        this.getDesignContainerRef();
+        this.designcontainerRef.nativeElement.firstElementChild.attributes['data-bg'].value = '';
+        this.designcontainerRef.nativeElement.firstElementChild.style["background-color"] = this._textService.hexToRgbA(event, 80);
     };
     templateModuleComponent.prototype.updateDesignObj = function (newW, newH) {
         this.getDesignContainerRef();
@@ -122,7 +130,7 @@ var templateModuleComponent = (function () {
         this.colorBoxRef.nativeElement.style.display = 'block';
     };
     templateModuleComponent.prototype.updateOpacity = function (event) {
-        this._textService.designcontainerRef.nativeElement.style['background-color'] = this._textService.hexToRgbA(this._textService.colorBoxRef.nativeElement.dataset.cValue, parseFloat(event.target.value) * 100);
+        this._textService.designcontainerRef.nativeElement.firstElementChild.style['background-color'] = this._textService.hexToRgbA(this.pickerBox.nativeElement.attributes[1].value, parseFloat(event.target.value) * 100);
     };
     templateModuleComponent.prototype.setTemplateDimension = function (event) {
         this.getDesignContainerRef();
@@ -130,12 +138,16 @@ var templateModuleComponent = (function () {
         this.designcontainerRef.nativeElement.style['width'] = this.tempWidth + 'px';
         this.designcontainerRef.nativeElement.style['height'] = this.tempHeight + 'px';
     };
+    __decorate([
+        core_1.ViewChild('pickerBox'),
+        __metadata("design:type", Object)
+    ], templateModuleComponent.prototype, "pickerBox", void 0);
     templateModuleComponent = __decorate([
         core_1.Component({
             selector: '[templateModule]',
-            template: " \n                        <h5 class=\"heading\">Template Setting</h5>\n                        <div class=\"seperator\"></div>\n\n                        <div class=\"clearfix mt-10\">\n                        <button class=\"temp-back-color btn icon\" (click)=setTemplateBgcolor($event)><i  class=\"sprite-img\"></i></button>\n                        <div selectBox class=\"temp-opacity-sec\" [defaultOptionValue]=\"'Opacity'\" (change)=\"updateOpacity($event)\"></div>\n                        <div class=\"vertical-seperator\"></div>\n                        <button class=\"btn\" (click)=chooseImageForBg($event)>Choose Bg Image</button>\n                        <div class=\"vertical-seperator\"></div>\n                        <!--div class=\"temp-bg-setting\">\n                            <linkAsButton [parentClass]=\"''\" [applyClass]=\"'blankT btn'\" [btnText]=\"'Blank'\" (click)=setTemplateBg($event)></linkAsButton>\n                            <linkAsButton [parentClass]=\"'ml5'\" [applyClass]=\"'CommonT btn'\" [btnText]=\"'Common'\" (click)=setTemplateBg($event)></linkAsButton>\n                            <linkAsButton [parentClass]=\"'ml5'\" [applyClass]=\"'FunT btn'\" [btnText]=\"'Fun'\" (click)=setTemplateBg($event)></linkAsButton>\n                        </div-->\n                        <!--div class=\"inputSize\"> \n                            <span>Size</span>\n                            <input type=\"text\" class=\"width\" [(ngModel)]=\"tempWidth\"><input type=\"text\" class=\"height\" [(ngModel)]=\"tempHeight\">\n                            <linkAsButton [parentClass]=\"'display-inline m-0'\" [applyClass]=\"'goSize btn'\" [btnText]=\"'Go'\" (click)=setTemplateDimension($event)></linkAsButton>\n                        </div-->\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>1:1</button>\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>5:4</button>\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>4:3</button>\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>3:2</button>\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>2:5</button>\n                        <div class=\"vertical-seperator\"></div>\n                        <div class=\"zoom\">\n                            <label>Zoom</label>\n                            <md-slider (input)=\"onRangeChanged($event)\"  min=\"{{minSliderValue}}\" max=\"{{maxSlidervalue}}\" value=\"{{defaultsliderValue}}\"></md-slider>\n                            <input type=\"text\" class=\"zoomInput\" [(ngModel)]=\"tempZoomWidth\">\n                         </div>\n                        <div class=\"vertical-seperator\"></div>\n                        </div>\n\n    "
+            template: " \n                        <h5 class=\"heading\">Template Setting</h5>\n                        <div class=\"seperator\"></div>\n\n                        <div class=\"clearfix mt-10\">\n                        <span #pickerBox [(colorPicker)]=\"color\" (colorPickerChange)=\"closePicker($event)\"\n                            [cpPosition]=\"'right'\"\n                            [style.backgroundColor]=\"color\"\n                            [cpPositionOffset]=\"'50%'\"\n                            [cpPositionRelativeToArrow]=\"true\" class=\"temp-back-color btn icon\" [cpPresetColors]=\"colorArray\"\n                            [cpOKButton]=\"true\"\n                            [cpSaveClickOutside]=\"true\"\n                            [cpOKButtonClass]= \"'btn btn-primary btn-xs'\"\n                            ><i  class=\"sprite-img\"></i></span>\n                        <!--button class=\"temp-back-color btn icon\" (click)=setTemplateBgcolor($event)><i  class=\"sprite-img\"></i></button-->\n                        <div selectBox class=\"temp-opacity-sec\" [defaultOptionValue]=\"'Opacity'\" (change)=\"updateOpacity($event)\"></div>\n                        <div class=\"vertical-seperator\"></div>\n                        <button class=\"btn\" (click)=chooseImageForBg($event)>Choose Bg Image</button>\n                        <div class=\"vertical-seperator\"></div>\n                        <!--div class=\"temp-bg-setting\">\n                            <linkAsButton [parentClass]=\"''\" [applyClass]=\"'blankT btn'\" [btnText]=\"'Blank'\" (click)=setTemplateBg($event)></linkAsButton>\n                            <linkAsButton [parentClass]=\"'ml5'\" [applyClass]=\"'CommonT btn'\" [btnText]=\"'Common'\" (click)=setTemplateBg($event)></linkAsButton>\n                            <linkAsButton [parentClass]=\"'ml5'\" [applyClass]=\"'FunT btn'\" [btnText]=\"'Fun'\" (click)=setTemplateBg($event)></linkAsButton>\n                        </div-->\n                        <!--div class=\"inputSize\"> \n                            <span>Size</span>\n                            <input type=\"text\" class=\"width\" [(ngModel)]=\"tempWidth\"><input type=\"text\" class=\"height\" [(ngModel)]=\"tempHeight\">\n                            <linkAsButton [parentClass]=\"'display-inline m-0'\" [applyClass]=\"'goSize btn'\" [btnText]=\"'Go'\" (click)=setTemplateDimension($event)></linkAsButton>\n                        </div-->\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>1:1</button>\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>5:4</button>\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>4:3</button>\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>3:2</button>\n                        <button class=\"btn temp-aspect-ratio\" (click)=setTemplateSize($event)>2:5</button>\n                        <div class=\"vertical-seperator\"></div>\n                         <div class=\"inputSize\"> \n                            <span>Size</span>\n                            <input type=\"text\" class=\"width\" [(ngModel)]=\"tempWidth\"><input type=\"text\" class=\"height\" [(ngModel)]=\"tempHeight\">\n                            <button class=\"goSize btn\" (click)=setTemplateDimension($event)>Go</button>\n                        </div>\n                        <!--div class=\"zoom\">\n                            <label>Zoom</label>\n                            <md-slider (input)=\"onRangeChanged($event)\"  min=\"{{minSliderValue}}\" max=\"{{maxSlidervalue}}\" value=\"{{defaultsliderValue}}\"></md-slider>\n                            <input type=\"text\" class=\"zoomInput\" [(ngModel)]=\"tempZoomWidth\">\n                         </div-->\n                        <div class=\"vertical-seperator\"></div>\n                        </div>\n\n    "
         }),
-        __metadata("design:paramtypes", [text_service_1.TextService])
+        __metadata("design:paramtypes", [angular2_color_picker_1.ColorPickerService, text_service_1.TextService])
     ], templateModuleComponent);
     return templateModuleComponent;
 }());

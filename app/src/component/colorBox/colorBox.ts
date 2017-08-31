@@ -1,5 +1,6 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import { TextService } from '../../service/text.service';
+import { ColorPickerService } from 'angular2-color-picker';
 
 
 @Component({
@@ -10,10 +11,24 @@ import { TextService } from '../../service/text.service';
       <span [style.backgroundColor]="colorVal"  [attr.data-colorValue]="colorVal" (click)="pickcolor($event)"></span>
     </li>
     <li>
-      <a href="javascript:text.openColorPicker()" class="more-color pull-right">More color</a>
+<span #ignoredInput [(colorPicker)]="color" 
+      [cpPosition]="'right'"
+      [style.color]="color"
+      [cpPositionOffset]="'50%'"
+      [cpPositionRelativeToArrow]="true" class="more-color" [cpPresetColors]="colorArray"
+       [cpOKButton]="true"
+       [cpSaveClickOutside]="false"
+       [cpOKButtonClass]= "'btn btn-primary btn-xs'"
+
+        
+      >Open Picker</span>
+
+
+      <!--a class="more-color pull-right" (click)="openColorPicker($event)">More color</a-->
       <a class="default pull-left" href="javascript:void(0)" (click)="closeColorBox()">No color</a>
     </li>
   </ul>
+
                     
      `
 })
@@ -23,8 +38,12 @@ export class colorBoxComponent {
   currentObj: any;
   colorBoxObj: any;
   designcontainerRef: any;
-  tempBgColor : any;
+  tempBgColor: any;
+  pickerValue: any;
+  private color: string = "#127bdc";
+
   @ViewChild('colorBox') elements: any;
+  @ViewChild('allColorBox') allColorBox: any;
 
   pickcolor(event: any) {
     this.currentObj = this._textService.currentObj;
@@ -51,22 +70,24 @@ export class colorBoxComponent {
       this.designcontainerRef.nativeElement.firstElementChild.attributes['data-bg'].value = '';
       // console.log(this.hexToRgbA(event.target.dataset['colorvalue']), styleProp)
 
-      this.designcontainerRef.nativeElement.style[styleProp] = pickedColorValue;
+      this.designcontainerRef.nativeElement.firstElementChild.style[styleProp] = pickedColorValue;
       this.elements.nativeElement.dataset['module'] = '';
     }
     this.closeColorBox();
   }
-
+  chooseValueFormPicker(event: any) {
+    console.log(event)
+  }
   closeColorBox() {
     this.colorBoxObj = this._textService.colorBoxRef;
     this.colorBoxObj.nativeElement.style.display = "none";
   }
-  
+
   ngOnInit() {
     this.colorArray = ["#000000", "#54585A", "#9fcece", "#8E9089", "#C7C9C7", "#f5d56c", "#347574", "#FFFFFF", "#CB333B", "#E53C2E", "#FF3EB3", "#C5299B", "#F57EB6", "#FABBCB", "#D9C89E", "#F9E547", "#FFB81C", "#FF6A13", "#FDDA24", "#B58500", "#7B4931", "#9D2235", "#7E2D40", "#006747", "#8EDD65", "#154734", "#00843D", "#827A04", "#9ADBE8", "#3EB1C8", "#0254A2", "#003087", "#13294B", "#CBA3D8", "#3D0182"];
     this._textService.setColorBoxRef(this.elements);
   }
-  constructor(private _textService: TextService) {
+  constructor(private cpService: ColorPickerService, private _textService: TextService) {
 
   }
 }

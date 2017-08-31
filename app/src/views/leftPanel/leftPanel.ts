@@ -13,6 +13,6 @@ export class leftPanelComponent {
     childTitle: string = 'This text is passed to child';
     @ViewChild('alignment', { read: ElementRef }) alignmentRef: ElementRef;
     ngAfterViewInit(){
-        console.log(this.alignmentRef)
+       // console.log(this.alignmentRef)
     }
 }

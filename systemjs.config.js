@@ -23,6 +23,8 @@
             '@angular/material': 'npm:@angular/material/bundles/material.umd.js',
             '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
             '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
+            'angular2-color-picker': 'npm:angular2-color-picker',
+
             //'html2canvas': 'html2canvas',
             // other libraries
             'rxjs': 'npm:rxjs',
@@ -36,6 +38,11 @@
             rxjs: {
                 defaultExtension: 'js'
             },
+            'angular2-color-picker': {
+                main: 'index.js',
+                defaultExtension: 'js'
+            }
+
             // html2canvas: {
             //     main: './dist/html2canvas.js',
             //     defaultExtension: 'js'

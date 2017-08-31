@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { TextService } from '../../../service/text.service';
+import { ColorPickerService } from 'angular2-color-picker';
 
 @Component({
     selector: '[templateModule]',
@@ -8,7 +9,16 @@ import { TextService } from '../../../service/text.service';
                         <div class="seperator"></div>
 
                         <div class="clearfix mt-10">
-                        <button class="temp-back-color btn icon" (click)=setTemplateBgcolor($event)><i  class="sprite-img"></i></button>
+                        <span #pickerBox [(colorPicker)]="color" (colorPickerChange)="closePicker($event)"
+                            [cpPosition]="'right'"
+                            [style.backgroundColor]="color"
+                            [cpPositionOffset]="'50%'"
+                            [cpPositionRelativeToArrow]="true" class="temp-back-color btn icon" [cpPresetColors]="colorArray"
+                            [cpOKButton]="true"
+                            [cpSaveClickOutside]="true"
+                            [cpOKButtonClass]= "'btn btn-primary btn-xs'"
+                            ><i  class="sprite-img"></i></span>
+                        <!--button class="temp-back-color btn icon" (click)=setTemplateBgcolor($event)><i  class="sprite-img"></i></button-->
                         <div selectBox class="temp-opacity-sec" [defaultOptionValue]="'Opacity'" (change)="updateOpacity($event)"></div>
                         <div class="vertical-seperator"></div>
                         <button class="btn" (click)=chooseImageForBg($event)>Choose Bg Image</button>
@@ -29,11 +39,16 @@ import { TextService } from '../../../service/text.service';
                         <button class="btn temp-aspect-ratio" (click)=setTemplateSize($event)>3:2</button>
                         <button class="btn temp-aspect-ratio" (click)=setTemplateSize($event)>2:5</button>
                         <div class="vertical-seperator"></div>
-                        <div class="zoom">
+                         <div class="inputSize"> 
+                            <span>Size</span>
+                            <input type="text" class="width" [(ngModel)]="tempWidth"><input type="text" class="height" [(ngModel)]="tempHeight">
+                            <button class="goSize btn" (click)=setTemplateDimension($event)>Go</button>
+                        </div>
+                        <!--div class="zoom">
                             <label>Zoom</label>
                             <md-slider (input)="onRangeChanged($event)"  min="{{minSliderValue}}" max="{{maxSlidervalue}}" value="{{defaultsliderValue}}"></md-slider>
                             <input type="text" class="zoomInput" [(ngModel)]="tempZoomWidth">
-                         </div>
+                         </div-->
                         <div class="vertical-seperator"></div>
                         </div>
 
@@ -48,6 +63,9 @@ export class templateModuleComponent {
     tempHeight: any;
     handlerRef: any;
     currentObj: any;
+    private color: string = "#ddd";
+    @ViewChild('pickerBox') public pickerBox: any;
+
 
     setTemplateSize(event: any) {
         this.getDesignContainerRef();
@@ -88,6 +106,13 @@ export class templateModuleComponent {
 
         }
     }
+    closePicker(event: any) {
+        this.getDesignContainerRef();
+        this.designcontainerRef.nativeElement.firstElementChild.attributes['data-bg'].value = '';
+
+        this.designcontainerRef.nativeElement.firstElementChild.style["background-color"] = this._textService.hexToRgbA(event, 80);
+
+    }
     updateDesignObj(newW: any, newH: any) {
         this.getDesignContainerRef();
         this.tempWidth = newW;
@@ -114,9 +139,9 @@ export class templateModuleComponent {
                 this._textService.setSliderValue(newW, 'maxV');
                 let objLeft = currentObj.style['left'] === '' ? 0 : parseInt(currentObj.style['left'])
                 let objTop = currentObj.style['top'] === '' ? 0 : parseInt(currentObj.style['top'])
-                console.log(newH,userArray[i].height,newW,calculatedW)
+                console.log(newH, userArray[i].height, newW, calculatedW)
                 if ((newH < userArray[i].height) || newW < calculatedW) {
-                    
+
                     this._textService.setImageDimension(currentObj, newW, newH, userArray[i]);
                 }
                 this._textService.setAlignmentValue(Math.round((objLeft * newW) / 100), 'left');
@@ -172,7 +197,7 @@ export class templateModuleComponent {
         this.colorBoxRef.nativeElement.style.display = 'block';
     }
     updateOpacity(event: any) {
-        this._textService.designcontainerRef.nativeElement.style['background-color'] = this._textService.hexToRgbA(this._textService.colorBoxRef.nativeElement.dataset.cValue,parseFloat(event.target.value)*100);
+        this._textService.designcontainerRef.nativeElement.firstElementChild.style['background-color'] = this._textService.hexToRgbA(this.pickerBox.nativeElement.attributes[1].value, parseFloat(event.target.value) * 100);
     }
     setTemplateDimension(event: any) {
         this.getDesignContainerRef();
@@ -182,6 +207,6 @@ export class templateModuleComponent {
 
     }
 
-    constructor(private _textService: TextService) { }
+    constructor(private cpService: ColorPickerService, private _textService: TextService) { }
 
 }

@@ -24,7 +24,7 @@ var textModuleComponent = (function () {
         this.updateTextcurrentObj('lineHeight', event.target.value + 'px');
     };
     textModuleComponent.prototype.updateOpacity = function (event) {
-        this.updateTextcurrentObj('background-color', this._textService.hexToRgbA(this.colorBoxRef.dataset.cValue, parseFloat(event.target.value) * 100));
+        this.updateTextcurrentObj('background-color', this._textService.hexToRgbA(this._textService.colorBoxRef.nativeElement.dataset.cValue, parseFloat(event.target.value) * 100));
     };
     textModuleComponent.prototype.updateFontFamliy = function (event) {
         this.updateTextcurrentObj('fontFamily', event.target.value);
@@ -76,14 +76,14 @@ var textModuleComponent = (function () {
         }
     };
     textModuleComponent.prototype.updateTextcurrentObj = function (property, value) {
-        console.log(this._textService.currentObj);
+        //console.log(this._textService.currentObj)
         var oldFontValue = parseInt(this._textService.currentObj.nativeElement.style[property]);
         this._textService.currentObj.nativeElement.style[property] = value;
         if (property == 'fontSize') {
             var objWidth = Math.round((parseInt(this._textService.currentObj.nativeElement.style.width) * parseInt(this._textService.designcontainerRef.nativeElement.style.width)) / 100);
-            console.log(objWidth, oldFontValue);
+            //console.log(objWidth,oldFontValue)
             var newWidthValue = this._textService.pixelToPercentage(((parseInt(value) * objWidth) / oldFontValue), this._textService.designcontainerRef.nativeElement.style["width"]);
-            console.log(newWidthValue);
+            //console.log(newWidthValue)
             this._textService.currentObj.nativeElement.style.width = newWidthValue;
         }
         this._textService.setSliderValue(this._textService.currentObj.nativeElement.offsetWidth, 'minV');
@@ -91,7 +91,7 @@ var textModuleComponent = (function () {
         this._textService.handlerRef.nativeElement.style.height = this._textService.currentObj.nativeElement.offsetHeight + 10 + 'px';
     };
     textModuleComponent.prototype.ngAfterViewChecked = function () {
-        //console.log(this._textService.currentObj)
+        // console.log(this._textService)
         // this.currentObj = this._textService.currentObj.nativeElement;
         // this._textService.handlerRef.nativeElement = this._textService.handlerRef.nativeElement;
         //this._textService.colorBoxRef.nativeElement = this._textService.colorBoxRef.nativeElement;

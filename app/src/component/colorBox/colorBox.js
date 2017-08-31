@@ -11,9 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var text_service_1 = require("../../service/text.service");
+var angular2_color_picker_1 = require("angular2-color-picker");
 var colorBoxComponent = (function () {
-    function colorBoxComponent(_textService) {
+    function colorBoxComponent(cpService, _textService) {
+        this.cpService = cpService;
         this._textService = _textService;
+        this.color = "#127bdc";
     }
     colorBoxComponent.prototype.pickcolor = function (event) {
         this.currentObj = this._textService.currentObj;
@@ -36,10 +39,13 @@ var colorBoxComponent = (function () {
             this.designcontainerRef = this._textService.designcontainerRef;
             this.designcontainerRef.nativeElement.firstElementChild.attributes['data-bg'].value = '';
             // console.log(this.hexToRgbA(event.target.dataset['colorvalue']), styleProp)
-            this.designcontainerRef.nativeElement.style[styleProp] = pickedColorValue;
+            this.designcontainerRef.nativeElement.firstElementChild.style[styleProp] = pickedColorValue;
             this.elements.nativeElement.dataset['module'] = '';
         }
         this.closeColorBox();
+    };
+    colorBoxComponent.prototype.chooseValueFormPicker = function (event) {
+        console.log(event);
     };
     colorBoxComponent.prototype.closeColorBox = function () {
         this.colorBoxObj = this._textService.colorBoxRef;
@@ -53,12 +59,16 @@ var colorBoxComponent = (function () {
         core_1.ViewChild('colorBox'),
         __metadata("design:type", Object)
     ], colorBoxComponent.prototype, "elements", void 0);
+    __decorate([
+        core_1.ViewChild('allColorBox'),
+        __metadata("design:type", Object)
+    ], colorBoxComponent.prototype, "allColorBox", void 0);
     colorBoxComponent = __decorate([
         core_1.Component({
             selector: 'color-box',
-            template: "\n  <ul class=\"custom-color-picker\" data-call=\"dasd\" data-module=\"\" data-cValue=\"\" #colorBox>\n    <li *ngFor=\"let colorVal of colorArray\">\n      <span [style.backgroundColor]=\"colorVal\"  [attr.data-colorValue]=\"colorVal\" (click)=\"pickcolor($event)\"></span>\n    </li>\n    <li>\n      <a href=\"javascript:text.openColorPicker()\" class=\"more-color pull-right\">More color</a>\n      <a class=\"default pull-left\" href=\"javascript:void(0)\" (click)=\"closeColorBox()\">No color</a>\n    </li>\n  </ul>\n                    \n     "
+            template: "\n  <ul class=\"custom-color-picker\" data-call=\"dasd\" data-module=\"\" data-cValue=\"\" #colorBox>\n    <li *ngFor=\"let colorVal of colorArray\">\n      <span [style.backgroundColor]=\"colorVal\"  [attr.data-colorValue]=\"colorVal\" (click)=\"pickcolor($event)\"></span>\n    </li>\n    <li>\n<span #ignoredInput [(colorPicker)]=\"color\" \n      [cpPosition]=\"'right'\"\n      [style.color]=\"color\"\n      [cpPositionOffset]=\"'50%'\"\n      [cpPositionRelativeToArrow]=\"true\" class=\"more-color\" [cpPresetColors]=\"colorArray\"\n       [cpOKButton]=\"true\"\n       [cpSaveClickOutside]=\"false\"\n       [cpOKButtonClass]= \"'btn btn-primary btn-xs'\"\n\n        \n      >Open Picker</span>\n\n\n      <!--a class=\"more-color pull-right\" (click)=\"openColorPicker($event)\">More color</a-->\n      <a class=\"default pull-left\" href=\"javascript:void(0)\" (click)=\"closeColorBox()\">No color</a>\n    </li>\n  </ul>\n\n                    \n     "
         }),
-        __metadata("design:paramtypes", [text_service_1.TextService])
+        __metadata("design:paramtypes", [angular2_color_picker_1.ColorPickerService, text_service_1.TextService])
     ], colorBoxComponent);
     return colorBoxComponent;
 }());
