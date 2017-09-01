@@ -25,15 +25,15 @@ export class AppComponent {
 
     @ViewChild('imageGen') public canvasElemRef: any;
 
-    ngOnChanges() {
-        console.log("onchange")
-        console.log(this._textService)
-    }
+    // ngOnChanges() {
+    //     console.log("onchange")
+    //     console.log(this._textService)
+    // }
     ngOnInit() {
         this._textService.setCanvasElem(this.canvasElemRef)
-        console.log("ngOnInit")
-        console.log(this._textService)
-        console.log(this._textService.currentObj)
+        // console.log("ngOnInit")
+        // console.log(this._textService)
+        // console.log(this._textService.currentObj)
     }
     // ngDoCheck() {
     //     console.log("ngDoCheck")

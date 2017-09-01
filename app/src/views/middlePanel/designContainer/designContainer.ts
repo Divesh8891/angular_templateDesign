@@ -5,7 +5,7 @@ import { TextService } from '../../../service/text.service';
     selector: '[designContainer]',
     template: ` 
                     <div class="desgin-tool-sec" style="width: 740px; height: 740px;" #designTooSec>
-                        <section class="desgin-inner" data-bg="blank">
+                        <section class="desgin-inner" data-bg="">
                         <ng-container *ngFor="let text of textAreaVal">
                           <p #xyz *ngIf="text.text!=''" class="textNative" data-type="text" id="{{text.randomNumber}}" (click)="textNodeEvent($event,text)" style="font-size: 18px;" >{{text.text}}</p>
                          <img #xyz *ngIf="text.src!=''" class="imgNative"  data-type="image"   id="{{text.randomNumber}}" (click)="imgNodeEvent($event,img)" src={{text.src}}/>

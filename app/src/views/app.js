@@ -39,15 +39,15 @@ var AppComponent = (function () {
     function AppComponent(_textService) {
         this._textService = _textService;
     }
-    AppComponent.prototype.ngOnChanges = function () {
-        console.log("onchange");
-        console.log(this._textService);
-    };
+    // ngOnChanges() {
+    //     console.log("onchange")
+    //     console.log(this._textService)
+    // }
     AppComponent.prototype.ngOnInit = function () {
         this._textService.setCanvasElem(this.canvasElemRef);
-        console.log("ngOnInit");
-        console.log(this._textService);
-        console.log(this._textService.currentObj);
+        // console.log("ngOnInit")
+        // console.log(this._textService)
+        // console.log(this._textService.currentObj)
     };
     __decorate([
         core_1.ViewChild('imageGen'),

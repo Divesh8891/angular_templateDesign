@@ -78,10 +78,13 @@ var TextService = (function () {
     };
     TextService.prototype.hexToRgbA = function (hex, opacity) {
         hex = hex.replace('#', '');
+        if (hex.length == 3) {
+            hex += hex;
+        }
         var r = parseInt(hex.substring(0, hex.length / 3), 16);
         var g = parseInt(hex.substring(hex.length / 3, 2 * hex.length / 3), 16);
         var b = parseInt(hex.substring(2 * hex.length / 3, 3 * hex.length / 3), 16);
-        var result = 'rgba(' + r + ',' + g + ',' + b + ',' + opacity / 100 + ')';
+        var result = 'rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')';
         return result;
     };
     TextService.prototype.setSliderValue = function (data, type) {

@@ -83,7 +83,9 @@ var rightPanelComponent = (function () {
         var currentObj = this._textService.currentObj.nativeElement;
         var objTop = Math.round((containerH - currentObjW - 5) / 2);
         this._textService.handlerRef.nativeElement.style["top"] = objTop - 5 + 'px';
-        currentObj.style.top = objTop + 'px';
+        currentObj.style.top = this._textService.pixelToPercentage((objTop), this._textService.designcontainerRef.nativeElement.style["height"]);
+        ;
+        this.inputTopValue = parseInt(this.handlerRef.nativeElement.style.top);
     };
     rightPanelComponent.prototype.setAlignment = function () {
         this.currentObj = this._textService.currentObj;
@@ -251,9 +253,13 @@ var rightPanelComponent = (function () {
         var me = this;
         me.handlerRef = this._textService.handlerRef;
         me.handlerRef.nativeElement.style.display = 'none';
+        var canvasW = parseInt(me._textService.designcontainerRef.nativeElement.offsetWidth);
+        var canvasH = parseInt(me._textService.designcontainerRef.nativeElement.style.height);
         console.log(this._textService.designcontainerRef.nativeElement);
         html2canvas(this._textService.designcontainerRef.nativeElement).then(function (canvas) {
             canvas.setAttribute("id", "canvas1");
+            //  canvas.setAttribute('width', canvasW);
+            // canvas.setAttribute('height', canvasH);
             me._textService.canvasElem.nativeElement.appendChild(canvas);
             me.modalImgSrc = me._textService.canvasElem.nativeElement.children['canvas1'].toDataURL("image/jpeg");
             me._textService.canvasElem.nativeElement.children['canvas1'].remove(canvas);
@@ -265,22 +271,32 @@ var rightPanelComponent = (function () {
         var me = this;
         me.handlerRef = this._textService.handlerRef;
         me.handlerRef.nativeElement.style.display = 'none';
+        console.log((me._textService.designcontainerRef));
+        var canvasW = parseInt(me._textService.designcontainerRef.nativeElement.offsetWidth);
+        var canvasH = parseInt(me._textService.designcontainerRef.nativeElement.style.height);
         html2canvas(this._textService.designcontainerRef.nativeElement).then(function (canvas) {
             canvas.backgroundColor = "rgba(19, 41, 75, 0.3)";
             canvas.setAttribute("id", "canvas1");
-            me._textService.canvasElem.nativeElement.appendChild(canvas);
-            me.canvasImageSrc = me._textService.canvasElem.nativeElement.children['canvas1'].toDataURL("image/jpeg");
-            me._textService.canvasElem.nativeElement.children['canvasPNG'].setAttribute("src", me.canvasImageSrc);
-            me._textService.canvasElem.nativeElement.children['canvas1'].remove(canvas);
-            var imgElem = document.createElement("a");
-            imgElem.setAttribute("src", me.canvasImageSrc);
-            imgElem.className = "downloadable";
-            var anchorElem = document.createElement("a");
-            anchorElem.setAttribute("href", me.canvasImageSrc);
-            anchorElem.setAttribute("download", "preview.jpeg");
-            anchorElem.appendChild(imgElem);
-            me.downloadImgCont.nativeElement.appendChild = anchorElem;
-            me.downloadImgCont.nativeElement.appendChild.click();
+            // canvas.setAttribute('width', canvasW);
+            // canvas.setAttribute('height', canvasH);
+            // me._textService.canvasElem.nativeElement.appendChild(canvas);
+            // me.canvasImageSrc = me._textService.canvasElem.nativeElement.children['canvas1'].toDataURL("image/jpeg");
+            // me._textService.canvasElem.nativeElement.children['canvasPNG'].setAttribute("src", me.canvasImageSrc);
+            // me._textService.canvasElem.nativeElement.children['canvas1'].remove(canvas);
+            var a = document.createElement('a');
+            // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+            a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            a.download = 'somefilename.png';
+            a.click();
+            // let imgElem = document.createElement("a");
+            // imgElem.setAttribute("src", me.canvasImageSrc);
+            // imgElem.className = "downloadable";
+            // let anchorElem = document.createElement("a");
+            // anchorElem.setAttribute("href", me.canvasImageSrc);
+            // anchorElem.setAttribute("download", "preview.jpeg");
+            // anchorElem.appendChild(imgElem);
+            // me.downloadImgCont.nativeElement.appendChild = anchorElem;
+            // me.downloadImgCont.nativeElement.appendChild.click();
             me.handlerRef.nativeElement.style.display = 'block';
         });
     };

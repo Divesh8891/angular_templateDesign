@@ -50,11 +50,14 @@ export class TextService {
     }
     hexToRgbA(hex: any, opacity: any) {
         hex = hex.replace('#', '');
+        if (hex.length == 3) {
+            hex += hex;
+        }
         let r = parseInt(hex.substring(0, hex.length / 3), 16);
         let g = parseInt(hex.substring(hex.length / 3, 2 * hex.length / 3), 16);
         let b = parseInt(hex.substring(2 * hex.length / 3, 3 * hex.length / 3), 16);
 
-        let result = 'rgba(' + r + ',' + g + ',' + b + ',' + opacity / 100 + ')';
+        let result = 'rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')';
         return result;
     }
 
@@ -111,7 +114,7 @@ export class TextService {
     }
 
     setImageDimension = function (currentObj: any, containerW: any, containerH: any, objArray: any) {
-       // console.log("setdimension")
+        // console.log("setdimension")
         // console.log(currentObj, containerW, containerH, objArray)
         let maxWidth = parseInt(containerW); // Max width for the image
         let maxHeight = parseInt(containerH);    // Max height for the image

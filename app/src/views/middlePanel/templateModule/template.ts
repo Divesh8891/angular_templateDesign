@@ -10,13 +10,14 @@ import { ColorPickerService } from 'angular2-color-picker';
 
                         <div class="clearfix mt-10">
                         <span #pickerBox [(colorPicker)]="color" (colorPickerChange)="closePicker($event)"
-                            [cpPosition]="'right'"
+                            [cpPosition]="'right'" 
                             [style.backgroundColor]="color"
                             [cpPositionOffset]="'50%'"
                             [cpPositionRelativeToArrow]="true" class="temp-back-color btn icon" [cpPresetColors]="colorArray"
                             [cpOKButton]="true"
                             [cpSaveClickOutside]="true"
                             [cpOKButtonClass]= "'btn btn-primary btn-xs'"
+                            [cpFallbackColor] = "color"
                             ><i  class="sprite-img"></i></span>
                         <!--button class="temp-back-color btn icon" (click)=setTemplateBgcolor($event)><i  class="sprite-img"></i></button-->
                         <div selectBox class="temp-opacity-sec" [defaultOptionValue]="'Opacity'" (change)="updateOpacity($event)"></div>
@@ -63,8 +64,10 @@ export class templateModuleComponent {
     tempHeight: any;
     handlerRef: any;
     currentObj: any;
-    private color: string = "#ddd";
+    private color: string = "#fff";
+    opacityValue: any = 0.8;
     @ViewChild('pickerBox') public pickerBox: any;
+
 
 
     setTemplateSize(event: any) {
@@ -106,12 +109,11 @@ export class templateModuleComponent {
 
         }
     }
+
     closePicker(event: any) {
         this.getDesignContainerRef();
-        this.designcontainerRef.nativeElement.firstElementChild.attributes['data-bg'].value = '';
-
-        this.designcontainerRef.nativeElement.firstElementChild.style["background-color"] = this._textService.hexToRgbA(event, 80);
-
+        console.log(this.opacityValue)
+        this.designcontainerRef.nativeElement.firstElementChild.style["background-color"] = this._textService.hexToRgbA(event, this.opacityValue);
     }
     updateDesignObj(newW: any, newH: any) {
         this.getDesignContainerRef();
@@ -197,7 +199,8 @@ export class templateModuleComponent {
         this.colorBoxRef.nativeElement.style.display = 'block';
     }
     updateOpacity(event: any) {
-        this._textService.designcontainerRef.nativeElement.firstElementChild.style['background-color'] = this._textService.hexToRgbA(this.pickerBox.nativeElement.attributes[1].value, parseFloat(event.target.value) * 100);
+        this.opacityValue = event.target.value;
+        this._textService.designcontainerRef.nativeElement.firstElementChild.style['background-color'] = this._textService.hexToRgbA(this.pickerBox.nativeElement.attributes[1].value, parseFloat(event.target.value));
     }
     setTemplateDimension(event: any) {
         this.getDesignContainerRef();

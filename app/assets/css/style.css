@@ -18,7 +18,7 @@ ul{list-style-type:none;padding:0}
 .vertical-seperator{border-left:3px solid #ddd;width:1px;height:40px;display:inline-block;margin:0 5px;vertical-align:middle;}
 .select-box{display:inline-block;width:48%;vertical-align:middle;}
 .select-box select{height:25px;width:100%;margin-bottom:5px;}
-.sprite-img{background:url('../images/template-sprite.png') no-repeat center 0/25px;width:25px;height:25px;display:block;}
+.sprite-img{background: url('../images/template-sprite.png') no-repeat center -6px/25px;width:25px;height:25px;display:block;}
 .icon{vertical-align:middle;}
 
 .wrapper{min-width:1330px;width:1330px;margin:0 auto;}
@@ -33,6 +33,16 @@ ul{list-style-type:none;padding:0}
 .text-module{padding:10px;margin-top:10px;}
 #textValhidden{opacity:0;visibility:hidden;display:inline-block;font-size:18px;position:absolute;white-space:nowrap;}
 .text-module textarea{width:100%;}
+.text-color{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+}
+.text-back-color{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+}
 .back-color .sprite-img{background-color:#ddd;background-position:2px -6px;}
 .color .sprite-img{background-position:0;}
 .opacity-width-sec select{vertical-align:bottom;}
