@@ -27,14 +27,13 @@ import { designContainer } from '../src/views/middlePanel/designContainer/design
 import { textAreaComponent } from '../src/component/textArea/textArea';
 import { selectBoxComponent } from '../src/component/selectBox/selectBox';
 import { buttonComponent } from '../src/component/button/button';
-import { colorBoxComponent } from '../src/component/colorBox/colorBox';
 
 
 
 
 @NgModule({
   imports: [BrowserModule, FormsModule,  ImageUploadModule.forRoot(),MdSliderModule,ColorPickerModule],
-  declarations: [AppComponent, headerComponent, leftPanelComponent,MiddlePanelComponent, rightPanelComponent, textModuleComponent, imageModuleComponent, templateModuleComponent, colorBoxComponent, designContainer, textAreaComponent, selectBoxComponent, buttonComponent, Draggable],
+  declarations: [AppComponent, headerComponent, leftPanelComponent,MiddlePanelComponent, rightPanelComponent, textModuleComponent, imageModuleComponent, templateModuleComponent, designContainer, textAreaComponent, selectBoxComponent, buttonComponent, Draggable],
   bootstrap: [AppComponent],
   providers: [TextService]
 })

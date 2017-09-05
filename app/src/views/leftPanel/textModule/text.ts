@@ -1,6 +1,5 @@
 import { Component, Output, EventEmitter, Input, ViewChildren, ViewChild } from '@angular/core';
 import { TextService } from '../../../service/text.service';
-import { ColorPickerService } from 'angular2-color-picker';
 
 @Component({
     selector: '[textModule]',
@@ -47,14 +46,16 @@ import { ColorPickerService } from 'angular2-color-picker';
 export class textModuleComponent {
 
     textPanelTitle = "Text";
-    currentObj: any;
-    colorBoxRef: any;
-    handlerRef: any;
-    containerRef: any;
-    opacityValue:any = '1'
+    opacityValue: any = '1'
     me = this;
     private color: string = "#ffffff";
     private textColor: string = "#000000";
+
+
+    handlerRef: any;
+    designcontainerRef: any;
+    currentObjRef: any;
+
     @ViewChild('pickerBgBox') public pickerBgBox: any;
 
     updateFontS(event: any) {
@@ -65,14 +66,14 @@ export class textModuleComponent {
     }
     updateOpacity(event: any) {
         this.opacityValue = event.target.value;
-        this._textService.currentObj.nativeElement.style['background-color'] = this._textService.hexToRgbA(this.pickerBgBox.nativeElement.attributes[1].value, parseFloat(this.opacityValue));
+        this.currentObjRef.style['background-color'] = this._textService.hexToRgbA(this.pickerBgBox.nativeElement.attributes[1].value, parseFloat(this.opacityValue));
     }
     updateFontFamliy(event: any) {
         this.updateTextcurrentObj('fontFamily', event.target.value)
     }
-    updateStrokeWidth(event: any) {
-        this.updateTextcurrentObj("textShadow", this._textService.colorBoxRef.nativeElement.dataset['textShadow'] + ' 0px 0px ' + event.target.value + 'px')
-    }
+    // updateStrokeWidth(event: any) {
+    //     this.updateTextcurrentObj("textShadow", this._textService.colorBoxRef.nativeElement.dataset['textShadow'] + ' 0px 0px ' + event.target.value + 'px')
+    // }
     // applyColor(event: any) {
     //     this.updateColorBoxObj("color");
     // }
@@ -121,38 +122,51 @@ export class textModuleComponent {
         }
     }
     updateTextcurrentObj(property: any, value: any) {
-        //console.log(this._textService.currentObj)
-        let oldFontValue = parseInt(this._textService.currentObj.nativeElement.style[property])
-        this._textService.currentObj.nativeElement.style[property] = value;
+        console.log(this.currentObjRef)
+        let oldFontValue = parseInt(this.currentObjRef.style[property])
+        this.currentObjRef.style[property] = value;
         if (property == 'fontSize') {
-            let objWidth = Math.round((parseInt(this._textService.currentObj.nativeElement.style.width) * parseInt(this._textService.designcontainerRef.nativeElement.style.width)) / 100);
+            let objWidth = Math.round((parseInt(this.currentObjRef.style.width) * parseInt(this.designcontainerRef.style.width)) / 100);
             //console.log(objWidth,oldFontValue)
-            let newWidthValue = this._textService.pixelToPercentage(((parseInt(value) * objWidth) / oldFontValue), this._textService.designcontainerRef.nativeElement.style["width"]);
+            let newWidthValue = this._textService.pixelToPercentage(((parseInt(value) * objWidth) / oldFontValue), this.designcontainerRef.style["width"]);
             //console.log(newWidthValue)
-            this._textService.currentObj.nativeElement.style.width = newWidthValue
+            this.currentObjRef.style.width = newWidthValue
         }
-        this._textService.setSliderValue(this._textService.currentObj.nativeElement.offsetWidth, 'minV');
-        this._textService.handlerRef.nativeElement.style.width = this._textService.currentObj.nativeElement.offsetWidth + 10 + 'px';
-        this._textService.handlerRef.nativeElement.style.height = this._textService.currentObj.nativeElement.offsetHeight + 10 + 'px';
+        this._textService.setSliderValue(this.currentObjRef.offsetWidth, 'minV');
+        this.handlerRef.style.width = this.currentObjRef.offsetWidth + 10 + 'px';
+        this.handlerRef.style.height = this.currentObjRef.offsetHeight + 10 + 'px';
     }
     closeTextPicker(event: any) {
-        if (this._textService.currentObj != undefined) this._textService.currentObj.nativeElement.style.color = event
+        if (this.currentObjRef != undefined) this.currentObjRef.style.color = event
     }
     closeTextBgPicker(event: any) {
-        if (this._textService.currentObj != undefined) this._textService.currentObj.nativeElement.style.backgroundColor = this._textService.hexToRgbA(event, this.opacityValue)
+        if (this.currentObjRef != undefined) this.currentObjRef.style.backgroundColor = this._textService.hexToRgbA(event, this.opacityValue)
 
     }
 
-    ngAfterViewChecked() {
-        // console.log(this._textService)
-        // this.currentObj = this._textService.currentObj.nativeElement;
-        // this._textService.handlerRef.nativeElement = this._textService.handlerRef.nativeElement;
-        //this._textService.colorBoxRef.nativeElement = this._textService.colorBoxRef.nativeElement;
-        // this._textService.designcontainerRef.nativeElement = this._textService.designcontainerRef.nativeElement;
-
-
+    constructor(private _textService: TextService) {
     }
-    constructor(private cpService: ColorPickerService, private _textService: TextService) {
+    ngOnInit() {
+        this._textService.designContainerController('get').subscribe(
+            data => {
+                this.designcontainerRef = data;
+                this.designcontainerRef = this.designcontainerRef.nativeElement
+            });
+        this._textService.currentObjController('getCurrentObj', '', '').subscribe(
+            data => {
+                this.currentObjRef = data;
+                if (this.currentObjRef == undefined) {
+                    this.currentObjRef = undefined
+                }
+                else {
+                    this.currentObjRef = this.currentObjRef.nativeElement
+                }
+            });
+        this._textService.currentObjController('getHandlerObj', '', '').subscribe(
+            data => {
+                this.handlerRef = data;
+                this.handlerRef = this.handlerRef.nativeElement
+            });
     }
 
 }

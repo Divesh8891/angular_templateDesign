@@ -37,23 +37,38 @@ var imageModuleComponent = (function () {
     imageModuleComponent.prototype.onUploadFinished = function (data) {
         var me = this;
         this._textService.setSliderValue(data.imageDimension.width, 'minV');
-        this._textService.setSliderValue(parseInt(this._textService.designcontainerRef.nativeElement.style.width), 'maxV');
+        this._textService.setSliderValue(parseInt(this.designcontainerRef.style.width), 'maxV');
         var a = new Date();
         this.randomNumber = a.getTime();
         var ratio = (parseInt(data.imageDimension.width) / parseInt(data.imageDimension.height)).toFixed(1);
-        this._textService.setTextValue({ 'text': '', 'randomNumber': this.randomNumber, 'imgSrc': data.fileHolder.src });
-        this._textService.updateObjArray({ 'id': this.randomNumber, 'oriWidth': data.imageDimension.width, 'oriHeight': data.imageDimension.height, 'width': data.imageDimension.width, 'height': data.imageDimension.height, 'ratio': ratio });
+        this._textService.setObjArray({
+            'id': this.randomNumber,
+            'oriWidth': data.imageDimension.width,
+            'oriHeight': data.imageDimension.height,
+            'ratio': ratio,
+            'width': data.imageDimension.width,
+            'height': data.imageDimension.height,
+            'value': data.fileHolder.src,
+            'type': 'image'
+        });
         setTimeout(function () {
-            // console.log(me._textService.designcontainerRef.nativeElement.children[0].lastElementChild)
+            // console.log(me.designcontainerRef.children[0].lastElementChild)
             var userArray = me._textService.objArray;
-            var currentImage = me._textService.designcontainerRef.nativeElement.children[0].lastElementChild;
-            var currentW = me._textService.designcontainerRef.nativeElement.style.width;
-            var currentH = me._textService.designcontainerRef.nativeElement.style.height;
+            var currentImage = me.designcontainerRef.children[0].lastElementChild;
+            var currentW = me.designcontainerRef.style.width;
+            var currentH = me.designcontainerRef.style.height;
             me._textService.setImageDimension(currentImage, '', '', userArray[userArray.length - 1]);
         }, 100);
     };
     imageModuleComponent.prototype.handleImageLoad = function (event) {
         console.log(event);
+    };
+    imageModuleComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this._textService.designContainerController('get').subscribe(function (data) {
+            _this.designcontainerRef = data;
+            _this.designcontainerRef = _this.designcontainerRef.nativeElement;
+        });
     };
     imageModuleComponent = __decorate([
         core_1.Component({

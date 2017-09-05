@@ -34,6 +34,14 @@ var selectBoxComponent = (function () {
             this.optionArray = [0.1, 0.3, 0.5, 0.8, 1];
             this.textfilter = this.optionArray[3];
         }
+        if (this.defaultOptionValue == 'Select Type') {
+            this.optionArray = ['Pixels', 'Inches'];
+            this.textfilter = this.optionArray[0];
+        }
+        if (this.defaultOptionValue == 'Select Scale') {
+            this.optionArray = [1, 2, 3, 4, 5, 6, 7, 8];
+            this.textfilter = this.optionArray[0];
+        }
     };
     __decorate([
         core_1.Input(),

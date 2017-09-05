@@ -20,45 +20,52 @@ var designContainer = (function () {
             var maxWidth = parseInt(this.designTooSec.nativeElement.style["width"]); // Max width for the image
             var maxHeight = parseInt(this.designTooSec.nativeElement.style["height"]); // Max height for the image
             // console.log(maxWidth,maxHeight)
-            console.log(this.currentObj);
+            // console.log(this.currentObj)
             var ratio = 0; // Used for aspect ratio
-            var width = this.currentObj.nativeElement.offsetWidth; // Current image width
-            var height = this.currentObj.nativeElement.offsetHeight; // Current image height
+            var width = this.currentObjRef.offsetWidth; // Current image width
+            var height = this.currentObjRef.offsetHeight; // Current image height
             // console.log((maxWidth), maxHeight, width, height);
             if (width > maxWidth) {
                 ratio = maxWidth / width; // get ratio for scaling image
-                this.currentObj.nativeElement.style["width"] = this._textService.pixelToPercentage(maxWidth, this.designTooSec.nativeElement.style["width"]);
-                this.currentObj.nativeElement.style["height"] = this._textService.pixelToPercentage((height * ratio), this.designTooSec.nativeElement.style["height"]);
+                this.currentObjRef.style["width"] = this._textService.pixelToPercentage(maxWidth, this.designTooSec.nativeElement.style["width"]);
+                this.currentObjRef.style["height"] = this._textService.pixelToPercentage((height * ratio), this.designTooSec.nativeElement.style["height"]);
                 height = height * ratio; // Reset height to match scaled image
                 width = width * ratio; // Reset width to match scaled image
             }
             // Check if current height is larger than max
             if (height > maxHeight) {
                 ratio = maxHeight / height; // get ratio for scaling image
-                this.currentObj.nativeElement.style["width"] = this._textService.pixelToPercentage((width * ratio), this.designTooSec.nativeElement.style["width"]);
-                this.currentObj.nativeElement.style["height"] = this._textService.pixelToPercentage(maxHeight, this.designTooSec.nativeElement.style["height"]);
+                this.currentObjRef.style["width"] = this._textService.pixelToPercentage((width * ratio), this.designTooSec.nativeElement.style["width"]);
+                this.currentObjRef.style["height"] = this._textService.pixelToPercentage(maxHeight, this.designTooSec.nativeElement.style["height"]);
                 width = width * ratio; // Reset width to match scaled image
                 height = height * ratio; // Reset height to match scaled image
             }
-            this.textHandler.nativeElement.style.width = parseInt(this.currentObj.nativeElement.offsetWidth) + 10 + 'px';
-            this.textHandler.nativeElement.style.height = parseInt(this.currentObj.nativeElement.offsetHeight) + 10 + 'px';
+            this.textHandler.nativeElement.style.width = parseInt(this.currentObjRef.offsetWidth) + 10 + 'px';
+            this.textHandler.nativeElement.style.height = parseInt(this.currentObjRef.offsetHeight) + 10 + 'px';
         };
     }
     designContainer.prototype.ngOnInit = function () {
         var _this = this;
-        this._textService.getTextValue().subscribe(function (data) {
-            _this.textAreaVal = data;
+        this._textService.getObjArray().subscribe(function (data) {
+            _this.localObjArray = data;
         });
-        this._textService.setDesigncontainerRef(this.designTooSec);
+        this._textService.currentObjController('getCurrentObj', '', '').subscribe(function (data) {
+            if (_this.currentObjRef == undefined) {
+                _this.currentObjRef = undefined;
+            }
+            else {
+                _this.currentObjRef = _this.currentObjRef.nativeElement;
+            }
+        });
+        this._textService.designContainerController('set', this.designTooSec);
     };
     designContainer.prototype.textNodeEvent = function (event) {
         var currentImagewidth = 0;
         this.textHandler.nativeElement.style.display = 'block';
         var objArray = this._textService.objArray;
         for (var i = 0; i < this.elements._results.length; i++) {
-            console.log(event.target.id, this.elements._results[i].nativeElement.id);
             if (event.target.id === this.elements._results[i].nativeElement.id) {
-                this.currentObj = this.elements._results[i];
+                this.currentObjRef = this.elements._results[i];
                 currentImagewidth = objArray[i].width;
             }
         }
@@ -66,8 +73,8 @@ var designContainer = (function () {
         this.textHandler.nativeElement.style.height = event.target.offsetHeight + 10 + 'px';
         this.textHandler.nativeElement.style.left = event.target.offsetLeft - 5 + 'px';
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
-        this._textService.setCurrentObj(this.currentObj, this.textHandler);
-        this.currentObj.nativeElement.style.width = this._textService.pixelToPercentage((event.target.offsetWidth), this.designTooSec.nativeElement.style["width"]);
+        this._textService.currentObjController('set', this.currentObjRef, this.textHandler);
+        this.currentObjRef.style.width = this._textService.pixelToPercentage((event.target.offsetWidth), this.designTooSec.nativeElement.style["width"]);
         this._textService.setSliderValue(currentImagewidth, 'minV');
         this._textService.setAlignmentValue(event.target.offsetLeft, 'left');
         this._textService.setAlignmentValue(event.target.offsetTop, 'top');
@@ -78,7 +85,7 @@ var designContainer = (function () {
         var currentImagewidth = 0;
         for (var i = 0; i < this.elements._results.length; i++) {
             if (event.target.id === this.elements._results[i].nativeElement.id) {
-                this.currentObj = this.elements._results[i];
+                this.currentObjRef = this.elements._results[i];
                 currentImagewidth = objArray[i].width;
             }
         }
@@ -86,8 +93,8 @@ var designContainer = (function () {
         this.textHandler.nativeElement.style.height = event.target.offsetHeight + 10 + 'px';
         this.textHandler.nativeElement.style.left = event.target.offsetLeft - 5 + 'px';
         this.textHandler.nativeElement.style.top = event.target.offsetTop - 5 + 'px';
-        this._textService.setCurrentObj(this.currentObj, this.textHandler);
-        this.currentObj.nativeElement.style.width = this._textService.pixelToPercentage((event.target.offsetWidth), this.designTooSec.nativeElement.style["width"]);
+        this._textService.currentObjController('set', this.currentObjRef, this.textHandler);
+        this.currentObjRef.style.width = this._textService.pixelToPercentage((event.target.offsetWidth), this.designTooSec.nativeElement.style["width"]);
         this._textService.setSliderValue(currentImagewidth, 'minV');
         this._textService.setSliderValue(parseInt(this.designTooSec.nativeElement.style["width"]), 'maxV');
         // this._textService.setAlignmentValue(event.target.offsetLeft, 'left');
@@ -97,24 +104,23 @@ var designContainer = (function () {
         }
     };
     designContainer.prototype.getPos = function (event) {
-        var handlerRef = this.textHandler.nativeElement.style.display;
-        if (handlerRef == 'block') {
-            this.currentObj.nativeElement.style.left = this._textService.pixelToPercentage((event.left + 5), this.designTooSec.nativeElement.style["width"]);
-            this.currentObj.nativeElement.style.top = this._textService.pixelToPercentage((event.top + 5), this.designTooSec.nativeElement.style["height"]);
-            this._textService.setAlignmentValue(event.left, 'left');
-            this._textService.setAlignmentValue(event.top, 'top');
+        var textHandler = this.textHandler.nativeElement.style.display;
+        var me = this;
+        if (textHandler == 'block') {
+            me.currentObjRef.style.left = me._textService.pixelToPercentage((event.left + 5), me.designTooSec.nativeElement.style["width"]);
+            me.currentObjRef.style.top = me._textService.pixelToPercentage((event.top + 5), me.designTooSec.nativeElement.style["height"]);
+            me._textService.setAlignmentValue(event.left, 'left');
+            me._textService.setAlignmentValue(event.top, 'top');
         }
     };
     designContainer.prototype.onhandlerClick = function (event) {
-        var handlerRef = this.textHandler.nativeElement.style.display;
+        var textHandler = this.textHandler.nativeElement.style.display;
         this.count++;
-        if (handlerRef == 'block' && this.count == 2) {
+        if (textHandler == 'block' && this.count == 2) {
             this.textHandler.nativeElement.style.display = 'none';
             this.count = 0;
+            this._textService.currentObjController('set', undefined, this.textHandler);
         }
-    };
-    designContainer.prototype.onResizeEnd = function (event) {
-        console.log('Element was resized', event);
     };
     __decorate([
         core_1.ViewChild('imageModuleComponent'),
@@ -135,7 +141,7 @@ var designContainer = (function () {
     designContainer = __decorate([
         core_1.Component({
             selector: '[designContainer]',
-            template: " \n                    <div class=\"desgin-tool-sec\" style=\"width: 740px; height: 740px;\" #designTooSec>\n                        <section class=\"desgin-inner\" data-bg=\"\">\n                        <ng-container *ngFor=\"let text of textAreaVal\">\n                          <p #xyz *ngIf=\"text.text!=''\" class=\"textNative\" data-type=\"text\" id=\"{{text.randomNumber}}\" (click)=\"textNodeEvent($event,text)\" style=\"font-size: 18px;\" >{{text.text}}</p>\n                         <img #xyz *ngIf=\"text.src!=''\" class=\"imgNative\"  data-type=\"image\"   id=\"{{text.randomNumber}}\" (click)=\"imgNodeEvent($event,img)\" src={{text.src}}/>\n                        </ng-container>\n                        </section>\n                        <div class=\"handler cube\" #handler  [ng2-draggable]=\"true\" (handlerClick)=\"onhandlerClick($event)\" (postions)=getPos($event)></div>\n                     </div>\n             \n                \n              \n                \n    "
+            template: " \n                    <div class=\"desgin-tool-sec\" style=\"width: 740px; height: 740px;\" #designTooSec>\n                        <section class=\"desgin-inner\" data-bg=\"\">\n                        <ng-container *ngFor=\"let obj of localObjArray\">\n                          <p #xyz *ngIf=\"obj.type=='text'\" class=\"textNative\" data-type=\"text\" id=\"{{obj.id}}\" (click)=\"textNodeEvent($event,text)\" style=\"font-size: 18px;\" >{{obj.value}}</p>\n                         <img #xyz *ngIf=\"obj.type=='image'\" class=\"imgNative\"  data-type=\"image\"   id=\"{{obj.id}}\" (click)=\"imgNodeEvent($event,img)\" src={{obj.value}}/>\n                        </ng-container>\n                        </section>\n                        <div class=\"handler cube\" #handler  [ng2-draggable]=\"true\" (handlerClick)=\"onhandlerClick($event)\" (postions)=getPos($event)></div>\n                     </div>\n             \n                \n              \n                \n    "
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], designContainer);

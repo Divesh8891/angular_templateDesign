@@ -32,17 +32,18 @@ import { ColorPickerService } from 'angular2-color-picker';
                         <!--div class="inputSize"> 
                             <span>Size</span>
                             <input type="text" class="width" [(ngModel)]="tempWidth"><input type="text" class="height" [(ngModel)]="tempHeight">
-                            <linkAsButton [parentClass]="'display-inline m-0'" [applyClass]="'goSize btn'" [btnText]="'Go'" (click)=setTemplateDimension($event)></linkAsButton>
+                             <linkAsButton [parentClass]="'display-inline m-0'" [applyClass]="'goSize btn'" [btnText]="'Go'" (click)=setTemplateDimension($event)></linkAsButton>
                         </div-->
-                        <button class="btn temp-aspect-ratio" (click)=setTemplateSize($event)>1:1</button>
+                        <!--button class="btn temp-aspect-ratio" (click)=setTemplateSize($event)>1:1</button>
                         <button class="btn temp-aspect-ratio" (click)=setTemplateSize($event)>5:4</button>
                         <button class="btn temp-aspect-ratio" (click)=setTemplateSize($event)>4:3</button>
                         <button class="btn temp-aspect-ratio" (click)=setTemplateSize($event)>3:2</button>
                         <button class="btn temp-aspect-ratio" (click)=setTemplateSize($event)>2:5</button>
-                        <div class="vertical-seperator"></div>
+                        <div class="vertical-seperator"></div-->
                          <div class="inputSize"> 
                             <span>Size</span>
                             <input type="text" class="width" [(ngModel)]="tempWidth"><input type="text" class="height" [(ngModel)]="tempHeight">
+                            <div selectBox class="conversion-box display-inline" [defaultOptionValue]="'Select Type'" (change)="setDimensionType($event)"></div>
                             <button class="goSize btn" (click)=setTemplateDimension($event)>Go</button>
                         </div>
                         <!--div class="zoom">
@@ -51,6 +52,8 @@ import { ColorPickerService } from 'angular2-color-picker';
                             <input type="text" class="zoomInput" [(ngModel)]="tempZoomWidth">
                          </div-->
                         <div class="vertical-seperator"></div>
+                        <div selectBox class="scale-box" [defaultOptionValue]="'Select Scale'" (change)="setScale($event)"></div>
+
                         </div>
 
     `
@@ -58,71 +61,29 @@ import { ColorPickerService } from 'angular2-color-picker';
 
 export class templateModuleComponent {
     tempatePanelTitle = "Text";
-    designcontainerRef: any;
-    colorBoxRef: any;
-    tempWidth: any;
-    tempHeight: any;
-    handlerRef: any;
-    currentObj: any;
+    dimensionstatus = 'Pixels';
     private color: string = "#fff";
+    scaleCount = 1;
     opacityValue: any = 0.8;
+    tempWidth: any = 740;
+    tempHeight: any = 740;
+
+    handlerRef: any;
+    designcontainerRef: any;
+    currentObjRef: any;
+
     @ViewChild('pickerBox') public pickerBox: any;
 
-
-
-    setTemplateSize(event: any) {
-        this.getDesignContainerRef();
-        if (event.target.innerHTML === "1:1") {
-            this.updateDesignObj(400, 400);
-            this.designcontainerRef.nativeElement.style['width'] = '400px';
-            this.designcontainerRef.nativeElement.style['height'] = '400px';
-
-        }
-        if (event.target.innerHTML === "5:4") {
-            this.updateDesignObj(500, 400);
-            this.designcontainerRef.nativeElement.style['width'] = '500px';
-            this.designcontainerRef.nativeElement.style['height'] = '400px';
-
-        }
-        if (event.target.innerHTML === "4:3") {
-            this.updateDesignObj(400, 300);
-            this.designcontainerRef.nativeElement.style['width'] = '400px';
-            this.designcontainerRef.nativeElement.style['height'] = '300px';
-
-        }
-        if (event.target.innerHTML === "3:2") {
-            this.updateDesignObj(300, 200);
-            this.designcontainerRef.nativeElement.style['width'] = '300px';
-            this.designcontainerRef.nativeElement.style['height'] = '200px';
-
-        }
-        if (event.target.innerHTML === "2:5") {
-            this.updateDesignObj(200, 500);
-            this.designcontainerRef.nativeElement.style['width'] = '200px';
-            this.designcontainerRef.nativeElement.style['height'] = '500px';
-
-        }
-        if (event.target.innerHTML === "FB") {
-            this.updateDesignObj(780, 780);
-            this.designcontainerRef.nativeElement.style['width'] = '768px';
-            this.designcontainerRef.nativeElement.style['height'] = '768px';
-
-        }
-    }
-
     closePicker(event: any) {
-        this.getDesignContainerRef();
-        console.log(this.opacityValue)
-        this.designcontainerRef.nativeElement.firstElementChild.style["background-color"] = this._textService.hexToRgbA(event, this.opacityValue);
+        this.designcontainerRef.firstElementChild.style["background-color"] = this._textService.hexToRgbA(event, this.opacityValue);
     }
     updateDesignObj(newW: any, newH: any) {
-        this.getDesignContainerRef();
-        this.tempWidth = newW;
-        this.tempHeight = newH;
+        // this.tempWidth = newW;
+        // this.tempHeight = newH;
         let userArray = this._textService.objArray;
-        let oldW = parseInt(this.designcontainerRef.nativeElement.style['width']);
-        let oldH = parseInt(this.designcontainerRef.nativeElement.style["height"])
-        let designObjs = this.designcontainerRef.nativeElement.children[0].children;
+        let oldW = parseInt(this.designcontainerRef.style['width']);
+        let oldH = parseInt(this.designcontainerRef.style["height"])
+        let designObjs = this.designcontainerRef.children[0].children;
 
         let me = this;
         for (let i = 0; i < designObjs.length; i++) {
@@ -131,7 +92,6 @@ export class templateModuleComponent {
             let imgRatio = parseFloat(userArray[i].ratio);
             let calculatedW = Math.round((imgWidth / oldW) * newW);
             // console.log(newH, calculatedW, imgRatio);
-
             userArray[i].width = (calculatedW);
             userArray[i].height = calculatedW / imgRatio;
             if (currentObj.dataset['type'] === 'image') {
@@ -141,14 +101,11 @@ export class templateModuleComponent {
                 this._textService.setSliderValue(newW, 'maxV');
                 let objLeft = currentObj.style['left'] === '' ? 0 : parseInt(currentObj.style['left'])
                 let objTop = currentObj.style['top'] === '' ? 0 : parseInt(currentObj.style['top'])
-                console.log(newH, userArray[i].height, newW, calculatedW)
                 if ((newH < userArray[i].height) || newW < calculatedW) {
-
                     this._textService.setImageDimension(currentObj, newW, newH, userArray[i]);
                 }
                 this._textService.setAlignmentValue(Math.round((objLeft * newW) / 100), 'left');
                 this._textService.setAlignmentValue(Math.round((objTop * newH) / 100), 'top');
-
             }
             else {
                 let fontSize: any = ((parseInt(currentObj.style['fontSize']) / oldW) * 100).toFixed(1);
@@ -161,55 +118,71 @@ export class templateModuleComponent {
                 this._textService.setAlignmentValue(Math.round((objTop * newH) / 100), 'top');
                 console.log(this._textService.currentObj)
             }
-
             if (currentObj.id == userArray[i].id) {
                 if (newW > newH) {
                     this._textService.setSliderValue(newH, 'maxV');
                 }
             }
-
         }
         setTimeout(function () {
-
-            me.currentObj = me._textService.currentObj;
-            me.handlerRef = me._textService.handlerRef;
-            if (me.currentObj != undefined) {
-                me.handlerRef.nativeElement.style.width = me.currentObj.nativeElement.offsetWidth + 10 + 'px';
-                me.handlerRef.nativeElement.style.height = me.currentObj.nativeElement.offsetHeight + 10 + 'px';
-                me.handlerRef.nativeElement.style.left = parseInt(me.currentObj.nativeElement.offsetLeft) - 5 + 'px';
-                me.handlerRef.nativeElement.style.top = parseInt(me.currentObj.nativeElement.offsetTop) - 5 + 'px';
+            if (me.currentObjRef != undefined) {
+                me.handlerRef.style.width = me.currentObjRef.offsetWidth + 10 + 'px';
+                me.handlerRef.style.height = me.currentObjRef.offsetHeight + 10 + 'px';
+                me.handlerRef.style.left = parseInt(me.currentObjRef.offsetLeft) - 5 + 'px';
+                me.handlerRef.style.top = parseInt(me.currentObjRef.offsetTop) - 5 + 'px';
             }
         }, 100)
-
     }
     setTemplateBg(event: any) {
-        this.getDesignContainerRef();
-        this.designcontainerRef.nativeElement.firstElementChild.attributes['data-bg'].value = event.target.innerHTML.toLowerCase();
-
-    }
-    getDesignContainerRef() {
-
-        this.designcontainerRef = this._textService.designcontainerRef;
-
-    }
-    setTemplateBgcolor() {
-        this.colorBoxRef = this._textService.colorBoxRef;
-        this.colorBoxRef.nativeElement.dataset['call'] = 'backgroundColor';
-        this.colorBoxRef.nativeElement.dataset['module'] = 'template';
-        this.colorBoxRef.nativeElement.style.display = 'block';
+        this.designcontainerRef.firstElementChild.attributes['data-bg'].value = event.target.innerHTML.toLowerCase();
     }
     updateOpacity(event: any) {
         this.opacityValue = event.target.value;
-        this._textService.designcontainerRef.nativeElement.firstElementChild.style['background-color'] = this._textService.hexToRgbA(this.pickerBox.nativeElement.attributes[1].value, parseFloat(event.target.value));
+        this.designcontainerRef.firstElementChild.style['background-color'] = this._textService.hexToRgbA(this.pickerBox.nativeElement.attributes[1].value, parseFloat(event.target.value));
     }
-    setTemplateDimension(event: any) {
-        this.getDesignContainerRef();
-        this.updateDesignObj(this.tempWidth, this.tempHeight);
-        this.designcontainerRef.nativeElement.style['width'] = this.tempWidth + 'px';
-        this.designcontainerRef.nativeElement.style['height'] = this.tempHeight + 'px';
-
+    setDimensionType(event: any) {
+        this.dimensionstatus = event.target.value
+    }
+    setScale(event: any) {
+        this.scaleCount = event.target.value;
+        this.setTemplateDimension();
+    }
+    setTemplateDimension() {
+        let localW = 0, localH = 0
+        if (this.dimensionstatus == 'Inches') {
+            localW = this.tempWidth * 96 * this.scaleCount
+            localH = this.tempHeight * 96 * this.scaleCount
+        }
+        else {
+            localW = this.tempWidth * this.scaleCount
+            localH = this.tempHeight * this.scaleCount
+        }
+        this.updateDesignObj(localW, localH);
+        this.designcontainerRef.style['width'] = localW + 'px';
+        this.designcontainerRef.style['height'] = localH + 'px';
     }
 
     constructor(private cpService: ColorPickerService, private _textService: TextService) { }
+    ngOnInit() {
+        this._textService.designContainerController('get').subscribe(
+            data => {
+                this.designcontainerRef = data;
+                this.designcontainerRef = this.designcontainerRef.nativeElement
+            });
+        this._textService.currentObjController('getCurrentObj', '', '').subscribe(
+            data => {
+                if (this.currentObjRef == undefined) {
+                    this.currentObjRef = undefined
+                }
+                else {
+                    this.currentObjRef = this.currentObjRef.nativeElement
+                }
+            });
+        this._textService.currentObjController('getHandlerObj', '', '').subscribe(
+            data => {
+                this.handlerRef = data;
+                this.handlerRef = this.handlerRef.nativeElement
+            });
 
+    }
 }

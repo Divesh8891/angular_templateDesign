@@ -11,10 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var text_service_1 = require("../../../service/text.service");
-var angular2_color_picker_1 = require("angular2-color-picker");
 var textModuleComponent = (function () {
-    function textModuleComponent(cpService, _textService) {
-        this.cpService = cpService;
+    function textModuleComponent(_textService) {
         this._textService = _textService;
         this.textPanelTitle = "Text";
         this.opacityValue = '1';
@@ -30,14 +28,14 @@ var textModuleComponent = (function () {
     };
     textModuleComponent.prototype.updateOpacity = function (event) {
         this.opacityValue = event.target.value;
-        this._textService.currentObj.nativeElement.style['background-color'] = this._textService.hexToRgbA(this.pickerBgBox.nativeElement.attributes[1].value, parseFloat(this.opacityValue));
+        this.currentObjRef.style['background-color'] = this._textService.hexToRgbA(this.pickerBgBox.nativeElement.attributes[1].value, parseFloat(this.opacityValue));
     };
     textModuleComponent.prototype.updateFontFamliy = function (event) {
         this.updateTextcurrentObj('fontFamily', event.target.value);
     };
-    textModuleComponent.prototype.updateStrokeWidth = function (event) {
-        this.updateTextcurrentObj("textShadow", this._textService.colorBoxRef.nativeElement.dataset['textShadow'] + ' 0px 0px ' + event.target.value + 'px');
-    };
+    // updateStrokeWidth(event: any) {
+    //     this.updateTextcurrentObj("textShadow", this._textService.colorBoxRef.nativeElement.dataset['textShadow'] + ' 0px 0px ' + event.target.value + 'px')
+    // }
     // applyColor(event: any) {
     //     this.updateColorBoxObj("color");
     // }
@@ -82,34 +80,47 @@ var textModuleComponent = (function () {
         }
     };
     textModuleComponent.prototype.updateTextcurrentObj = function (property, value) {
-        //console.log(this._textService.currentObj)
-        var oldFontValue = parseInt(this._textService.currentObj.nativeElement.style[property]);
-        this._textService.currentObj.nativeElement.style[property] = value;
+        console.log(this.currentObjRef);
+        var oldFontValue = parseInt(this.currentObjRef.style[property]);
+        this.currentObjRef.style[property] = value;
         if (property == 'fontSize') {
-            var objWidth = Math.round((parseInt(this._textService.currentObj.nativeElement.style.width) * parseInt(this._textService.designcontainerRef.nativeElement.style.width)) / 100);
+            var objWidth = Math.round((parseInt(this.currentObjRef.style.width) * parseInt(this.designcontainerRef.style.width)) / 100);
             //console.log(objWidth,oldFontValue)
-            var newWidthValue = this._textService.pixelToPercentage(((parseInt(value) * objWidth) / oldFontValue), this._textService.designcontainerRef.nativeElement.style["width"]);
+            var newWidthValue = this._textService.pixelToPercentage(((parseInt(value) * objWidth) / oldFontValue), this.designcontainerRef.style["width"]);
             //console.log(newWidthValue)
-            this._textService.currentObj.nativeElement.style.width = newWidthValue;
+            this.currentObjRef.style.width = newWidthValue;
         }
-        this._textService.setSliderValue(this._textService.currentObj.nativeElement.offsetWidth, 'minV');
-        this._textService.handlerRef.nativeElement.style.width = this._textService.currentObj.nativeElement.offsetWidth + 10 + 'px';
-        this._textService.handlerRef.nativeElement.style.height = this._textService.currentObj.nativeElement.offsetHeight + 10 + 'px';
+        this._textService.setSliderValue(this.currentObjRef.offsetWidth, 'minV');
+        this.handlerRef.style.width = this.currentObjRef.offsetWidth + 10 + 'px';
+        this.handlerRef.style.height = this.currentObjRef.offsetHeight + 10 + 'px';
     };
     textModuleComponent.prototype.closeTextPicker = function (event) {
-        if (this._textService.currentObj != undefined)
-            this._textService.currentObj.nativeElement.style.color = event;
+        if (this.currentObjRef != undefined)
+            this.currentObjRef.style.color = event;
     };
     textModuleComponent.prototype.closeTextBgPicker = function (event) {
-        if (this._textService.currentObj != undefined)
-            this._textService.currentObj.nativeElement.style.backgroundColor = this._textService.hexToRgbA(event, this.opacityValue);
+        if (this.currentObjRef != undefined)
+            this.currentObjRef.style.backgroundColor = this._textService.hexToRgbA(event, this.opacityValue);
     };
-    textModuleComponent.prototype.ngAfterViewChecked = function () {
-        // console.log(this._textService)
-        // this.currentObj = this._textService.currentObj.nativeElement;
-        // this._textService.handlerRef.nativeElement = this._textService.handlerRef.nativeElement;
-        //this._textService.colorBoxRef.nativeElement = this._textService.colorBoxRef.nativeElement;
-        // this._textService.designcontainerRef.nativeElement = this._textService.designcontainerRef.nativeElement;
+    textModuleComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this._textService.designContainerController('get').subscribe(function (data) {
+            _this.designcontainerRef = data;
+            _this.designcontainerRef = _this.designcontainerRef.nativeElement;
+        });
+        this._textService.currentObjController('getCurrentObj', '', '').subscribe(function (data) {
+            _this.currentObjRef = data;
+            if (_this.currentObjRef == undefined) {
+                _this.currentObjRef = undefined;
+            }
+            else {
+                _this.currentObjRef = _this.currentObjRef.nativeElement;
+            }
+        });
+        this._textService.currentObjController('getHandlerObj', '', '').subscribe(function (data) {
+            _this.handlerRef = data;
+            _this.handlerRef = _this.handlerRef.nativeElement;
+        });
     };
     __decorate([
         core_1.ViewChild('pickerBgBox'),
@@ -120,7 +131,7 @@ var textModuleComponent = (function () {
             selector: '[textModule]',
             template: " \n                        <h2 id=\"textValhidden\">fsdfs</h2>\n                        <h5 class=\"heading\">{{textPanelTitle}}</h5>\n                        <div class=\"seperator\"></div>\n                        <div textArea></div>\n                        <div class=\"seperator\"></div>\n                        <div selectBox class=\"font-sec select-box\" [defaultOptionValue]=\"'Font-size'\" (change)=\"updateFontS($event)\"></div>\n                        <div selectBox class=\"line-height-sec select-box ml5\" [defaultOptionValue]=\"'line-height'\" (change)=\"updateLineHeight($event)\"></div>\n                        <div selectBox class=\"font-famliy-sec select-box \"  [defaultOptionValue]=\"'Font-famliy'\" (change)=\"updateFontFamliy($event)\"></div>\n                        <div selectBox class=\"stroke-width-sec select-box ml5\" [defaultOptionValue]=\"'stroke-width'\" (change)=\"updateStrokeWidth($event)\"></div>\n                        <div class=\"seperator\"></div>\n                        <span #pickerTextColorBox [(colorPicker)]=\"textColor\" (colorPickerChange)=\"closeTextPicker($event)\"\n                            [cpPosition]=\"'right'\"\n                            [style.backgroundColor]=\"textColor\"\n                            [cpPositionOffset]=\"'50%'\"\n                            [cpPositionRelativeToArrow]=\"true\" class=\"text-color btn icon\" [cpPresetColors]=\"colorArray\"\n                            [cpOKButton]=\"true\"\n                            [cpSaveClickOutside]=\"true\"\n                            [cpOKButtonClass]= \"'btn btn-primary btn-xs'\"\n                            ></span>\n                            <!--button class=\"color btn icon\" (click)=applyColor($event)><i  class=\"sprite-img\"></i></button>\n                            <button class=\"stroke-color btn  icon\" (click)=applyColor($event)>Stroke Color</button>\n                            <button class=\"back-color btn  icon\" (click)=applyBgColor($event)><i class=\"sprite-img\"></i></button-->\n                          <span #pickerBgBox [(colorPicker)]=\"color\" (colorPickerChange)=\"closeTextBgPicker($event)\"\n                            [cpPosition]=\"'right'\"\n                            [style.backgroundColor]=\"color\"\n                            [cpPositionOffset]=\"'50%'\"\n                            [cpPositionRelativeToArrow]=\"true\" class=\"text-back-color btn icon\" [cpPresetColors]=\"colorArray\"\n                            [cpOKButton]=\"true\"\n                            [cpSaveClickOutside]=\"true\"\n                            [cpOKButtonClass]= \"'btn btn-primary btn-xs'\"\n                            ><i  class=\"sprite-img\"></i></span>\n                        <div selectBox class=\"opacity-width-sec select-box\" [defaultOptionValue]=\"'Opacity'\" (change)=\"updateOpacity($event)\"></div>\n                        <div class=\"seperator\"></div>\n                        <button class=\"bold btn text-font-effect\" (click)=applyBold($event)>B</button>\n                        <button class=\"italic btn text-font-effect\" (click)=applyItalic($event)>I</button>\n                        <button class=\"underline btn text-font-effect\" (click)=applyUnderline($event)>U</button>\n    "
         }),
-        __metadata("design:paramtypes", [angular2_color_picker_1.ColorPickerService, text_service_1.TextService])
+        __metadata("design:paramtypes", [text_service_1.TextService])
     ], textModuleComponent);
     return textModuleComponent;
 }());

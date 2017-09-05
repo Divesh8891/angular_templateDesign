@@ -12,25 +12,20 @@ import { TextService } from '../service/text.service';
             <div class="middle-module" middleModule></div>
             <section class="right-module  bg-grey" rightModule></section>
         </div>
-         <section class="imageGen" #imageGen>
-             <img id="canvasPNG" class="downloadable">
-         </section>
+     
     </div>
 
     `
 })
 
 export class AppComponent {
-    canvanElem: any;
-
-    @ViewChild('imageGen') public canvasElemRef: any;
 
     // ngOnChanges() {
     //     console.log("onchange")
     //     console.log(this._textService)
     // }
     ngOnInit() {
-        this._textService.setCanvasElem(this.canvasElemRef)
+     //   this._textService.setCanvasElem(this.canvasElemRef)
         // console.log("ngOnInit")
         // console.log(this._textService)
         // console.log(this._textService.currentObj)

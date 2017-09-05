@@ -15,24 +15,38 @@ export class imageModuleComponent {
     customClass = "image-upload col-xs-12";
     userArray: any;
     randomNumber: any;
+
+
+    designcontainerRef: any;
+
+
     onRemoved(event: any) {
         console.log(event)
     }
     onUploadFinished(data: any) {
         let me = this;
         this._textService.setSliderValue(data.imageDimension.width, 'minV');
-        this._textService.setSliderValue(parseInt(this._textService.designcontainerRef.nativeElement.style.width), 'maxV');
+        this._textService.setSliderValue(parseInt(this.designcontainerRef.style.width), 'maxV');
         let a = new Date();
         this.randomNumber = a.getTime();
         let ratio: any = (parseInt(data.imageDimension.width) / parseInt(data.imageDimension.height)).toFixed(1);
-        this._textService.setTextValue({ 'text': '', 'randomNumber': this.randomNumber, 'imgSrc': data.fileHolder.src });
-        this._textService.updateObjArray({ 'id': this.randomNumber, 'oriWidth': data.imageDimension.width, 'oriHeight': data.imageDimension.height, 'width': data.imageDimension.width, 'height': data.imageDimension.height, 'ratio': ratio })
+        this._textService.setObjArray({
+            'id': this.randomNumber,
+            'oriWidth': data.imageDimension.width,
+            'oriHeight': data.imageDimension.height,
+            'ratio': ratio,
+            'width': data.imageDimension.width,
+            'height': data.imageDimension.height,
+            'value': data.fileHolder.src,
+            'type': 'image'
+        });
+
         setTimeout(function () {
-            // console.log(me._textService.designcontainerRef.nativeElement.children[0].lastElementChild)
+            // console.log(me.designcontainerRef.children[0].lastElementChild)
             let userArray = me._textService.objArray;
-            let currentImage = me._textService.designcontainerRef.nativeElement.children[0].lastElementChild;
-            let currentW = me._textService.designcontainerRef.nativeElement.style.width;
-            let currentH = me._textService.designcontainerRef.nativeElement.style.height;
+            let currentImage = me.designcontainerRef.children[0].lastElementChild;
+            let currentW = me.designcontainerRef.style.width;
+            let currentH = me.designcontainerRef.style.height;
             me._textService.setImageDimension(currentImage, '', '', userArray[userArray.length - 1]);
         }, 100)
     }
@@ -57,5 +71,13 @@ export class imageModuleComponent {
     // }
 
     constructor(private _textService: TextService) { }
+    ngOnInit() {
+        this._textService.designContainerController('get').subscribe(
+            data => {
+                this.designcontainerRef = data;
+                this.designcontainerRef = this.designcontainerRef.nativeElement
+            });
 
+
+    }
 }

@@ -10,15 +10,17 @@ var core_1 = require("@angular/core");
 var Subject_1 = require("rxjs/Subject");
 var TextService = (function () {
     function TextService() {
-        this.dataStringSource = new Subject_1.Subject();
-        this.objArraySource = new Subject_1.Subject();
+        this.objArrSource = new Subject_1.Subject();
+        // public objArraySource = new Subject();
         this.sliderMinValue = new Subject_1.Subject();
         this.sliderMaxValue = new Subject_1.Subject();
         this.leftAlignmentValue = new Subject_1.Subject();
         this.topAlignmentValue = new Subject_1.Subject();
         this.temBgValue = new Subject_1.Subject();
         this.textBgValue = new Subject_1.Subject();
-        this.users = [];
+        this.currentObj = new Subject_1.Subject();
+        this.handlerRef = new Subject_1.Subject();
+        this.designcontainerRef = new Subject_1.Subject();
         this.objArray = [];
         this.setImageDimension = function (currentObj, containerW, containerH, objArray) {
             // console.log("setdimension")
@@ -59,22 +61,15 @@ var TextService = (function () {
             // this.textHandler.nativeElement.style.height = parseInt(localCurrentObj.offsetHeight) + 10 + 'px';
         };
     }
-    TextService.prototype.setTextValue = function (data) {
+    // 'id': this.randomNumber, 'oriWidth': textWidth, 'oriHeight': textHeight, 'ratio': ratio, 'width': textWidth, 
+    //'height': textHeight, 'value': this.textAreaValue/imgSrc, 'type': 'text'
+    TextService.prototype.setObjArray = function (data) {
         var me = this;
-        this.users.push(new User(data.text, data.randomNumber, data.imgSrc, data.width, data.height, data.ratio));
-        this.dataStringSource.next(me.users);
-    };
-    TextService.prototype.getTextValue = function () {
-        return this.dataStringSource.asObservable();
-    };
-    TextService.prototype.updateObjArray = function (data) {
-        var me = this;
-        this.objArray.push(new objArray(data.id, data.oriWidth, data.oriHeight, data.oriWidth, data.oriHeight, data.ratio));
-        this.objArraySource.next(me.objArray);
-        //console.log(this.objArray)
+        this.objArray.push(new objectArray(data.id, data.oriWidth, data.oriHeight, data.ratio, data.width, data.height, data.value, data.type));
+        this.objArrSource.next(me.objArray);
     };
     TextService.prototype.getObjArray = function () {
-        return this.objArraySource.asObservable();
+        return this.objArrSource.asObservable();
     };
     TextService.prototype.hexToRgbA = function (hex, opacity) {
         hex = hex.replace('#', '');
@@ -96,14 +91,10 @@ var TextService = (function () {
         }
     };
     TextService.prototype.setAlignmentValue = function (data, type) {
-        // let alignData = {}
-        // alignData[type] = data;
         if (type === 'left') {
-            // alignData["containerWidth"] = parseInt(this.designcontainerRef.nativeElement.style.width) - this.currentObj.nativeElement.offsetWidth;
             this.leftAlignmentValue.next(data);
         }
         if (type === 'top') {
-            // alignData["containerHeight"] = parseInt(this.designcontainerRef.nativeElement.style.height) - this.currentObj.nativeElement.offsetHeight;
             this.topAlignmentValue.next(data);
         }
     };
@@ -119,18 +110,28 @@ var TextService = (function () {
     TextService.prototype.getTopAlignment = function () {
         return this.topAlignmentValue.asObservable();
     };
-    TextService.prototype.setCurrentObj = function (currentObjData, handlerData) {
-        this.currentObj = currentObjData;
-        this.handlerRef = handlerData;
+    TextService.prototype.currentObjController = function (type, currentObjData, handlerData) {
+        if (type == 'set') {
+            this.currentObj.next(currentObjData);
+            this.handlerRef.next(handlerData);
+        }
+        if (type == 'getCurrentObj') {
+            return this.currentObj.asObservable();
+        }
+        if (type == 'getHandlerObj') {
+            return this.handlerRef.asObservable();
+        }
     };
-    TextService.prototype.setColorBoxRef = function (data) {
-        this.colorBoxRef = data;
-    };
-    TextService.prototype.setDesigncontainerRef = function (data) {
-        this.designcontainerRef = data;
-    };
-    TextService.prototype.setCanvasElem = function (data) {
-        this.canvasElem = data;
+    TextService.prototype.designContainerController = function (type, data) {
+        if (data === void 0) { data = null; }
+        //console.log(type,data)
+        if (type == 'set') {
+            this.designcontainerRef.next(data);
+        }
+        if (type == 'get') {
+            // console.log(this.designcontainerRef)
+            return this.designcontainerRef.asObservable();
+        }
     };
     TextService.prototype.pixelToPercentage = function (objVal, containerVal) {
         return (Math.round((parseInt(objVal) / parseInt(containerVal)) * 100)) + '%';
@@ -141,28 +142,20 @@ var TextService = (function () {
     return TextService;
 }());
 exports.TextService = TextService;
-var User = (function () {
-    function User(text, randomNumber, src, width, height, ratio) {
-        this.text = text;
-        this.randomNumber = randomNumber;
-        this.src = src;
-        this.width = width;
-        this.height = height;
-        this.ratio = ratio;
-    }
-    return User;
-}());
-exports.User = User;
-var objArray = (function () {
-    function objArray(id, oriWidth, oriHeight, width, height, ratio) {
+var objectArray = (function () {
+    // 'id': this.randomNumber, 'oriWidth': textWidth, 'oriHeight': textHeight, 'ratio': ratio, 'width': textWidth, 
+    //'height': textHeight, 'value': this.textAreaValue/imgSrc, 'type': 'text'
+    function objectArray(id, oriWidth, oriHeight, ratio, width, height, value, type) {
         this.id = id;
         this.oriWidth = oriWidth;
         this.oriHeight = oriHeight;
+        this.ratio = ratio;
         this.width = width;
         this.height = height;
-        this.ratio = ratio;
+        this.value = value;
+        this.type = type;
     }
-    return objArray;
+    return objectArray;
 }());
-exports.objArray = objArray;
+exports.objectArray = objectArray;
 //# sourceMappingURL=text.service.js.map

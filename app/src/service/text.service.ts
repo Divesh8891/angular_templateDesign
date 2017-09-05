@@ -4,8 +4,8 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class TextService {
 
-    public dataStringSource = new Subject();
-    public objArraySource = new Subject();
+    public objArrSource = new Subject();
+    // public objArraySource = new Subject();
 
     public sliderMinValue = new Subject();
     public sliderMaxValue = new Subject();
@@ -16,38 +16,22 @@ export class TextService {
     public temBgValue = new Subject();
     public textBgValue = new Subject();
 
+    public currentObj = new Subject();
+    public handlerRef = new Subject();
+    public designcontainerRef = new Subject();
 
-
-
-    currentObj: any;
-    nodeArray: any;
-    colorBoxRef: any;
-    handlerRef: any;
-    designcontainerRef: any;
-    canvasElem: any;
-    canvasImageSrc: any;
-
-
-    users: User[] = [];
-    objArray: objArray[] = [];
-    setTextValue(data: any) {
+    objArray: objectArray[] = [];
+    // 'id': this.randomNumber, 'oriWidth': textWidth, 'oriHeight': textHeight, 'ratio': ratio, 'width': textWidth, 
+    //'height': textHeight, 'value': this.textAreaValue/imgSrc, 'type': 'text'
+    setObjArray(data: any) {
         let me = this;
-        this.users.push(new User(data.text, data.randomNumber, data.imgSrc, data.width, data.height, data.ratio));
-        this.dataStringSource.next(me.users);
-    }
-    getTextValue() {
-        return this.dataStringSource.asObservable();
-    }
-    updateObjArray(data: any) {
-        let me = this;
-        this.objArray.push(new objArray(data.id, data.oriWidth, data.oriHeight, data.oriWidth, data.oriHeight, data.ratio));
-        this.objArraySource.next(me.objArray);
-        //console.log(this.objArray)
-
+        this.objArray.push(new objectArray(data.id, data.oriWidth, data.oriHeight, data.ratio, data.width, data.height, data.value, data.type));
+        this.objArrSource.next(me.objArray);
     }
     getObjArray() {
-        return this.objArraySource.asObservable();
+        return this.objArrSource.asObservable();
     }
+
     hexToRgbA(hex: any, opacity: any) {
         hex = hex.replace('#', '');
         if (hex.length == 3) {
@@ -63,25 +47,17 @@ export class TextService {
 
     setSliderValue(data: any, type: any) {
         if (type === 'minV') {
-
             this.sliderMinValue.next(data);
         }
         if (type === 'maxV') {
             this.sliderMaxValue.next(data);
         }
-
     }
     setAlignmentValue(data: any, type: any) {
-        // let alignData = {}
-        // alignData[type] = data;
         if (type === 'left') {
-            // alignData["containerWidth"] = parseInt(this.designcontainerRef.nativeElement.style.width) - this.currentObj.nativeElement.offsetWidth;
-
             this.leftAlignmentValue.next(data);
         }
         if (type === 'top') {
-            // alignData["containerHeight"] = parseInt(this.designcontainerRef.nativeElement.style.height) - this.currentObj.nativeElement.offsetHeight;
-
             this.topAlignmentValue.next(data);
         }
 
@@ -98,20 +74,32 @@ export class TextService {
     getTopAlignment() {
         return this.topAlignmentValue.asObservable();
     }
+    currentObjController(type: any, currentObjData: any, handlerData: any) {
+        if (type == 'set') {
+            this.currentObj.next(currentObjData);
+            this.handlerRef.next(handlerData)
+        }
 
-    setCurrentObj(currentObjData: any, handlerData: any) {
-        this.currentObj = currentObjData;
-        this.handlerRef = handlerData;
+        if (type == 'getCurrentObj') {
+
+            return this.currentObj.asObservable();
+        }
+        if (type == 'getHandlerObj') {
+            return this.handlerRef.asObservable();
+        }
     }
-    setColorBoxRef(data: any) {
-        this.colorBoxRef = data;
+    designContainerController(type: any, data: any = null) {
+        //console.log(type,data)
+        if (type == 'set') {
+            this.designcontainerRef.next(data);
+        }
+        if (type == 'get') {
+            // console.log(this.designcontainerRef)
+            return this.designcontainerRef.asObservable();
+        }
+
     }
-    setDesigncontainerRef(data: any) {
-        this.designcontainerRef = data
-    }
-    setCanvasElem(data: any) {
-        this.canvasElem = data;
-    }
+
 
     setImageDimension = function (currentObj: any, containerW: any, containerH: any, objArray: any) {
         // console.log("setdimension")
@@ -124,8 +112,6 @@ export class TextService {
         if (containerH === '') {
             maxHeight = parseInt(this.designcontainerRef.nativeElement.style.height);
         }
-
-
         let localCurrentObj = currentObj;
         // console.log(maxWidth,maxHeight)
 
@@ -159,34 +145,20 @@ export class TextService {
     pixelToPercentage(objVal: any, containerVal: any) {
         return (Math.round((parseInt(objVal) / parseInt(containerVal)) * 100)) + '%';
     }
-
-
-
 }
-export class User {
-    constructor(
-        public text: any,
-        public randomNumber: number,
-        public src: any,
-        public width: any,
-        public height: any,
-        public ratio: any,
-
-
-    ) {
-    }
-}
-export class objArray {
+export class objectArray {
+    // 'id': this.randomNumber, 'oriWidth': textWidth, 'oriHeight': textHeight, 'ratio': ratio, 'width': textWidth, 
+    //'height': textHeight, 'value': this.textAreaValue/imgSrc, 'type': 'text'
     constructor(
         public id: any,
         public oriWidth: number,
         public oriHeight: any,
+        public ratio: any,
         public width: any,
         public height: any,
-        public ratio: any
+        public value: any,
+        public type: any,
+    ) { }
 
 
-
-    ) {
-    }
 }

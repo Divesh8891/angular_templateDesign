@@ -42,7 +42,7 @@ import { TextService } from '../../service/text.service';
                                 <li><button class="btn" (click)=sendBack($event)>Send Back</button></li>
                                 <li><button class="btn" (click)=sendforward($event)>Send Backward</button></li>
                                 <li><button class="btn" (click)=bringFront($event)>Bring front</button></li>
-                                <li><button class="btn" (click)=bringForward($event)>Send Backward</button></li>
+                                <li><button class="btn" (click)=bringForward($event)>Send Forward</button></li>
                              </ul>
                         <div class="seperator"></div>
                         <ul class="list-inline obj-action">
@@ -73,9 +73,10 @@ export class rightPanelComponent {
     defaultTopSlidervalue: any = this.inputTopValue;
 
     AlignmnetPanelTitle = "Alignment";
-    currentObj: any;
-    handlerRef: any;
 
+    handlerRef: any;
+    designcontainerRef: any;
+    currentObjRef: any;
     modalImgSrc: any = '';
     canvasImageSrc: any;
     userArray: any;
@@ -96,79 +97,67 @@ export class rightPanelComponent {
             });
         this._textService.getLeftAlignment().subscribe(
             data => {
-                // console.log((this._textService.designcontainerRef))
-
-                // console.log(parseInt(this._textService.designcontainerRef.nativeElement.offsetWidth),parseInt(this._textService.currentObj.nativeElement.offsetWidth))
                 let me = this;
-                setTimeout(function () {
-                    me.inputLeftValue = data;
-                    //console.log(me._textService.designcontainerRef)
-                    //console.log(me._textService.currentObj)
+                if (this.currentObjRef != undefined) {
+                    setTimeout(function () {
 
-                    me.maxLeftSlidervalue = parseInt(me._textService.designcontainerRef.nativeElement.offsetWidth) - parseInt(me._textService.currentObj.nativeElement.offsetWidth);
-                    //console.log(this.maxLeftSlidervalue)
-                }, 100)
+                        me.inputLeftValue = data;
+                        me.maxLeftSlidervalue = parseInt(me.designcontainerRef.offsetWidth) - parseInt(me.currentObjRef.offsetWidth);
+                    }, 100)
+                }
             });
         this._textService.getTopAlignment().subscribe(
             data => {
                 let me = this;
+                if (this.currentObjRef != undefined) {
 
-                // console.log(parseInt(this._textService.designcontainerRef.nativeElement.offsetHeight), parseInt(this._textService.currentObj.nativeElement.offsetHeight))
-                setTimeout(function () {
-                    me.inputTopValue = data;
-                    me.maxTopSlidervalue = parseInt(me._textService.designcontainerRef.nativeElement.offsetHeight) - parseInt(me._textService.currentObj.nativeElement.offsetHeight);
-                    //console.log(this.maxTopSlidervalue)
-                }, 100)
+                    setTimeout(function () {
+                        me.inputTopValue = data;
+                        me.maxTopSlidervalue = parseInt(me.designcontainerRef.offsetHeight) - parseInt(me.currentObjRef.offsetHeight);
+                    }, 100)
+                }
+            });
+        this._textService.designContainerController('get').subscribe(
+            data => {
+                this.designcontainerRef = data;
+                this.designcontainerRef = this.designcontainerRef.nativeElement
+            });
+        this._textService.currentObjController('getCurrentObj', '', '').subscribe(
+            data => {
+                this.currentObjRef = data;
+
+                if (this.currentObjRef == undefined) {
+                    this.currentObjRef = undefined
+                }
+                else {
+                    this.currentObjRef = this.currentObjRef.nativeElement
+                }
+            });
+        this._textService.currentObjController('getHandlerObj', '', '').subscribe(
+            data => {
+                this.handlerRef = data;
+                this.handlerRef = this.handlerRef.nativeElement
             });
 
 
     }
-
-    // leftAlignment(event: any) {
-    //     this.updateCurrentObj({ 'left': '0' });
-    //    // console.log(this.slider)
-    // }
-    // middleAlignment(event: any) {
-    //     let currentObjW = parseInt(this._textService.currentObj.nativeElement.style['width'])
-    //     let objLet = Math.round((100 - currentObjW) / 2);
-    //     this.updateCurrentObj({ 'left': objLet });
-
-    // }
-    // rightAlignment(event: any) {
-    //     let containerW = parseInt(this._textService.currentObj.nativeElement.style["width"]);
-    //     let objLet = (100 - containerW);
-    //     this.updateCurrentObj({ 'left': objLet });
-    // }
     horizontalC() {
-        let currentObjW = parseInt(this._textService.currentObj.nativeElement.style['width'])
+        let currentObjW = parseInt(this.currentObjRef.style['width'])
         let objLet = Math.round((100 - currentObjW) / 2);
         this.updateCurrentObj({ 'left': objLet });
     }
     verticallyC() {
-        let currentObjW = parseInt(this._textService.handlerRef.nativeElement.style['height']);
-        let containerH = parseInt(this._textService.designcontainerRef.nativeElement.style["height"]);
-        let currentObj = this._textService.currentObj.nativeElement;
+        let currentObjW = parseInt(this.handlerRef.style['height']);
+        let containerH = parseInt(this.designcontainerRef.style["height"]);
+        let currentObj = this.currentObjRef;
         let objTop = Math.round((containerH - currentObjW - 5) / 2);
-        this._textService.handlerRef.nativeElement.style["top"] = objTop - 5 + 'px';
-        currentObj.style.top = this._textService.pixelToPercentage((objTop), this._textService.designcontainerRef.nativeElement.style["height"]);;
-        this.inputTopValue = parseInt(this.handlerRef.nativeElement.style.top);
-    }
-
-    setAlignment() {
-        this.currentObj = this._textService.currentObj;
-        this.handlerRef = this._textService.handlerRef;
-        this.currentObj.nativeElement.style['transform'] = '';
-        this.currentObj.nativeElement.style['left'] = this.inputLeftValue;
-        this.currentObj.nativeElement.style['top'] = this.inputTopValue;
-        this.currentObj.nativeElement.style['right'] = 'auto';
-        this.handlerRef.nativeElement.style.left = this.inputLeftValue;
-        this.handlerRef.nativeElement.style.top = this.inputTopValue;
+        this.handlerRef.style["top"] = objTop - 5 + 'px';
+        currentObj.style.top = this._textService.pixelToPercentage((objTop), this.designcontainerRef.style["height"]);;
+        this.inputTopValue = parseInt(this.handlerRef.style.top);
     }
     setwidth() {
-        let currentObj = this._textService.currentObj.nativeElement;
-        this.handlerRef = this._textService.handlerRef;
-
-        currentObj.style['width'] = this._textService.pixelToPercentage(this.inputMinWidthValue, this._textService.designcontainerRef.nativeElement.style["width"]);
+        let currentObj = this.currentObjRef;
+        currentObj.style['width'] = this._textService.pixelToPercentage(this.inputMinWidthValue, this.designcontainerRef.style["width"]);
         this._textService.setSliderValue(this.inputMinWidthValue, 'minV');
         let objArray = this._textService.objArray;
         for (let j = 0; j < objArray.length; j++) {
@@ -176,115 +165,101 @@ export class rightPanelComponent {
                 objArray[j].width = parseInt(this.inputMinWidthValue);
                 objArray[j].height = objArray[j].width * parseInt(objArray[j].ratio);
                 currentObj.style['height'] = objArray[j].height + 'px';
-                this.handlerRef.nativeElement.style.width = objArray[j].width + 10 + 'px';
-                this.handlerRef.nativeElement.style.height = objArray[j].height + 10 + 'px';
+                this.handlerRef.style.width = objArray[j].width + 10 + 'px';
+                this.handlerRef.style.height = objArray[j].height + 10 + 'px';
             }
         }
     }
     updateCurrentObj(propertyArray: any) {
-        this.currentObj = this._textService.currentObj;
-        this.handlerRef = this._textService.handlerRef;
 
-        this.currentObj.nativeElement.style['left'] = propertyArray.left + '%';
-        this.inputLeftValue = Math.round((propertyArray.left * parseInt(this._textService.designcontainerRef.nativeElement.style["width"])) / 100);
-        this.inputTopValue = parseInt(this.handlerRef.nativeElement.style.top) + 5;
-        this.handlerRef.nativeElement.style.left = this.inputLeftValue - 5 + 'px';
+        this.currentObjRef.style['left'] = propertyArray.left + '%';
+        this.inputLeftValue = Math.round((propertyArray.left * parseInt(this.designcontainerRef.style["width"])) / 100);
+        this.inputTopValue = parseInt(this.handlerRef.style.top) + 5;
+        this.handlerRef.style.left = this.inputLeftValue - 5 + 'px';
 
     }
     onWidthChanged(event: any) {
-        this.handlerRef = this._textService.handlerRef;
-        this.currentObj = this._textService.currentObj;
-
-        if (this.currentObj != undefined) {
+        // console.log(this.currentObjRef)
+        if (this.currentObjRef != undefined) {
             this.inputMinWidthValue = event.value;
             let objArray = this._textService.objArray;
-            let currentObjElememtID = this._textService.currentObj.nativeElement.id;
-            this.currentObj.nativeElement.style['width'] = this._textService.pixelToPercentage(event.value, this._textService.designcontainerRef.nativeElement.style["width"]);
+            let currentObjElememtID = this.currentObjRef.id;
+            this.currentObjRef.style['width'] = this._textService.pixelToPercentage(event.value, this.designcontainerRef.style["width"]);
             for (let j = 0; j < objArray.length; j++) {
-                // console.log(objArray[j].id, this.currentObj.nativeElement.id)
-                if (objArray[j].id === parseInt(this.currentObj.nativeElement.id)) {
-                    if (this.currentObj.nativeElement.dataset['type'] === 'image') {
-                        this.currentObj.nativeElement.style['height'] = event.value / objArray[j].ratio + 'px';
+                // console.log(objArray[j].id, this.currentObjRef.id)
+                if (objArray[j].id === parseInt(this.currentObjRef.id)) {
+                    if (objArray[j].type === 'image') {
+                        this.currentObjRef.style['height'] = event.value / objArray[j].ratio + 'px';
                         objArray[j].height = event.value * objArray[j].ratio;
                     }
-                    this._textService.setAlignmentValue(this.currentObj.nativeElement.offsetLeft, 'left');
-                    this._textService.setAlignmentValue(this.currentObj.nativeElement.offsetTop, 'top');
+                    this._textService.setAlignmentValue(this.currentObjRef.offsetLeft, 'left');
+                    this._textService.setAlignmentValue(this.currentObjRef.offsetTop, 'top');
                     objArray[j].width = event.value;
                 }
             }
-            this.handlerRef.nativeElement.style.width = this.currentObj.nativeElement.offsetWidth + 10 + 'px';
-            this.handlerRef.nativeElement.style.height = this.currentObj.nativeElement.offsetHeight + 10 + 'px';
+            this.handlerRef.style.width = this.currentObjRef.offsetWidth + 10 + 'px';
+            this.handlerRef.style.height = this.currentObjRef.offsetHeight + 10 + 'px';
 
         }
     }
     onWidthChangedFromInput(event: any) {
-        this.handlerRef = this._textService.handlerRef;
-        this.currentObj = this._textService.currentObj;
-        if (this.currentObj != undefined) {
-            this.currentObj.nativeElement.style['width'] = this._textService.pixelToPercentage((event.value), this._textService.designcontainerRef.nativeElement.offsetWidth);
-            this.handlerRef.nativeElement.style.left = this.currentObj.nativeElement.offsetLeft - 5 + 'px';
+        if (this.currentObjRef != undefined) {
+            this.currentObjRef.style['width'] = this._textService.pixelToPercentage((parseInt(event.target.value)), this.designcontainerRef.offsetWidth);
+            this.handlerRef.style.width = parseInt(event.target.value) + 10 + 'px';
         }
 
     }
     onLeftChanged(event: any) {
-        this.handlerRef = this._textService.handlerRef;
-        this.currentObj = this._textService.currentObj;
-        if (this.currentObj != undefined) {
+        if (this.currentObjRef != undefined) {
             this.inputLeftValue = event.value;
-            // console.log(event.value, this._textService.designcontainerRef.nativeElement.offsetWidth)
-            this.currentObj.nativeElement.style['left'] = this._textService.pixelToPercentage((event.value), this._textService.designcontainerRef.nativeElement.offsetWidth);
-            this.handlerRef.nativeElement.style.left = this.currentObj.nativeElement.offsetLeft - 5 + 'px';
+            // console.log(event.value, this.designcontainerRef.offsetWidth)
+            this.currentObjRef.style['left'] = this._textService.pixelToPercentage((event.value), this.designcontainerRef.offsetWidth);
+            this.handlerRef.style.left = this.currentObjRef.offsetLeft - 5 + 'px';
         }
     }
     onLeftChangedFromInput(event: any) {
-        this.handlerRef = this._textService.handlerRef;
-        this.currentObj = this._textService.currentObj;
-        if (this.currentObj != undefined) {
+        if (this.currentObjRef != undefined) {
             if (event.target.value > this.maxLeftSlidervalue) {
-                this.currentObj.nativeElement.style['left'] = this._textService.pixelToPercentage((this.maxLeftSlidervalue), this._textService.designcontainerRef.nativeElement.offsetWidth);
+                this.currentObjRef.style['left'] = this._textService.pixelToPercentage((this.maxLeftSlidervalue), this.designcontainerRef.offsetWidth);
                 this.inputLeftValue = this.maxLeftSlidervalue
-                alert("value cannot be exceed from container Height " + this._textService.designcontainerRef.nativeElement.offsetWidth);
+                alert("value cannot be exceed from container Height " + this.designcontainerRef.offsetWidth);
             }
             else {
-                this.currentObj.nativeElement.style['left'] = this._textService.pixelToPercentage(event.target.value, this._textService.designcontainerRef.nativeElement.offsetWidth);
+                this.currentObjRef.style['left'] = this._textService.pixelToPercentage(event.target.value, this.designcontainerRef.offsetWidth);
             }
-            this.handlerRef.nativeElement.style.left = this.currentObj.nativeElement.offsetLeft - 5 + 'px';
+            this.handlerRef.style.left = this.currentObjRef.offsetLeft - 5 + 'px';
         }
     }
     onTopChangedFromInput(event: any) {
-        this.handlerRef = this._textService.handlerRef;
-        this.currentObj = this._textService.currentObj;
-        if (this.currentObj != undefined) {
-            let objH = this.currentObj.nativeElement.offsetHeight + 5;
-            let containerH = parseInt(this._textService.designcontainerRef.nativeElement.style["height"])
+        if (this.currentObjRef != undefined) {
+            let objH = this.currentObjRef.offsetHeight + 5;
+            let containerH = parseInt(this.designcontainerRef.style["height"])
             if (event.target.value > this.maxTopSlidervalue) {
-                this.currentObj.nativeElement.style['top'] = this._textService.pixelToPercentage((this.maxTopSlidervalue), containerH);
+                this.currentObjRef.style['top'] = this._textService.pixelToPercentage((this.maxTopSlidervalue), containerH);
                 this.inputTopValue = this.maxTopSlidervalue
                 alert("value cannot be exceed from container Height " + this.maxTopSlidervalue);
             }
             else {
-                this.currentObj.nativeElement.style['top'] = this._textService.pixelToPercentage(event.target.value, containerH);
+                this.currentObjRef.style['top'] = this._textService.pixelToPercentage(event.target.value, containerH);
             }
-            this.handlerRef.nativeElement.style.top = this.currentObj.nativeElement.offsetTop - 5 + 'px';
+            this.handlerRef.style.top = this.currentObjRef.offsetTop - 5 + 'px';
         }
     }
     onTopChanged(event: any) {
-        this.handlerRef = this._textService.handlerRef;
-        this.currentObj = this._textService.currentObj;
-        if (this.currentObj != undefined) {
-            let containerH = parseInt(this._textService.designcontainerRef.nativeElement.style["height"])
+        if (this.currentObjRef != undefined) {
+            let containerH = parseInt(this.designcontainerRef.style["height"])
             this.inputTopValue = event.value;
-            let objH = this.currentObj.nativeElement.offsetHeight;
-            this.currentObj.nativeElement.style['top'] = this._textService.pixelToPercentage((event.value), containerH);
-            this.handlerRef.nativeElement.style.top = this.currentObj.nativeElement.offsetTop - 5 + 'px';
+            let objH = this.currentObjRef.offsetHeight;
+            this.currentObjRef.style['top'] = this._textService.pixelToPercentage((event.value), containerH);
+            this.handlerRef.style.top = this.currentObjRef.offsetTop - 5 + 'px';
         }
     }
     sendBack() {
-        let $currentObj = this._textService.currentObj.nativeElement;
+        let $currentObj = this.currentObjRef;
         let $prevID = $currentObj.previousSibling;
         let $currentObjId = $currentObj.id;
 
-        let $container = this._textService.designcontainerRef.nativeElement.children[0];
+        let $container = this.designcontainerRef.children[0];
         let $firstChildId = $container.firstElementChild.getAttribute('id')
         if ($firstChildId != $currentObjId) {
             $currentObj.remove();
@@ -293,11 +268,11 @@ export class rightPanelComponent {
 
     }
     bringFront() {
-        let $currentObj = this._textService.currentObj.nativeElement;
+        let $currentObj = this.currentObjRef;
         let $currentObjId = $currentObj.id;
         let $nextID = $currentObj.nextSibling;
 
-        let $container = this._textService.designcontainerRef.nativeElement.children[0];
+        let $container = this.designcontainerRef.children[0];
         let $lastChildId = $container.lastElementChild.getAttribute('id')
 
         if ($lastChildId != $currentObjId) {
@@ -305,10 +280,10 @@ export class rightPanelComponent {
         }
     }
     sendforward() {
-        let $currentObj = this._textService.currentObj.nativeElement;
+        let $currentObj = this.currentObjRef;
         let $currentObjId = $currentObj.id;
 
-        let $container = this._textService.designcontainerRef.nativeElement.children[0];
+        let $container = this.designcontainerRef.children[0];
         let $firstChildId = $container.firstElementChild.getAttribute('id')
         let $prevID = $container.firstElementChild;
 
@@ -317,10 +292,10 @@ export class rightPanelComponent {
         }
     }
     bringForward() {
-        let $currentObj = this._textService.currentObj.nativeElement;
+        let $currentObj = this.currentObjRef;
         let $currentObjId = $currentObj.id;
 
-        let $container = this._textService.designcontainerRef.nativeElement.children[0];
+        let $container = this.designcontainerRef.children[0];
         let $lastChildId = $container.lastElementChild.getAttribute('id')
 
 
@@ -337,77 +312,38 @@ export class rightPanelComponent {
 
     showPreview() {
         let me = this;
-        me.handlerRef = this._textService.handlerRef;
-        me.handlerRef.nativeElement.style.display = 'none';
-        let canvasW = parseInt(me._textService.designcontainerRef.nativeElement.offsetWidth)
-        let canvasH = parseInt(me._textService.designcontainerRef.nativeElement.style.height)
-        console.log(this._textService.designcontainerRef.nativeElement)
-        html2canvas(this._textService.designcontainerRef.nativeElement).then(function (canvas: any) {
-            canvas.setAttribute("id", "canvas1");
-            //  canvas.setAttribute('width', canvasW);
-            // canvas.setAttribute('height', canvasH);
-            me._textService.canvasElem.nativeElement.appendChild(canvas);
-            me.modalImgSrc = me._textService.canvasElem.nativeElement.children['canvas1'].toDataURL("image/jpeg");
-            me._textService.canvasElem.nativeElement.children['canvas1'].remove(canvas);
-            me.handlerRef.nativeElement.style.display = 'block';
+        me.handlerRef.style.display = 'none';
+        html2canvas(this.designcontainerRef).then(function (canvas: any) {
+            me.modalImgSrc = canvas.toDataURL("image/jpeg");
+            me.handlerRef.style.display = 'block';
         });
 
     }
     saveImage() {
-        // console.log("asdasdasd")
         let me = this;
-        me.handlerRef = this._textService.handlerRef;
-        me.handlerRef.nativeElement.style.display = 'none';
-        console.log((me._textService.designcontainerRef))
-        let canvasW = parseInt(me._textService.designcontainerRef.nativeElement.offsetWidth)
-        let canvasH = parseInt(me._textService.designcontainerRef.nativeElement.style.height)
-
-        html2canvas(this._textService.designcontainerRef.nativeElement).then(function (canvas: any) {
-            canvas.backgroundColor = "rgba(19, 41, 75, 0.3)";
-            canvas.setAttribute("id", "canvas1");
-            // canvas.setAttribute('width', canvasW);
-            // canvas.setAttribute('height', canvasH);
-
-            // me._textService.canvasElem.nativeElement.appendChild(canvas);
-            // me.canvasImageSrc = me._textService.canvasElem.nativeElement.children['canvas1'].toDataURL("image/jpeg");
-            // me._textService.canvasElem.nativeElement.children['canvasPNG'].setAttribute("src", me.canvasImageSrc);
-            // me._textService.canvasElem.nativeElement.children['canvas1'].remove(canvas);
+        me.handlerRef.style.display = 'none';
+        html2canvas(this.designcontainerRef).then(function (canvas: any) {
             var a = document.createElement('a');
-            // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
             a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-            a.download = 'somefilename.png';
+            a.download = 'template.png';
             a.click();
-            // let imgElem = document.createElement("a");
-            // imgElem.setAttribute("src", me.canvasImageSrc);
-            // imgElem.className = "downloadable";
-            // let anchorElem = document.createElement("a");
-            // anchorElem.setAttribute("href", me.canvasImageSrc);
-            // anchorElem.setAttribute("download", "preview.jpeg");
-            // anchorElem.appendChild(imgElem);
-
-            // me.downloadImgCont.nativeElement.appendChild = anchorElem;
-            // me.downloadImgCont.nativeElement.appendChild.click();
-            me.handlerRef.nativeElement.style.display = 'block';
-
+            me.handlerRef.style.display = 'block';
         }
         );
 
     }
     deleteNode() {
-        this.userArray = this._textService.users;
         let ObjArray = this._textService.objArray;
-
-        let currentObjElememtID = this._textService.currentObj.nativeElement.id;
-        for (let j = 0; j < this.userArray.length; j++) {
-            if (this.userArray[j].randomNumber == currentObjElememtID && ObjArray[j].id == currentObjElememtID) {
-                this.userArray.splice(j, 1);
+        let currentObjElememtID = this.currentObjRef.id;
+        for (let j = 0; j < ObjArray.length; j++) {
+            if (ObjArray[j].id == currentObjElememtID) {
                 ObjArray.splice(j, 1);
                 break;
             }
         }
-        this.handlerRef = this._textService.handlerRef;
-        this.handlerRef.nativeElement.style.display = 'none';
+        this.handlerRef.style.display = 'none';
     }
     constructor(private _textService: TextService) {
     }
+
 }

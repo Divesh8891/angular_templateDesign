@@ -18,15 +18,63 @@ var textAreaComponent = (function () {
         this.textPlaceholder = 'Add Text';
     }
     textAreaComponent.prototype.addtext = function (event) {
+        this.textWidth = this.dummyText.nativeElement.offsetWidth;
+        this.textHeight = this.dummyText.nativeElement.offsetHeight;
         var a = new Date();
         this.randomNumber = a.getTime();
-        this.textAreaValue === '' ? alert(this.textAreaValue) : this._textService.setTextValue({ 'text': this.textAreaValue, 'randomNumber': this.randomNumber, 'imgSrc': '' });
-        var textWidth = this.dummyText.nativeElement.offsetWidth;
-        var textHeight = this.dummyText.nativeElement.offsetHeight;
-        var ratio = textWidth / textHeight;
-        this._textService.updateObjArray({ 'id': this.randomNumber, 'oriWidth': textWidth, 'oriHeight': textHeight, 'width': textWidth, 'height': textHeight, 'ratio': ratio });
-        this._textService.setSliderValue(textWidth, 'minV');
-        this._textService.setSliderValue(parseInt(this._textService.designcontainerRef.nativeElement.style.width), 'maxV');
+        var ratio = this.textWidth / this.textHeight;
+        this.textAreaValue === '' ? alert(this.textAreaValue) : this._textService.setObjArray({
+            'id': this.randomNumber,
+            'oriWidth': this.textWidth,
+            'oriHeight': this.textHeight,
+            'ratio': ratio,
+            'width': this.textWidth,
+            'height': this.textHeight,
+            'value': this.textAreaValue,
+            'type': 'text'
+        });
+        this._textService.setSliderValue(this.textWidth, 'minV');
+        this._textService.setSliderValue(parseInt(this.designcontainerRef.style.width), 'maxV');
+    };
+    textAreaComponent.prototype.updateText = function (event) {
+        //console.log(event)
+        var currentObj = this.currentObjRef;
+        if (currentObj != undefined) {
+            var handlerRef = this.handlerRef;
+            this.textWidth = this.dummyText.nativeElement.offsetWidth;
+            this.textHeight = this.dummyText.nativeElement.offsetHeight;
+            var objArray = this._textService.objArray;
+            var currentObjElememtID = currentObj.id;
+            for (var j = 0; j < objArray.length; j++) {
+                if (objArray[j].type == 'text' && objArray[j].id == currentObjElememtID) {
+                    objArray[j].value = event.target.value;
+                    objArray[j].width = this.textWidth;
+                    this._textService.setSliderValue(objArray[j].width, 'minV');
+                    currentObj.style.width = this._textService.pixelToPercentage((this.textWidth), this.designcontainerRef.style["width"]);
+                    handlerRef.style.width = objArray[j].width + 12 + 'px';
+                }
+            }
+        }
+    };
+    textAreaComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this._textService.designContainerController('get').subscribe(function (data) {
+            _this.designcontainerRef = data;
+            _this.designcontainerRef = _this.designcontainerRef.nativeElement;
+        });
+        this._textService.currentObjController('getCurrentObj', '', '').subscribe(function (data) {
+            _this.currentObjRef = data;
+            if (_this.currentObjRef == undefined) {
+                _this.currentObjRef = undefined;
+            }
+            else {
+                _this.currentObjRef = _this.currentObjRef.nativeElement;
+            }
+        });
+        this._textService.currentObjController('getHandlerObj', '', '').subscribe(function (data) {
+            _this.handlerRef = data;
+            _this.handlerRef = _this.handlerRef.nativeElement;
+        });
     };
     __decorate([
         core_1.ViewChild('dummyText'),
@@ -35,7 +83,7 @@ var textAreaComponent = (function () {
     textAreaComponent = __decorate([
         core_1.Component({
             selector: '[textArea]',
-            template: " \n                    <textarea [placeholder]=\"textPlaceholder\" [class]=\"textAreaClass\" [(ngModel)]= \"textAreaValue\"></textarea>\n                    <button class=\"btn btn-lrg\" (click)=\"addtext($event)\">Add</button>\n                    <p #dummyText style=\"visibility:hidden;position:absolute;top:-100%\" class=\"m0\">{{textAreaValue}}</p>\n                "
+            template: " \n                    <textarea [placeholder]=\"textPlaceholder\" [class]=\"textAreaClass\" [(ngModel)]= \"textAreaValue\" (input)=\"updateText($event)\"></textarea>\n                    <button class=\"btn btn-lrg\" (click)=\"addtext($event)\">Add</button>\n                    <p #dummyText style=\"visibility:hidden;position:absolute;top:-100%\" class=\"m0\">{{textAreaValue}}</p>\n                "
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], textAreaComponent);

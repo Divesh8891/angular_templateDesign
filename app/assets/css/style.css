@@ -56,9 +56,11 @@ ul{list-style-type:none;padding:0}
 .zoom,.zoom > *{display: inline-block !important;}
 .zoom label{font-size: 12px;}
 .zoom input{width: 40px;}
+
 .inputSize{display: inline-block;}
 .inputSize input{width: 50px;margin-right: 10px;}
-
+.conversion-box{display: inline-block}
+.scale-box{display: inline-block}
 .right-module{display:inline-block;width:200px;vertical-align:top;padding:10px;}
 .left-align label,.top-align label{font-size:12px;margin-right:8px;}
 .left-align input,.top-align input{width:40px;display:inline-block;}
