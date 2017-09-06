@@ -33,30 +33,23 @@ ul{list-style-type:none;padding:0}
 .text-module{padding:10px;margin-top:10px;}
 #textValhidden{opacity:0;visibility:hidden;display:inline-block;font-size:18px;position:absolute;white-space:nowrap;}
 .text-module textarea{width:100%;}
-.text-color{
-    display: inline-block;
-    width: 25px;
-    height: 25px;
-}
-.text-back-color{
-    display: inline-block;
-    width: 25px;
-    height: 25px;
-}
+.text-color{display: inline-block;width: 25px;height: 25px;}
+.text-back-color{display: inline-block;width: 25px;height: 25px;}
 .back-color .sprite-img{background-color:#ddd;background-position:2px -6px;}
 .color .sprite-img{background-position:0;}
 .opacity-width-sec select{vertical-align:bottom;}
+.text-transform,.text-align{width: 31%;display: inline-block}
+
 .middle-module{display:inline-block;width:900px;}
 .template-module{padding:10px;}
 .temp-back-color{display: inline-block;}
 .temp-back-color .sprite-img{background-color: transparent;background-position:2px -6px;}
 .temp-opacity-sec{display:inline-block;}
 .temp-opacity-sec select{height:25px;}
-.text-font-effect,.text-font-effect:hover,.temp-aspect-ratio,.temp-aspect-ratio:hover{padding:5px 10px!important;}
+.text-font-effect,.text-font-effect:hover,.temp-aspect-ratio,.temp-aspect-ratio:hover{padding:5px 10px!important;width: 31%;}
 .zoom,.zoom > *{display: inline-block !important;}
 .zoom label{font-size: 12px;}
 .zoom input{width: 40px;}
-
 .inputSize{display: inline-block;}
 .inputSize input{width: 50px;margin-right: 10px;}
 .conversion-box{display: inline-block}
@@ -83,7 +76,6 @@ ul{list-style-type:none;padding:0}
 #img-out{text-align:center;}
 #img-out img{width:60%;}
 #canvasPNG,.imageGen,.downloadImgCont{display:none;}
-
 
 .custom-color-picker{display:none;position:absolute;border:1px solid;box-shadow:0 0 7px;background-color:#fff;width:100%;padding:10px;max-width: 200px;top: 40px;left: 50%;z-index: 10;transform: translate(-50%,45px);}
 .custom-color-picker li{width:20px!important;height:20px;display:inline-block;margin-left:2px;margin-bottom:2px!important;float:left;}

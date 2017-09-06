@@ -40,6 +40,14 @@ import { TextService } from '../../../service/text.service';
                         <button class="bold btn text-font-effect" (click)=applyBold($event)>B</button>
                         <button class="italic btn text-font-effect" (click)=applyItalic($event)>I</button>
                         <button class="underline btn text-font-effect" (click)=applyUnderline($event)>U</button>
+                        <div class="seperator"></div>
+                        <button class="lower-case btn text-transform" (click)=applyTextTransform($event) data-transform="lowercase">tt</button>
+                        <button class="upper-case btn text-transform" (click)=applyTextTransform($event) data-transform="uppercase">TT</button>
+                        <button class="camel-case btn text-transform" (click)=applyTextTransform($event) data-transform="capitalize">Tt</button>
+                        <div class="seperator"></div>
+                        <button class="text-left btn text-align" (click)=applyTextAlign($event) data-align="left">left</button>
+                        <button class="text-middle btn text-align" (click)=applyTextAlign($event) data-align="center">mid</button>
+                        <button class="text-right btn text-align" (click)=applyTextAlign($event) data-align="right">right</button>
     `
 })
 
@@ -121,8 +129,14 @@ export class textModuleComponent {
             this.updateTextcurrentObj('textDecoration', 'underline')
         }
     }
+    applyTextTransform(event: any) {
+        this.currentObjRef.style['text-transform'] = event.target.dataset['transform']
+    }
+    applyTextAlign(event: any) {
+        this.currentObjRef.style['text-align'] = event.target.dataset['align']
+    }
     updateTextcurrentObj(property: any, value: any) {
-        console.log(this.currentObjRef)
+        // console.log(this.currentObjRef)
         let oldFontValue = parseInt(this.currentObjRef.style[property])
         this.currentObjRef.style[property] = value;
         if (property == 'fontSize') {
