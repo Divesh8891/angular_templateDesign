@@ -5,10 +5,8 @@ import { ColorPickerService } from 'angular2-color-picker';
 @Component({
     selector: '[templateModule]',
     template: ` 
-                        <h5 class="heading">Template Setting</h5>
-                        <div class="seperator"></div>
-
-                        <div class="clearfix mt-10">
+                        <h5 class="heading display-inline">Template Setting</h5>
+                        <div class="clearfix mt-10 display-inline">
                         <span #pickerBox [(colorPicker)]="color" (colorPickerChange)="closePicker($event)"
                             [cpPosition]="'right'" 
                             [style.backgroundColor]="color"
