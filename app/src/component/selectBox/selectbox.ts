@@ -40,7 +40,7 @@ export class selectBoxComponent implements OnInit {
             this.optionArray = ['Pixels','Inches'];
             this.textfilter = this.optionArray[0];
         }
-         if (this.defaultOptionValue == 'Select Scale') {
+         if (this.defaultOptionValue == 'Scale') {
             this.optionArray = [1,2,3,4,5,6,7,8];
             this.textfilter = this.optionArray[0];
         }

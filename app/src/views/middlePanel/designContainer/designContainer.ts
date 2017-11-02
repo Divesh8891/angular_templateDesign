@@ -4,14 +4,14 @@ import { TextService } from '../../../service/text.service';
 @Component({
     selector: '[designContainer]',
     template: ` 
-                    <div class="desgin-tool-sec" style="width: 740px; height: 740px;" #designTooSec>
+                    <div class="desgin-tool-sec" style="width: 740px; height: 740px;" #designTooSec >
                         <section class="desgin-inner" data-bg="">
                         <ng-container *ngFor="let obj of localObjArray">
                           <p #xyz *ngIf="obj.type=='text'" class="textNative" data-type="text" id="{{obj.id}}" (click)="textNodeEvent($event,text)" style="font-size: 18px;" >{{obj.value}}</p>
                          <img #xyz *ngIf="obj.type=='image'" class="imgNative"  data-type="image"   id="{{obj.id}}" (click)="imgNodeEvent($event,img)" src={{obj.value}}/>
                         </ng-container>
                         </section>
-                        <div class="handler cube" #handler  [ng2-draggable]="true" (handlerClick)="onhandlerClick($event)" (postions)=getPos($event)></div>
+                        <div class="handler cube" #handler  [ng2-draggable]="true" (handlerClick)="onhandlerClick($event)" (dblclick)="onhandlerdbClick()" (postions)=getPos($event)></div>
                      </div>
              
                 
@@ -76,6 +76,8 @@ export class designContainer {
         this._textService.setSliderValue(currentImagewidth, 'minV');
         this._textService.setAlignmentValue(event.target.offsetLeft, 'left');
         this._textService.setAlignmentValue(event.target.offsetTop, 'top');
+        console.log(this.currentObjRef.style)
+        this._textService.setAlignmentValue(parseInt(this.currentObjRef.style.fontSize), 'font-size');
 
 
 
@@ -110,22 +112,27 @@ export class designContainer {
         let textHandler = this.textHandler.nativeElement.style.display;
         let me = this;
         if (textHandler == 'block') {
-            me.currentObjRef.style.left = me._textService.pixelToPercentage((event.left + 5), me.designTooSec.nativeElement.style["width"]);
-            me.currentObjRef.style.top = me._textService.pixelToPercentage((event.top + 5), me.designTooSec.nativeElement.style["height"]);
+            me.currentObjRef.style.left = event.left + 'px';
+            me.currentObjRef.style.top = event.top + 'px';
             me._textService.setAlignmentValue(event.left, 'left');
             me._textService.setAlignmentValue(event.top, 'top');
+            this.textHandler.nativeElement.style.left = event.left - 5 + 'px';
+            this.textHandler.nativeElement.style.top = event.top - 5 + 'px';
         }
     }
     onhandlerClick(event: any) {
-        let textHandler = this.textHandler.nativeElement.style.display;
-        this.count++;
+        // let textHandler = this.textHandler.nativeElement.style.display;
+        // this.count++;
 
-        if (textHandler == 'block' && this.count == 2) {
-            this.textHandler.nativeElement.style.display = 'none';
-            this.count = 0;
-            this._textService.currentObjController('set', undefined, this.textHandler);
-        }
-    
+        // if (textHandler == 'block' && this.count == 2) {
+        //     this.textHandler.nativeElement.style.display = 'none';
+        //     this.count = 0;
+        //     this._textService.currentObjController('set', undefined, this.textHandler);
+        // }
+
+    }
+    onhandlerdbClick(event:any){
+        this.textHandler.nativeElement.style.display = 'none';
     }
 
     setImageDimension = function () {

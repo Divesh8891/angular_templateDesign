@@ -34,13 +34,26 @@ import { TextService } from '../../service/text.service';
                             </div>     
                             <div class="text-center">
                                 <input type="text" (input)="onWidthChangedFromInput($event)" placeholder="Min" class="widthA" [(ngModel)]="inputMinWidthValue" value={{inputMinWidthValue}}>
-                                <input readonly placeholder="Max" type="text" class="widthA" [(ngModel)]="inputMaxWidthValue" value={{inputMaxWidthValue}}>
+                                <input readonly placeholder="Max" type="text" class="widthA max" [(ngModel)]="inputMaxWidthValue" value={{inputMaxWidthValue}}>
                             </div>
                         </div>
                         <div class="seperator"></div>
-                            <ul class="list-inline align-action">
+                        <div class="align-action">
+                            <i class="sprite-img sendBack" (click)=sendBack($event) title="Send Back"></i>
+                            <i class="sprite-img bringFront" (click)=bringFront($event) title="Bring Front"></i>
+                            <i class="sprite-img sendBackword" (click)=sendforward($event) title="Send Backward"></i>
+                            <i class="sprite-img bringForward" (click)=bringForward($event) title="Bring Forward"></i>
+                        </div>
+                                                <div class="seperator"></div>
+
+                        <div class="obj-action text-center">
+                            <i class="sprite-img delete" (click)=deleteNode($event) title="Delete"></i>
+                            <i class="sprite-img preview" (click)=showPreview($event) title="Preview"></i>
+                            <i class="sprite-img save" (click)=saveImage($event)  title="Save"></i>
+                        </div>
+                            <!--ul class="list-inline align-action">
                                 <li><button class="btn" (click)=sendBack($event)>Send Back</button></li>
-                                <li><button class="btn" (click)=sendforward($event)>Send Backward</button></li>
+                                <li><button class="btn" (click)=sendBack($event)>Send Backward</button></li>
                                 <li><button class="btn" (click)=bringFront($event)>Bring front</button></li>
                                 <li><button class="btn" (click)=bringForward($event)>Send Forward</button></li>
                              </ul>
@@ -49,7 +62,7 @@ import { TextService } from '../../service/text.service';
                             <li><button class="delete btn" (click)=deleteNode($event)>Delete</button></li>
                             <li><button class="preview btn" (click)=showPreview($event)>Preview</button></li>
                             <li><button class="save btn" (click)=saveImage($event)>Save</button></li>
-                        </ul>
+                        </ul-->
                           <div class="popup-body"><div id="img-out" #modal><img  src="{{modalImgSrc}}"/></div></div>
                 <section class="downloadImgCont" #downloadImgCont></section>
     `
@@ -274,7 +287,7 @@ export class rightPanelComponent {
 
         let $container = this.designcontainerRef.children[0];
         let $lastChildId = $container.lastElementChild.getAttribute('id')
-
+        
         if ($lastChildId != $currentObjId) {
             $container.insertBefore($nextID, $currentObj)
         }

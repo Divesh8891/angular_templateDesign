@@ -12,7 +12,6 @@
         map: {
             // our app is within the app folder
             app: 'app',
-
             // angular bundles
             '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
             '@angular/common': 'npm:@angular/common/bundles/common.umd.js',
@@ -24,6 +23,8 @@
             '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
             '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
             'angular2-color-picker': 'npm:angular2-color-picker',
+            'ngx-fs': 'npm:ngx-fs/bundles/core.umd.js',
+
 
             //'html2canvas': 'html2canvas',
             // other libraries

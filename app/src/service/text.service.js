@@ -16,6 +16,8 @@ var TextService = (function () {
         this.sliderMaxValue = new Subject_1.Subject();
         this.leftAlignmentValue = new Subject_1.Subject();
         this.topAlignmentValue = new Subject_1.Subject();
+        this.fontSizeValue = new Subject_1.Subject();
+        this.lineHeightValue = new Subject_1.Subject();
         this.temBgValue = new Subject_1.Subject();
         this.textBgValue = new Subject_1.Subject();
         this.currentObj = new Subject_1.Subject();
@@ -97,6 +99,12 @@ var TextService = (function () {
         if (type === 'top') {
             this.topAlignmentValue.next(data);
         }
+        if (type === 'font-size') {
+            this.fontSizeValue.next(data);
+        }
+        if (type === 'lineH') {
+            this.lineHeightValue.next(data);
+        }
     };
     TextService.prototype.getSliderMinValue = function () {
         return this.sliderMinValue.asObservable();
@@ -109,6 +117,12 @@ var TextService = (function () {
     };
     TextService.prototype.getTopAlignment = function () {
         return this.topAlignmentValue.asObservable();
+    };
+    TextService.prototype.getFontSize = function () {
+        return this.fontSizeValue.asObservable();
+    };
+    TextService.prototype.getLineH = function () {
+        return this.lineHeightValue.asObservable();
     };
     TextService.prototype.currentObjController = function (type, currentObjData, handlerData) {
         if (type == 'set') {

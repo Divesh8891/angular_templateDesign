@@ -26,6 +26,7 @@ export class textAreaComponent {
     @ViewChild('dummyText') public dummyText: any;
 
     addtext(event: any) {
+        console.log(this.dummyText)
         this.textWidth = this.dummyText.nativeElement.offsetWidth;
         this.textHeight = this.dummyText.nativeElement.offsetHeight;
         let a = new Date();
@@ -41,7 +42,7 @@ export class textAreaComponent {
             'value': this.textAreaValue,
             'type': 'text'
         });
-
+        console.log(this.textWidth)
         this._textService.setSliderValue(this.textWidth, 'minV');
         this._textService.setSliderValue(parseInt(this.designcontainerRef.style.width), 'maxV');
     }

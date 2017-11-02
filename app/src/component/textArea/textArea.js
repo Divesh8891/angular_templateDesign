@@ -18,6 +18,7 @@ var textAreaComponent = (function () {
         this.textPlaceholder = 'Add Text';
     }
     textAreaComponent.prototype.addtext = function (event) {
+        console.log(this.dummyText);
         this.textWidth = this.dummyText.nativeElement.offsetWidth;
         this.textHeight = this.dummyText.nativeElement.offsetHeight;
         var a = new Date();
@@ -33,6 +34,7 @@ var textAreaComponent = (function () {
             'value': this.textAreaValue,
             'type': 'text'
         });
+        console.log(this.textWidth);
         this._textService.setSliderValue(this.textWidth, 'minV');
         this._textService.setSliderValue(parseInt(this.designcontainerRef.style.width), 'maxV');
     };

@@ -12,6 +12,9 @@ export class TextService {
 
     public leftAlignmentValue = new Subject();
     public topAlignmentValue = new Subject();
+    public fontSizeValue = new Subject();
+    public lineHeightValue = new Subject();
+
 
     public temBgValue = new Subject();
     public textBgValue = new Subject();
@@ -52,6 +55,7 @@ export class TextService {
         if (type === 'maxV') {
             this.sliderMaxValue.next(data);
         }
+
     }
     setAlignmentValue(data: any, type: any) {
         if (type === 'left') {
@@ -60,7 +64,12 @@ export class TextService {
         if (type === 'top') {
             this.topAlignmentValue.next(data);
         }
-
+        if (type === 'font-size') {
+            this.fontSizeValue.next(data);
+        }
+        if (type === 'lineH') {
+            this.lineHeightValue.next(data);
+        }
     }
     getSliderMinValue() {
         return this.sliderMinValue.asObservable();
@@ -73,6 +82,12 @@ export class TextService {
     }
     getTopAlignment() {
         return this.topAlignmentValue.asObservable();
+    }
+    getFontSize() {
+        return this.fontSizeValue.asObservable();
+    }
+     getLineH() {
+        return this.lineHeightValue.asObservable();
     }
     currentObjController(type: any, currentObjData: any, handlerData: any) {
         if (type == 'set') {

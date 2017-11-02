@@ -78,6 +78,8 @@ var designContainer = (function () {
         this._textService.setSliderValue(currentImagewidth, 'minV');
         this._textService.setAlignmentValue(event.target.offsetLeft, 'left');
         this._textService.setAlignmentValue(event.target.offsetTop, 'top');
+        console.log(this.currentObjRef.style);
+        this._textService.setAlignmentValue(parseInt(this.currentObjRef.style.fontSize), 'font-size');
     };
     designContainer.prototype.imgNodeEvent = function (event) {
         this.textHandler.nativeElement.style.display = 'block';
@@ -107,20 +109,25 @@ var designContainer = (function () {
         var textHandler = this.textHandler.nativeElement.style.display;
         var me = this;
         if (textHandler == 'block') {
-            me.currentObjRef.style.left = me._textService.pixelToPercentage((event.left + 5), me.designTooSec.nativeElement.style["width"]);
-            me.currentObjRef.style.top = me._textService.pixelToPercentage((event.top + 5), me.designTooSec.nativeElement.style["height"]);
+            me.currentObjRef.style.left = event.left + 'px';
+            me.currentObjRef.style.top = event.top + 'px';
             me._textService.setAlignmentValue(event.left, 'left');
             me._textService.setAlignmentValue(event.top, 'top');
+            this.textHandler.nativeElement.style.left = event.left - 5 + 'px';
+            this.textHandler.nativeElement.style.top = event.top - 5 + 'px';
         }
     };
     designContainer.prototype.onhandlerClick = function (event) {
-        var textHandler = this.textHandler.nativeElement.style.display;
-        this.count++;
-        if (textHandler == 'block' && this.count == 2) {
-            this.textHandler.nativeElement.style.display = 'none';
-            this.count = 0;
-            this._textService.currentObjController('set', undefined, this.textHandler);
-        }
+        // let textHandler = this.textHandler.nativeElement.style.display;
+        // this.count++;
+        // if (textHandler == 'block' && this.count == 2) {
+        //     this.textHandler.nativeElement.style.display = 'none';
+        //     this.count = 0;
+        //     this._textService.currentObjController('set', undefined, this.textHandler);
+        // }
+    };
+    designContainer.prototype.onhandlerdbClick = function (event) {
+        this.textHandler.nativeElement.style.display = 'none';
     };
     __decorate([
         core_1.ViewChild('imageModuleComponent'),
@@ -141,7 +148,7 @@ var designContainer = (function () {
     designContainer = __decorate([
         core_1.Component({
             selector: '[designContainer]',
-            template: " \n                    <div class=\"desgin-tool-sec\" style=\"width: 740px; height: 740px;\" #designTooSec>\n                        <section class=\"desgin-inner\" data-bg=\"\">\n                        <ng-container *ngFor=\"let obj of localObjArray\">\n                          <p #xyz *ngIf=\"obj.type=='text'\" class=\"textNative\" data-type=\"text\" id=\"{{obj.id}}\" (click)=\"textNodeEvent($event,text)\" style=\"font-size: 18px;\" >{{obj.value}}</p>\n                         <img #xyz *ngIf=\"obj.type=='image'\" class=\"imgNative\"  data-type=\"image\"   id=\"{{obj.id}}\" (click)=\"imgNodeEvent($event,img)\" src={{obj.value}}/>\n                        </ng-container>\n                        </section>\n                        <div class=\"handler cube\" #handler  [ng2-draggable]=\"true\" (handlerClick)=\"onhandlerClick($event)\" (postions)=getPos($event)></div>\n                     </div>\n             \n                \n              \n                \n    "
+            template: " \n                    <div class=\"desgin-tool-sec\" style=\"width: 740px; height: 740px;\" #designTooSec >\n                        <section class=\"desgin-inner\" data-bg=\"\">\n                        <ng-container *ngFor=\"let obj of localObjArray\">\n                          <p #xyz *ngIf=\"obj.type=='text'\" class=\"textNative\" data-type=\"text\" id=\"{{obj.id}}\" (click)=\"textNodeEvent($event,text)\" style=\"font-size: 18px;\" >{{obj.value}}</p>\n                         <img #xyz *ngIf=\"obj.type=='image'\" class=\"imgNative\"  data-type=\"image\"   id=\"{{obj.id}}\" (click)=\"imgNodeEvent($event,img)\" src={{obj.value}}/>\n                        </ng-container>\n                        </section>\n                        <div class=\"handler cube\" #handler  [ng2-draggable]=\"true\" (handlerClick)=\"onhandlerClick($event)\" (dblclick)=\"onhandlerdbClick()\" (postions)=getPos($event)></div>\n                     </div>\n             \n                \n              \n                \n    "
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], designContainer);

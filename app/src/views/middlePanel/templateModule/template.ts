@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild ,Output,EventEmitter} from '@angular/core';
 import { TextService } from '../../../service/text.service';
 import { ColorPickerService } from 'angular2-color-picker';
 
@@ -7,11 +7,13 @@ import { ColorPickerService } from 'angular2-color-picker';
     template: ` 
                         <h5 class="heading display-inline">Template Setting</h5>
                         <div class="clearfix mt-10 display-inline">
+                        <button class="btn" (click)=chooseImageForBg($event)>Choose Bg Image</button>
+                        <div class="vertical-seperator"></div>
                         <span #pickerBox [(colorPicker)]="color" (colorPickerChange)="closePicker($event)"
                             [cpPosition]="'right'" 
                             [style.backgroundColor]="color"
                             [cpPositionOffset]="'50%'"
-                            [cpPositionRelativeToArrow]="true" class="temp-back-color btn icon" [cpPresetColors]="colorArray"
+                            [cpPositionRelativeToArrow]="true" class="temp-back-color icon" [cpPresetColors]="colorArray"
                             [cpOKButton]="true"
                             [cpSaveClickOutside]="true"
                             [cpOKButtonClass]= "'btn btn-primary btn-xs'"
@@ -19,8 +21,6 @@ import { ColorPickerService } from 'angular2-color-picker';
                             ><i  class="sprite-img"></i></span>
                         <!--button class="temp-back-color btn icon" (click)=setTemplateBgcolor($event)><i  class="sprite-img"></i></button-->
                         <div selectBox class="temp-opacity-sec" [defaultOptionValue]="'Opacity'" (change)="updateOpacity($event)"></div>
-                        <div class="vertical-seperator"></div>
-                        <button class="btn" (click)=chooseImageForBg($event)>Choose Bg Image</button>
                         <div class="vertical-seperator"></div>
                         <!--div class="temp-bg-setting">
                             <linkAsButton [parentClass]="''" [applyClass]="'blankT btn'" [btnText]="'Blank'" (click)=setTemplateBg($event)></linkAsButton>
@@ -50,7 +50,7 @@ import { ColorPickerService } from 'angular2-color-picker';
                             <input type="text" class="zoomInput" [(ngModel)]="tempZoomWidth">
                          </div-->
                         <div class="vertical-seperator"></div>
-                        <div selectBox class="scale-box" [defaultOptionValue]="'Select Scale'" (change)="setScale($event)"></div>
+                        <div selectBox class="scale-box" [defaultOptionValue]="'Scale'" (change)="setScale($event)"></div>
 
                         </div>
 
@@ -71,9 +71,12 @@ export class templateModuleComponent {
     currentObjRef: any;
 
     @ViewChild('pickerBox') public pickerBox: any;
-
+    @Output() onfolderChoose = new EventEmitter();
     closePicker(event: any) {
         this.designcontainerRef.firstElementChild.style["background-color"] = this._textService.hexToRgbA(event, this.opacityValue);
+    }
+    chooseImageForBg(){
+        this.onfolderChoose.emit("helolo")
     }
     updateDesignObj(newW: any, newH: any) {
         // this.tempWidth = newW;
@@ -108,13 +111,17 @@ export class templateModuleComponent {
             else {
                 let fontSize: any = ((parseInt(currentObj.style['fontSize']) / oldW) * 100).toFixed(1);
                 currentObj.style['fontSize'] = (fontSize * newW) / 100 + 'px';
+                currentObj.style['lineHeight'] = (fontSize * newW) / 100 + 'px';
+
                 this._textService.setSliderValue(calculatedW, 'minV');
                 this._textService.setSliderValue(newW, 'maxV');
                 let objLeft = currentObj.style['left'] === '' ? 0 : parseInt(currentObj.style['left'])
                 let objTop = currentObj.style['top'] === '' ? 0 : parseInt(currentObj.style['top'])
                 this._textService.setAlignmentValue(Math.round((objLeft * newW) / 100), 'left');
                 this._textService.setAlignmentValue(Math.round((objTop * newH) / 100), 'top');
-                console.log(this._textService.currentObj)
+                this.handlerRef.style.left = ((objLeft * newW) / 100) - 5 + 'px';
+                this.handlerRef.style.top = ((objTop * newW) / 100) - 5 + 'px';
+
             }
             if (currentObj.id == userArray[i].id) {
                 if (newW > newH) {

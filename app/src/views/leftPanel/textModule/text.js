@@ -14,12 +14,45 @@ var text_service_1 = require("../../../service/text.service");
 var textModuleComponent = (function () {
     function textModuleComponent(_textService) {
         this._textService = _textService;
+        this.minfontSizeSlidervalue = 10;
+        this.maxfontSizeSlidervalue = 100;
+        this.defaultfontSizeSlidervalue = this.inputfontSizeValue;
+        this.minlineHeightSlidervalue = 10;
+        this.maxlineHeightSlidervalue = 100;
+        this.defaultlineHeightSlidervalue = this.inputlineHeightValue;
         this.textPanelTitle = "Text";
         this.opacityValue = '1';
         this.me = this;
         this.color = "#ffffff";
         this.textColor = "#000000";
     }
+    textModuleComponent.prototype.onfontSizeChanged = function (event) {
+        if (this.currentObjRef != undefined) {
+            this.inputfontSizeValue = event.value;
+            this.updateTextcurrentObj('fontSize', event.value + 'px');
+            this.updateTextcurrentObj('lineHeight', event.value + 'px');
+            this._textService.setAlignmentValue(event.value, 'lineH');
+        }
+    };
+    textModuleComponent.prototype.onfontSizeChangedFromInput = function (event) {
+        if (this.currentObjRef != undefined) {
+            this._textService.setAlignmentValue(event.target.value, 'font-size');
+            this._textService.setAlignmentValue(event.target.value, 'lineH');
+            this.updateTextcurrentObj('fontSize', event.target.value + 'px');
+        }
+    };
+    textModuleComponent.prototype.onLineHChanged = function (event) {
+        if (this.currentObjRef != undefined) {
+            this.inputlineHeightValue = event.value;
+            this.updateTextcurrentObj('lineHeight', event.value + 'px');
+        }
+    };
+    textModuleComponent.prototype.onLineHChangedFromInput = function (event) {
+        if (this.currentObjRef != undefined) {
+            this._textService.setAlignmentValue(event.target.value, 'lineH');
+            this.updateTextcurrentObj('lineHeight', event.target.value + 'px');
+        }
+    };
     textModuleComponent.prototype.updateFontS = function (event) {
         this.updateTextcurrentObj('fontSize', event.target.value + 'px');
     };
@@ -90,12 +123,14 @@ var textModuleComponent = (function () {
         var oldFontValue = parseInt(this.currentObjRef.style[property]);
         this.currentObjRef.style[property] = value;
         if (property == 'fontSize') {
-            var objWidth = Math.round((parseInt(this.currentObjRef.style.width) * parseInt(this.designcontainerRef.style.width)) / 100);
+            console.log(parseInt(this.currentObjRef.style.width), value, oldFontValue);
+            var newWidthValue = Math.round(((parseInt(this.currentObjRef.style.width) * parseInt(value)) / oldFontValue));
             //console.log(objWidth,oldFontValue)
-            var newWidthValue = this._textService.pixelToPercentage(((parseInt(value) * objWidth) / oldFontValue), this.designcontainerRef.style["width"]);
-            //console.log(newWidthValue)
-            this.currentObjRef.style.width = newWidthValue;
+            //let newWidthValue = this._textService.pixelToPercentage(((parseInt(value) * objWidth) / oldFontValue), this.designcontainerRef.style["width"]);
+            console.log(newWidthValue);
+            this.currentObjRef.style.width = newWidthValue + '%';
         }
+        console.log(this.currentObjRef.offsetWidth);
         this._textService.setSliderValue(this.currentObjRef.offsetWidth, 'minV');
         this.handlerRef.style.width = this.currentObjRef.offsetWidth + 10 + 'px';
         this.handlerRef.style.height = this.currentObjRef.offsetHeight + 10 + 'px';
@@ -120,12 +155,29 @@ var textModuleComponent = (function () {
                 _this.currentObjRef = undefined;
             }
             else {
+                console.log(_this.currentObjRef);
                 _this.currentObjRef = _this.currentObjRef.nativeElement;
             }
         });
         this._textService.currentObjController('getHandlerObj', '', '').subscribe(function (data) {
             _this.handlerRef = data;
             _this.handlerRef = _this.handlerRef.nativeElement;
+        });
+        this._textService.getFontSize().subscribe(function (data) {
+            var me = _this;
+            if (_this.currentObjRef != undefined) {
+                setTimeout(function () {
+                    me.inputfontSizeValue = data;
+                }, 100);
+            }
+        });
+        this._textService.getLineH().subscribe(function (data) {
+            var me = _this;
+            if (_this.currentObjRef != undefined) {
+                setTimeout(function () {
+                    me.inputlineHeightValue = data;
+                }, 100);
+            }
         });
     };
     __decorate([
@@ -135,7 +187,7 @@ var textModuleComponent = (function () {
     textModuleComponent = __decorate([
         core_1.Component({
             selector: '[textModule]',
-            template: " \n                        <h2 id=\"textValhidden\">fsdfs</h2>\n                        <h5 class=\"heading\">{{textPanelTitle}}</h5>\n                        <div class=\"seperator\"></div>\n                        <div textArea></div>\n                        <div class=\"seperator\"></div>\n                        <div selectBox class=\"font-sec select-box\" [defaultOptionValue]=\"'Font-size'\" (change)=\"updateFontS($event)\"></div>\n                        <div selectBox class=\"line-height-sec select-box ml5\" [defaultOptionValue]=\"'line-height'\" (change)=\"updateLineHeight($event)\"></div>\n                        <div selectBox class=\"font-famliy-sec select-box \"  [defaultOptionValue]=\"'Font-famliy'\" (change)=\"updateFontFamliy($event)\"></div>\n                        <div selectBox class=\"stroke-width-sec select-box ml5\" [defaultOptionValue]=\"'stroke-width'\" (change)=\"updateStrokeWidth($event)\"></div>\n                        <div class=\"seperator\"></div>\n                        <span #pickerTextColorBox [(colorPicker)]=\"textColor\" (colorPickerChange)=\"closeTextPicker($event)\"\n                            [cpPosition]=\"'right'\"\n                            [style.backgroundColor]=\"textColor\"\n                            [cpPositionOffset]=\"'50%'\"\n                            [cpPositionRelativeToArrow]=\"true\" class=\"text-color btn icon\" [cpPresetColors]=\"colorArray\"\n                            [cpOKButton]=\"true\"\n                            [cpSaveClickOutside]=\"true\"\n                            [cpOKButtonClass]= \"'btn btn-primary btn-xs'\"\n                            ></span>\n                            <!--button class=\"color btn icon\" (click)=applyColor($event)><i  class=\"sprite-img\"></i></button>\n                            <button class=\"stroke-color btn  icon\" (click)=applyColor($event)>Stroke Color</button>\n                            <button class=\"back-color btn  icon\" (click)=applyBgColor($event)><i class=\"sprite-img\"></i></button-->\n                          <span #pickerBgBox [(colorPicker)]=\"color\" (colorPickerChange)=\"closeTextBgPicker($event)\"\n                            [cpPosition]=\"'right'\"\n                            [style.backgroundColor]=\"color\"\n                            [cpPositionOffset]=\"'50%'\"\n                            [cpPositionRelativeToArrow]=\"true\" class=\"text-back-color btn icon\" [cpPresetColors]=\"colorArray\"\n                            [cpOKButton]=\"true\"\n                            [cpSaveClickOutside]=\"true\"\n                            [cpOKButtonClass]= \"'btn btn-primary btn-xs'\"\n                            ><i  class=\"sprite-img\"></i></span>\n                        <div selectBox class=\"opacity-width-sec select-box\" [defaultOptionValue]=\"'Opacity'\" (change)=\"updateOpacity($event)\"></div>\n                        <div class=\"seperator\"></div>\n                        <button class=\"bold btn text-font-effect\" (click)=applyBold($event)>B</button>\n                        <button class=\"italic btn text-font-effect\" (click)=applyItalic($event)>I</button>\n                        <button class=\"underline btn text-font-effect\" (click)=applyUnderline($event)>U</button>\n                        <div class=\"seperator\"></div>\n                        <button class=\"lower-case btn text-transform\" (click)=applyTextTransform($event) data-transform=\"lowercase\">tt</button>\n                        <button class=\"upper-case btn text-transform\" (click)=applyTextTransform($event) data-transform=\"uppercase\">TT</button>\n                        <button class=\"camel-case btn text-transform\" (click)=applyTextTransform($event) data-transform=\"capitalize\">Tt</button>\n                        <div class=\"seperator\"></div>\n                        <button class=\"text-left btn text-align\" (click)=applyTextAlign($event) data-align=\"left\">left</button>\n                        <button class=\"text-middle btn text-align\" (click)=applyTextAlign($event) data-align=\"center\">mid</button>\n                        <button class=\"text-right btn text-align\" (click)=applyTextAlign($event) data-align=\"right\">right</button>\n    "
+            template: " \n                        <h2 id=\"textValhidden\">fsdfs</h2>\n                        <h5 class=\"heading\">{{textPanelTitle}}</h5>\n                        <div class=\"seperator\"></div>\n                        <div textArea></div>\n                        <div class=\"seperator\"></div>\n                        <div selectBox class=\"font-famliy-sec select-box \"  [defaultOptionValue]=\"'Font-famliy'\" (change)=\"updateFontFamliy($event)\"></div>\n                                                  <div class=\"seperator\"></div>\n<div class=\"font-size-wrappper\">\n                            <h5 class=\"m0\">font-size</h5>\n                            <div class=\"fontSizeSlider\">\n                                <md-slider class=\"custom-slider\" (input)=\"onfontSizeChanged($event)\"  min=\"{{minfontSizeSlidervalue}}\" max=\"{{maxfontSizeSlidervalue}}\" value=\"{{inputfontSizeValue}}\"></md-slider>\n                            </div>\n                            <input type=\"number\" placeholder=\"top\" class=\"fontS\" (input)=\"onfontSizeChangedFromInput($event)\" [(ngModel)]=\"inputfontSizeValue\">\n                        </div>\n                         <div class=\"line-height-wrappper\">\n                            <h5 class=\"m0\">line-Gap</h5>\n                            <div class=\"lineHeightSlider\">\n                                <md-slider class=\"custom-slider\" (input)=\"onLineHChanged($event)\"  min=\"{{minlineHeightSlidervalue}}\" max=\"{{maxlineHeightSlidervalue}}\" value=\"{{inputlineHeightValue}}\"></md-slider>\n                            </div>\n                            <input type=\"number\" placeholder=\"lineH\" class=\"lineH\" (input)=\"onLineHChangedFromInput($event)\" [(ngModel)]=\"inputlineHeightValue\">\n                        </div>\n                        <!--div selectBox class=\"font-sec select-box\" [defaultOptionValue]=\"'Font-size'\" (change)=\"updateFontS($event)\"></div>\n                        <div selectBox class=\"line-height-sec select-box ml5\" [defaultOptionValue]=\"'line-height'\" (change)=\"updateLineHeight($event)\"></div-->\n                        <!--div selectBox class=\"stroke-width-sec select-box ml5\" [defaultOptionValue]=\"'stroke-width'\" (change)=\"updateStrokeWidth($event)\"></div-->\n                        <div class=\"seperator\"></div>\n                        \n                        <span #pickerTextColorBox [(colorPicker)]=\"textColor\" (colorPickerChange)=\"closeTextPicker($event)\"\n                            [cpPosition]=\"'right'\"\n                            [style.backgroundColor]=\"textColor\"\n                            [cpPositionOffset]=\"'50%'\"\n                            [cpPositionRelativeToArrow]=\"true\" class=\"text-color icon\" [cpPresetColors]=\"colorArray\"\n                            [cpOKButton]=\"true\"\n                            [cpSaveClickOutside]=\"true\"\n                            [cpOKButtonClass]= \"'btn btn-primary btn-xs'\"\n                            ></span>\n                            <!--button class=\"color btn icon\" (click)=applyColor($event)><i  class=\"sprite-img\"></i></button>\n                            <button class=\"stroke-color btn  icon\" (click)=applyColor($event)>Stroke Color</button>\n                            <button class=\"back-color btn  icon\" (click)=applyBgColor($event)><i class=\"sprite-img\"></i></button-->\n\n                          <span #pickerBgBox [(colorPicker)]=\"color\" (colorPickerChange)=\"closeTextBgPicker($event)\"\n                            [cpPosition]=\"'right'\"\n                            [style.backgroundColor]=\"color\"\n                            [cpPositionOffset]=\"'50%'\"\n                            [cpPositionRelativeToArrow]=\"true\" class=\"text-back-color icon\" [cpPresetColors]=\"colorArray\"\n                            [cpOKButton]=\"true\"\n                            [cpSaveClickOutside]=\"true\"\n                            [cpOKButtonClass]= \"'btn btn-primary btn-xs'\"\n                            ><i  class=\"sprite-img\"></i></span>\n                        <div selectBox class=\"opacity-width-sec select-box\" [defaultOptionValue]=\"'Opacity'\" (change)=\"updateOpacity($event)\"></div>\n                        <div class=\"seperator\"></div>\n                        <button class=\"bold btn text-font-effect\" (click)=applyBold($event)>B</button>\n                        <button class=\"italic btn text-font-effect\" (click)=applyItalic($event)>I</button>\n                        <button class=\"underline btn text-font-effect\" (click)=applyUnderline($event)>U</button>\n                        <div class=\"seperator\"></div>\n                        <button class=\"lower-case btn text-transform\" (click)=applyTextTransform($event) data-transform=\"lowercase\">tt</button>\n                        <button class=\"upper-case btn text-transform\" (click)=applyTextTransform($event) data-transform=\"uppercase\">TT</button>\n                        <button class=\"camel-case btn text-transform\" (click)=applyTextTransform($event) data-transform=\"capitalize\">Tt</button>\n                        <div class=\"seperator\"></div>\n                        <button class=\"text-left btn text-align\" (click)=applyTextAlign($event) data-align=\"left\">left</button>\n                        <button class=\"text-middle btn text-align\" (click)=applyTextAlign($event) data-align=\"center\">mid</button>\n                        <button class=\"text-right btn text-align\" (click)=applyTextAlign($event) data-align=\"right\">right</button>\n    "
         }),
         __metadata("design:paramtypes", [text_service_1.TextService])
     ], textModuleComponent);
