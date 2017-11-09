@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { TextService } from '../../service/text.service';
-import { NgxFsModule } from 'ngx-fs';
 
 @Component({
     selector: '[middleModule]',
@@ -45,11 +44,8 @@ export class MiddlePanelComponent {
 
     //     return results;
     // }
-    constructor(private _fsService: NgxFsModule) {
-
-    }
     ngOnInit() {
-         console.log(this._fsService)
+      //,,  console.log(this._fsService)
 
     }
     

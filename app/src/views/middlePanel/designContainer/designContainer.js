@@ -129,30 +129,30 @@ var designContainer = (function () {
     designContainer.prototype.onhandlerdbClick = function (event) {
         this.textHandler.nativeElement.style.display = 'none';
     };
-    __decorate([
-        core_1.ViewChild('imageModuleComponent'),
-        __metadata("design:type", Object)
-    ], designContainer.prototype, "imageModule", void 0);
-    __decorate([
-        core_1.ViewChild('handler'),
-        __metadata("design:type", Object)
-    ], designContainer.prototype, "textHandler", void 0);
-    __decorate([
-        core_1.ViewChild('designTooSec'),
-        __metadata("design:type", Object)
-    ], designContainer.prototype, "designTooSec", void 0);
-    __decorate([
-        core_1.ViewChildren('xyz'),
-        __metadata("design:type", Object)
-    ], designContainer.prototype, "elements", void 0);
-    designContainer = __decorate([
-        core_1.Component({
-            selector: '[designContainer]',
-            template: " \n                    <div class=\"desgin-tool-sec\" style=\"width: 740px; height: 740px;\" #designTooSec >\n                        <section class=\"desgin-inner\" data-bg=\"\">\n                        <ng-container *ngFor=\"let obj of localObjArray\">\n                          <p #xyz *ngIf=\"obj.type=='text'\" class=\"textNative\" data-type=\"text\" id=\"{{obj.id}}\" (click)=\"textNodeEvent($event,text)\" style=\"font-size: 18px;\" >{{obj.value}}</p>\n                         <img #xyz *ngIf=\"obj.type=='image'\" class=\"imgNative\"  data-type=\"image\"   id=\"{{obj.id}}\" (click)=\"imgNodeEvent($event,img)\" src={{obj.value}}/>\n                        </ng-container>\n                        </section>\n                        <div class=\"handler cube\" #handler  [ng2-draggable]=\"true\" (handlerClick)=\"onhandlerClick($event)\" (dblclick)=\"onhandlerdbClick()\" (postions)=getPos($event)></div>\n                     </div>\n             \n                \n              \n                \n    "
-        }),
-        __metadata("design:paramtypes", [text_service_1.TextService])
-    ], designContainer);
     return designContainer;
 }());
+__decorate([
+    core_1.ViewChild('imageModuleComponent'),
+    __metadata("design:type", Object)
+], designContainer.prototype, "imageModule", void 0);
+__decorate([
+    core_1.ViewChild('handler'),
+    __metadata("design:type", Object)
+], designContainer.prototype, "textHandler", void 0);
+__decorate([
+    core_1.ViewChild('designTooSec'),
+    __metadata("design:type", Object)
+], designContainer.prototype, "designTooSec", void 0);
+__decorate([
+    core_1.ViewChildren('xyz'),
+    __metadata("design:type", Object)
+], designContainer.prototype, "elements", void 0);
+designContainer = __decorate([
+    core_1.Component({
+        selector: '[designContainer]',
+        template: " \n                    <div class=\"desgin-tool-sec\" style=\"width: 740px; height: 740px;\" #designTooSec >\n                        <section class=\"desgin-inner\" data-bg=\"\">\n                        <ng-container *ngFor=\"let obj of localObjArray\">\n                          <p #xyz *ngIf=\"obj.type=='text'\" class=\"textNative\" data-type=\"text\" id=\"{{obj.id}}\" (click)=\"textNodeEvent($event,text)\" style=\"font-size: 18px;\" >{{obj.value}}</p>\n                         <img #xyz *ngIf=\"obj.type=='image'\" class=\"imgNative\"  data-type=\"image\"   id=\"{{obj.id}}\" (click)=\"imgNodeEvent($event,img)\" src={{obj.value}}/>\n                        </ng-container>\n                        </section>\n                        <div class=\"handler cube\" #handler  [ng2-draggable]=\"true\" (handlerClick)=\"onhandlerClick($event)\" (dblclick)=\"onhandlerdbClick()\" (postions)=getPos($event)></div>\n                     </div>\n             \n                \n              \n                \n    "
+    }),
+    __metadata("design:paramtypes", [text_service_1.TextService])
+], designContainer);
 exports.designContainer = designContainer;
 //# sourceMappingURL=designContainer.js.map

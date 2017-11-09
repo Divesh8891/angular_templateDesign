@@ -128,75 +128,75 @@ var ImageUploadComponent = (function () {
     ImageUploadComponent.prototype.countRemainingSlots = function () {
         return this.max - this.fileCounter;
     };
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", Number)
-    ], ImageUploadComponent.prototype, "max", void 0);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", String)
-    ], ImageUploadComponent.prototype, "url", void 0);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", Array)
-    ], ImageUploadComponent.prototype, "headers", void 0);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", Boolean)
-    ], ImageUploadComponent.prototype, "preview", void 0);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", Number)
-    ], ImageUploadComponent.prototype, "maxFileSize", void 0);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", Boolean)
-    ], ImageUploadComponent.prototype, "withCredentials", void 0);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", String)
-    ], ImageUploadComponent.prototype, "partName", void 0);
-    __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
-    ], ImageUploadComponent.prototype, "isPending", void 0);
-    __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
-    ], ImageUploadComponent.prototype, "onFileUploadFinish", void 0);
-    __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
-    ], ImageUploadComponent.prototype, "onRemove", void 0);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", String)
-    ], ImageUploadComponent.prototype, "buttonCaption", void 0);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", String)
-    ], ImageUploadComponent.prototype, "dropBoxMessage", void 0);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", String)
-    ], ImageUploadComponent.prototype, "fileTooLargeMessage", void 0);
-    __decorate([
-        core_1.Input('extensions'),
-        __metadata("design:type", Array)
-    ], ImageUploadComponent.prototype, "supportedExtensions", void 0);
-    __decorate([
-        core_1.ViewChild('input'),
-        __metadata("design:type", core_1.ElementRef)
-    ], ImageUploadComponent.prototype, "inputElement", void 0);
-    ImageUploadComponent = __decorate([
-        core_1.Component({
-            selector: 'image-uploads',
-            templateUrl: './image-upload.component.html',
-            styleUrls: ['./image-upload.component.css']
-        }),
-        __metadata("design:paramtypes", [image_service_1.ImageService])
-    ], ImageUploadComponent);
     return ImageUploadComponent;
 }());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Number)
+], ImageUploadComponent.prototype, "max", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], ImageUploadComponent.prototype, "url", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Array)
+], ImageUploadComponent.prototype, "headers", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Boolean)
+], ImageUploadComponent.prototype, "preview", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Number)
+], ImageUploadComponent.prototype, "maxFileSize", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Boolean)
+], ImageUploadComponent.prototype, "withCredentials", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], ImageUploadComponent.prototype, "partName", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", core_1.EventEmitter)
+], ImageUploadComponent.prototype, "isPending", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", core_1.EventEmitter)
+], ImageUploadComponent.prototype, "onFileUploadFinish", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", core_1.EventEmitter)
+], ImageUploadComponent.prototype, "onRemove", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], ImageUploadComponent.prototype, "buttonCaption", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], ImageUploadComponent.prototype, "dropBoxMessage", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], ImageUploadComponent.prototype, "fileTooLargeMessage", void 0);
+__decorate([
+    core_1.Input('extensions'),
+    __metadata("design:type", Array)
+], ImageUploadComponent.prototype, "supportedExtensions", void 0);
+__decorate([
+    core_1.ViewChild('input'),
+    __metadata("design:type", core_1.ElementRef)
+], ImageUploadComponent.prototype, "inputElement", void 0);
+ImageUploadComponent = __decorate([
+    core_1.Component({
+        selector: 'image-uploads',
+        templateUrl: './image-upload.component.html',
+        styleUrls: ['./image-upload.component.css']
+    }),
+    __metadata("design:paramtypes", [image_service_1.ImageService])
+], ImageUploadComponent);
 exports.ImageUploadComponent = ImageUploadComponent;
 //# sourceMappingURL=image-upload.component.js.map

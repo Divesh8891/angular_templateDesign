@@ -81,73 +81,73 @@ var Draggable = (function () {
         enumerable: true,
         configurable: true
     });
-    __decorate([
-        core_1.Output(),
-        __metadata("design:type", Object)
-    ], Draggable.prototype, "postions", void 0);
-    __decorate([
-        core_1.Output(),
-        __metadata("design:type", Object)
-    ], Draggable.prototype, "handlerClick", void 0);
-    __decorate([
-        core_1.HostListener('mousedown', ['$event']),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [MouseEvent]),
-        __metadata("design:returntype", void 0)
-    ], Draggable.prototype, "onMouseDown", null);
-    __decorate([
-        core_1.HostListener('document:mouseup', ['$event']),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [MouseEvent]),
-        __metadata("design:returntype", void 0)
-    ], Draggable.prototype, "onMouseUp", null);
-    __decorate([
-        core_1.HostListener('document:mousemove', ['$event']),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [MouseEvent]),
-        __metadata("design:returntype", void 0)
-    ], Draggable.prototype, "onMouseMove", null);
-    __decorate([
-        core_1.HostListener('document:mouseleave', ['$event']),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [MouseEvent]),
-        __metadata("design:returntype", void 0)
-    ], Draggable.prototype, "onMouseLeave", null);
-    __decorate([
-        core_1.HostListener('touchstart', ['$event']),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [TouchEvent]),
-        __metadata("design:returntype", void 0)
-    ], Draggable.prototype, "onTouchStart", null);
-    __decorate([
-        core_1.HostListener('document:touchend', ['$event']),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", void 0)
-    ], Draggable.prototype, "onTouchEnd", null);
-    __decorate([
-        core_1.HostListener('document:touchmove', ['$event']),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [TouchEvent]),
-        __metadata("design:returntype", void 0)
-    ], Draggable.prototype, "onTouchMove", null);
-    __decorate([
-        core_1.Input('ng2-draggable'),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
-    ], Draggable.prototype, "allowDrag", null);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", HTMLElement),
-        __metadata("design:paramtypes", [HTMLElement])
-    ], Draggable.prototype, "ng2DraggableHandle", null);
-    Draggable = __decorate([
-        core_1.Directive({
-            selector: '[ng2-draggable]'
-        }),
-        __metadata("design:paramtypes", [core_1.ElementRef])
-    ], Draggable);
     return Draggable;
 }());
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], Draggable.prototype, "postions", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], Draggable.prototype, "handlerClick", void 0);
+__decorate([
+    core_1.HostListener('mousedown', ['$event']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [MouseEvent]),
+    __metadata("design:returntype", void 0)
+], Draggable.prototype, "onMouseDown", null);
+__decorate([
+    core_1.HostListener('document:mouseup', ['$event']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [MouseEvent]),
+    __metadata("design:returntype", void 0)
+], Draggable.prototype, "onMouseUp", null);
+__decorate([
+    core_1.HostListener('document:mousemove', ['$event']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [MouseEvent]),
+    __metadata("design:returntype", void 0)
+], Draggable.prototype, "onMouseMove", null);
+__decorate([
+    core_1.HostListener('document:mouseleave', ['$event']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [MouseEvent]),
+    __metadata("design:returntype", void 0)
+], Draggable.prototype, "onMouseLeave", null);
+__decorate([
+    core_1.HostListener('touchstart', ['$event']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [TouchEvent]),
+    __metadata("design:returntype", void 0)
+], Draggable.prototype, "onTouchStart", null);
+__decorate([
+    core_1.HostListener('document:touchend', ['$event']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], Draggable.prototype, "onTouchEnd", null);
+__decorate([
+    core_1.HostListener('document:touchmove', ['$event']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [TouchEvent]),
+    __metadata("design:returntype", void 0)
+], Draggable.prototype, "onTouchMove", null);
+__decorate([
+    core_1.Input('ng2-draggable'),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [Boolean])
+], Draggable.prototype, "allowDrag", null);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", HTMLElement),
+    __metadata("design:paramtypes", [HTMLElement])
+], Draggable.prototype, "ng2DraggableHandle", null);
+Draggable = __decorate([
+    core_1.Directive({
+        selector: '[ng2-draggable]'
+    }),
+    __metadata("design:paramtypes", [core_1.ElementRef])
+], Draggable);
 exports.Draggable = Draggable;
 //# sourceMappingURL=draggable.directive.js.map

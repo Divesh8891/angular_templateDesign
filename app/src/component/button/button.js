@@ -13,25 +13,25 @@ var core_1 = require("@angular/core");
 var buttonComponent = (function () {
     function buttonComponent() {
     }
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", Object)
-    ], buttonComponent.prototype, "applyClass", void 0);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", Object)
-    ], buttonComponent.prototype, "btnText", void 0);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", Object)
-    ], buttonComponent.prototype, "parentClass", void 0);
-    buttonComponent = __decorate([
-        core_1.Component({
-            selector: 'linkAsButton',
-            template: "<a href=\"javascript:void(0)\" class=\"{{applyClass}}\">{{btnText}}</a>"
-        })
-    ], buttonComponent);
     return buttonComponent;
 }());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], buttonComponent.prototype, "applyClass", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], buttonComponent.prototype, "btnText", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], buttonComponent.prototype, "parentClass", void 0);
+buttonComponent = __decorate([
+    core_1.Component({
+        selector: 'linkAsButton',
+        template: "<a href=\"javascript:void(0)\" class=\"{{applyClass}}\">{{btnText}}</a>"
+    })
+], buttonComponent);
 exports.buttonComponent = buttonComponent;
 //# sourceMappingURL=button.js.map

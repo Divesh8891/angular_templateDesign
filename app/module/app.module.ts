@@ -3,7 +3,6 @@ import { Draggable } from '../src/service/ng2draggable/draggable.directive';
 import { ImageUploadModule } from "../src/service/angular2-image-upload/index";
 import { MdSliderModule } from '@angular/material';
 import {ColorPickerModule} from 'angular2-color-picker';
-import {NgxFsModule} from 'ngx-fs';
 
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -33,7 +32,7 @@ import { buttonComponent } from '../src/component/button/button';
 
 
 @NgModule({
-  imports: [BrowserModule, FormsModule,  ImageUploadModule.forRoot(),MdSliderModule,ColorPickerModule,NgxFsModule],
+  imports: [BrowserModule, FormsModule,  ImageUploadModule.forRoot(),MdSliderModule,ColorPickerModule],
   declarations: [AppComponent, headerComponent, leftPanelComponent,MiddlePanelComponent, rightPanelComponent, textModuleComponent, imageModuleComponent, templateModuleComponent, designContainer, textAreaComponent, selectBoxComponent, buttonComponent, Draggable],
   bootstrap: [AppComponent],
   providers: [TextService]

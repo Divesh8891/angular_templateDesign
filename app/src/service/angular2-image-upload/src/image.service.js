@@ -35,11 +35,11 @@ var ImageService = (function () {
         formData.append(partName, image);
         return this.http.post(url, formData, options);
     };
-    ImageService = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.Http])
-    ], ImageService);
     return ImageService;
 }());
+ImageService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.Http])
+], ImageService);
 exports.ImageService = ImageService;
 //# sourceMappingURL=image.service.js.map

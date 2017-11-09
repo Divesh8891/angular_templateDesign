@@ -12,31 +12,30 @@ var http_1 = require("@angular/http");
 var file_drop_directive_1 = require("./file-drop.directive");
 var image_upload_component_1 = require("./image-upload/image-upload.component");
 var image_service_1 = require("./image.service");
-var ImageUploadModule = (function () {
+var ImageUploadModule = ImageUploadModule_1 = (function () {
     function ImageUploadModule() {
     }
-    ImageUploadModule_1 = ImageUploadModule;
     ImageUploadModule.forRoot = function () {
         return {
             ngModule: ImageUploadModule_1,
             providers: [image_service_1.ImageService]
         };
     };
-    ImageUploadModule = ImageUploadModule_1 = __decorate([
-        core_1.NgModule({
-            imports: [
-                common_1.CommonModule,
-                http_1.HttpModule
-            ],
-            declarations: [
-                image_upload_component_1.ImageUploadComponent,
-                file_drop_directive_1.FileDropDirective
-            ],
-            exports: [image_upload_component_1.ImageUploadComponent]
-        })
-    ], ImageUploadModule);
     return ImageUploadModule;
-    var ImageUploadModule_1;
 }());
+ImageUploadModule = ImageUploadModule_1 = __decorate([
+    core_1.NgModule({
+        imports: [
+            common_1.CommonModule,
+            http_1.HttpModule
+        ],
+        declarations: [
+            image_upload_component_1.ImageUploadComponent,
+            file_drop_directive_1.FileDropDirective
+        ],
+        exports: [image_upload_component_1.ImageUploadComponent]
+    })
+], ImageUploadModule);
 exports.ImageUploadModule = ImageUploadModule;
+var ImageUploadModule_1;
 //# sourceMappingURL=image-upload.module.js.map

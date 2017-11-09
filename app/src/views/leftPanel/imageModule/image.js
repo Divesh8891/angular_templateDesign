@@ -70,14 +70,14 @@ var imageModuleComponent = (function () {
             _this.designcontainerRef = _this.designcontainerRef.nativeElement;
         });
     };
-    imageModuleComponent = __decorate([
-        core_1.Component({
-            selector: '[imageModule]',
-            template: " \n                        <h5 class=\"heading\">{{imagePanelTitle}}</h5>\n                        <div class=\"seperator\"></div>\n                        <image-upload class={{customClass}} [max]=\"100\" [buttonCaption]=\"'Select Images'\" [extensions]=\"['jpeg','jpg','png','gif']\" (onFileUploadFinish)=\"onUploadFinished($event)\"></image-upload>\n    "
-        }),
-        __metadata("design:paramtypes", [text_service_1.TextService])
-    ], imageModuleComponent);
     return imageModuleComponent;
 }());
+imageModuleComponent = __decorate([
+    core_1.Component({
+        selector: '[imageModule]',
+        template: " \n                        <h5 class=\"heading\">{{imagePanelTitle}}</h5>\n                        <div class=\"seperator\"></div>\n                        <image-upload class={{customClass}} [max]=\"100\" [buttonCaption]=\"'Select Images'\" [extensions]=\"['jpeg','jpg','png','gif']\" (onFileUploadFinish)=\"onUploadFinished($event)\"></image-upload>\n    "
+    }),
+    __metadata("design:paramtypes", [text_service_1.TextService])
+], imageModuleComponent);
 exports.imageModuleComponent = imageModuleComponent;
 //# sourceMappingURL=image.js.map

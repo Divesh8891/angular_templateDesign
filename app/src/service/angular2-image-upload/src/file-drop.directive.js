@@ -10,12 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var FileDropDirective = (function () {
+var FileDropDirective = FileDropDirective_1 = (function () {
     function FileDropDirective() {
         this.isFileOver = new core_1.EventEmitter();
         this.fileDrop = new core_1.EventEmitter();
     }
-    FileDropDirective_1 = FileDropDirective;
     FileDropDirective.prototype.onDragOver = function (event) {
         var dataTransfer = FileDropDirective_1.getDataTransfer(event);
         if (!FileDropDirective_1.hasFiles(dataTransfer.types)) {
@@ -72,43 +71,43 @@ var FileDropDirective = (function () {
         }
         return false;
     };
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", Array)
-    ], FileDropDirective.prototype, "accept", void 0);
-    __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
-    ], FileDropDirective.prototype, "isFileOver", void 0);
-    __decorate([
-        core_1.Output(),
-        __metadata("design:type", core_1.EventEmitter)
-    ], FileDropDirective.prototype, "fileDrop", void 0);
-    __decorate([
-        core_1.HostListener('dragover', ['$event']),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Object]),
-        __metadata("design:returntype", void 0)
-    ], FileDropDirective.prototype, "onDragOver", null);
-    __decorate([
-        core_1.HostListener('dragleave', ['$event']),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [AnalyserNode]),
-        __metadata("design:returntype", void 0)
-    ], FileDropDirective.prototype, "onDragLeave", null);
-    __decorate([
-        core_1.HostListener('drop', ['$event']),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Object]),
-        __metadata("design:returntype", void 0)
-    ], FileDropDirective.prototype, "onDrop", null);
-    FileDropDirective = FileDropDirective_1 = __decorate([
-        core_1.Directive({
-            selector: '[fileDrop]'
-        })
-    ], FileDropDirective);
     return FileDropDirective;
-    var FileDropDirective_1;
 }());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Array)
+], FileDropDirective.prototype, "accept", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", core_1.EventEmitter)
+], FileDropDirective.prototype, "isFileOver", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", core_1.EventEmitter)
+], FileDropDirective.prototype, "fileDrop", void 0);
+__decorate([
+    core_1.HostListener('dragover', ['$event']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], FileDropDirective.prototype, "onDragOver", null);
+__decorate([
+    core_1.HostListener('dragleave', ['$event']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [AnalyserNode]),
+    __metadata("design:returntype", void 0)
+], FileDropDirective.prototype, "onDragLeave", null);
+__decorate([
+    core_1.HostListener('drop', ['$event']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], FileDropDirective.prototype, "onDrop", null);
+FileDropDirective = FileDropDirective_1 = __decorate([
+    core_1.Directive({
+        selector: '[fileDrop]'
+    })
+], FileDropDirective);
 exports.FileDropDirective = FileDropDirective;
+var FileDropDirective_1;
 //# sourceMappingURL=file-drop.directive.js.map

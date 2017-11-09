@@ -150,11 +150,11 @@ var TextService = (function () {
     TextService.prototype.pixelToPercentage = function (objVal, containerVal) {
         return (Math.round((parseInt(objVal) / parseInt(containerVal)) * 100)) + '%';
     };
-    TextService = __decorate([
-        core_1.Injectable()
-    ], TextService);
     return TextService;
 }());
+TextService = __decorate([
+    core_1.Injectable()
+], TextService);
 exports.TextService = TextService;
 var objectArray = (function () {
     // 'id': this.randomNumber, 'oriWidth': textWidth, 'oriHeight': textHeight, 'ratio': ratio, 'width': textWidth, 

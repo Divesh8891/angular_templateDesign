@@ -78,18 +78,18 @@ var textAreaComponent = (function () {
             _this.handlerRef = _this.handlerRef.nativeElement;
         });
     };
-    __decorate([
-        core_1.ViewChild('dummyText'),
-        __metadata("design:type", Object)
-    ], textAreaComponent.prototype, "dummyText", void 0);
-    textAreaComponent = __decorate([
-        core_1.Component({
-            selector: '[textArea]',
-            template: " \n                    <textarea [placeholder]=\"textPlaceholder\" [class]=\"textAreaClass\" [(ngModel)]= \"textAreaValue\" (input)=\"updateText($event)\"></textarea>\n                    <button class=\"btn btn-lrg\" (click)=\"addtext($event)\">Add</button>\n                    <p #dummyText style=\"visibility:hidden;position:absolute;top:-100%\" class=\"m0\">{{textAreaValue}}</p>\n                "
-        }),
-        __metadata("design:paramtypes", [text_service_1.TextService])
-    ], textAreaComponent);
     return textAreaComponent;
 }());
+__decorate([
+    core_1.ViewChild('dummyText'),
+    __metadata("design:type", Object)
+], textAreaComponent.prototype, "dummyText", void 0);
+textAreaComponent = __decorate([
+    core_1.Component({
+        selector: '[textArea]',
+        template: " \n                    <textarea [placeholder]=\"textPlaceholder\" [class]=\"textAreaClass\" [(ngModel)]= \"textAreaValue\" (input)=\"updateText($event)\"></textarea>\n                    <button class=\"btn btn-lrg\" (click)=\"addtext($event)\">Add</button>\n                    <p #dummyText style=\"visibility:hidden;position:absolute;top:-100%\" class=\"m0\">{{textAreaValue}}</p>\n                "
+    }),
+    __metadata("design:paramtypes", [text_service_1.TextService])
+], textAreaComponent);
 exports.textAreaComponent = textAreaComponent;
 //# sourceMappingURL=textArea.js.map

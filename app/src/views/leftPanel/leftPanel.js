@@ -10,13 +10,13 @@ var core_1 = require("@angular/core");
 var leftPanelComponent = (function () {
     function leftPanelComponent() {
     }
-    leftPanelComponent = __decorate([
-        core_1.Component({
-            selector: '[leftModule]',
-            template: " \n                <section class=\"image-module module bg-grey\" imageModule></section>\n                <section class=\"text-module module bg-grey\" textModule></section>\n            "
-        })
-    ], leftPanelComponent);
     return leftPanelComponent;
 }());
+leftPanelComponent = __decorate([
+    core_1.Component({
+        selector: '[leftModule]',
+        template: " \n                <section class=\"image-module module bg-grey\" imageModule></section>\n                <section class=\"text-module module bg-grey\" textModule></section>\n            "
+    })
+], leftPanelComponent);
 exports.leftPanelComponent = leftPanelComponent;
 //# sourceMappingURL=leftPanel.js.map

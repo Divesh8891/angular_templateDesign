@@ -43,21 +43,21 @@ var selectBoxComponent = (function () {
             this.textfilter = this.optionArray[0];
         }
     };
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", Object)
-    ], selectBoxComponent.prototype, "parentClass", void 0);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", Object)
-    ], selectBoxComponent.prototype, "defaultOptionValue", void 0);
-    selectBoxComponent = __decorate([
-        core_1.Component({
-            selector: '[selectBox]',
-            template: "\n      <select name=\"filter\" [(ngModel)]=\"textfilter\">\n         <option value=\"0\">{{defaultOptionValue}}</option>\n         <option value=\"{{optionValue}}\" *ngFor=\"let optionValue of optionArray\" [attr.selected]=\"optionValue==textfilter?true:null\">{{optionValue}}</option>\n      </select>\n     "
-        })
-    ], selectBoxComponent);
     return selectBoxComponent;
 }());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], selectBoxComponent.prototype, "parentClass", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], selectBoxComponent.prototype, "defaultOptionValue", void 0);
+selectBoxComponent = __decorate([
+    core_1.Component({
+        selector: '[selectBox]',
+        template: "\n      <select name=\"filter\" [(ngModel)]=\"textfilter\">\n         <option value=\"0\">{{defaultOptionValue}}</option>\n         <option value=\"{{optionValue}}\" *ngFor=\"let optionValue of optionArray\" [attr.selected]=\"optionValue==textfilter?true:null\">{{optionValue}}</option>\n      </select>\n     "
+    })
+], selectBoxComponent);
 exports.selectBoxComponent = selectBoxComponent;
 //# sourceMappingURL=selectBox.js.map

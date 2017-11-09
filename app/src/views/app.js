@@ -49,14 +49,14 @@ var AppComponent = (function () {
         // console.log(this._textService)
         // console.log(this._textService.currentObj)
     };
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'my-app',
-            template: " \n\n    <div class=\"wrapper\">\n        <custom-header></custom-header>\n        <div class=\"wrapper-inner\">\n            <section class=\"left-module\" leftModule></section>\n            <div class=\"middle-module\" middleModule></div>\n            <section class=\"right-module  bg-grey\" rightModule></section>\n        </div>\n     \n    </div>\n\n    "
-        }),
-        __metadata("design:paramtypes", [text_service_1.TextService])
-    ], AppComponent);
     return AppComponent;
 }());
+AppComponent = __decorate([
+    core_1.Component({
+        selector: 'my-app',
+        template: " \n\n    <div class=\"wrapper\">\n        <custom-header></custom-header>\n        <div class=\"wrapper-inner\">\n            <section class=\"left-module\" leftModule></section>\n            <div class=\"middle-module\" middleModule></div>\n            <section class=\"right-module  bg-grey\" rightModule></section>\n        </div>\n     \n    </div>\n\n    "
+    }),
+    __metadata("design:paramtypes", [text_service_1.TextService])
+], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.js.map

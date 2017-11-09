@@ -12,13 +12,13 @@ var headerComponent = (function () {
         this.headerHeading = "Template Design";
         this.headerHeadingClassName = "heading text-center";
     }
-    headerComponent = __decorate([
-        core_1.Component({
-            selector: 'custom-header',
-            template: " \n              <header class=\"header bg-grey\">\n                 <h4 [class]=\"headerHeadingClassName\">{{headerHeading}}</h4>\n              </header>\n    "
-        })
-    ], headerComponent);
     return headerComponent;
 }());
+headerComponent = __decorate([
+    core_1.Component({
+        selector: 'custom-header',
+        template: " \n              <header class=\"header bg-grey\">\n                 <h4 [class]=\"headerHeadingClassName\">{{headerHeading}}</h4>\n              </header>\n    "
+    })
+], headerComponent);
 exports.headerComponent = headerComponent;
 //# sourceMappingURL=header.js.map
