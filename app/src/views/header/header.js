@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var headerComponent = (function () {
     function headerComponent() {
-        this.headerHeading = "Template Design";
+        this.headerHeading = "Customize Design";
         this.headerHeadingClassName = "heading text-center";
     }
     return headerComponent;

@@ -10,6 +10,6 @@ import { Component } from '@angular/core';
 })
 
 export class headerComponent {
-    headerHeading = "Template Design";
+    headerHeading = "Customize Design";
     headerHeadingClassName= "heading text-center"
 }

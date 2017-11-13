@@ -1,0 +1,44 @@
+[
+    {
+        "type": "Cup",
+        "productArray": [
+            {
+                "name": "xyz",
+                "id": 123,
+                "quantity": 100,
+                "color": "#000,#fff,#frg",
+                "src": "dummy-cup.png",
+                "folderName": "../app/assets/images/"
+            },
+            {
+                "name": "eqweqwe",
+                "id": 1323,
+                "quantity": 120,
+                "color": "#000,#fff,#frg",
+                "src": "dummy-cup.png",
+                "folderName": "../app/assets/images/"
+            }
+        ]
+    },
+    {
+        "type": "Card",
+        "productArray": [
+            {
+                "name": "xyz",
+                "id": 123,
+                "quantity": 100,
+                "color": "#000,#fff,#frg",
+                "src": "dummy-cup.png",
+                "folderName": "../app/assets/images/"
+            },
+            {
+                "name": "eqweqwe",
+                "id": 1323,
+                "quantity": 120,
+                "color": "#000,#fff,#frg",
+                "src": "dummy-cup.png",
+                "folderName": "../app/assets/images/"
+            }
+        ]
+    }
+]

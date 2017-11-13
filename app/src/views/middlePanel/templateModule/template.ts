@@ -107,6 +107,11 @@ export class templateModuleComponent {
                 }
                 this._textService.setAlignmentValue(Math.round((objLeft * newW) / 100), 'left');
                 this._textService.setAlignmentValue(Math.round((objTop * newH) / 100), 'top');
+                console.log(objLeft , newW)
+                this.handlerRef.style.left = objLeft - 5 + 'px';
+                this.handlerRef.style.top = objTop - 5 + 'px';
+                this.handlerRef.style.width = this._textService.pixelToPercentage(userArray[i].width+8, newW);;
+                this.handlerRef.style.height = userArray[i].height + 8 +'px';
             }
             else {
                 let fontSize: any = ((parseInt(currentObj.style['fontSize']) / oldW) * 100).toFixed(1);

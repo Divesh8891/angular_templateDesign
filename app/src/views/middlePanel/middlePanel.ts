@@ -6,7 +6,7 @@ import { TextService } from '../../service/text.service';
     template: ` 
                 <section class="template-module bg-grey" templateModule (onfolderChoose)=openFolderOption($event)></section>
                 <section class="design-section display-inline" designContainer></section>
-                <section class="help-image-popup " #helpImagePopup (onfolderChoose)=openFolderOption($event)>
+                <!--section class="help-image-popup " #helpImagePopup (onfolderChoose)=openFolderOption($event)>
                     <ul class="left-sec">
                         <li [class.active]="myString == 'Products'"><span (click)="showlist($event)">Products</span></li>
                         <li [class.active]="myString == 'Shapes' "><span (click)="showlist($event)">Shapes</span></li>
@@ -15,7 +15,7 @@ import { TextService } from '../../service/text.service';
                     <div class="right-sec">
                            <ul class="shapes"><li data-parent="shapes" class="active"><img src="../app/assets/imageLibrary/shapes/rect.png" /></ul>
                     </div>
-                </section>
+                </section-->
         
                         
     `

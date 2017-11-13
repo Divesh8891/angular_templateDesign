@@ -11,13 +11,13 @@ var AppComponent = (function () {
     function AppComponent() {
         this.title = 'Welcome To Angular 2 World';
     }
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'app',
-            template: '<h2>{{title}}</h2><basic></basic><ifcase></ifcase>'
-        })
-    ], AppComponent);
     return AppComponent;
 }());
+AppComponent = __decorate([
+    core_1.Component({
+        selector: 'app',
+        template: '<h2>{{title}}</h2><basic></basic><ifcase></ifcase>'
+    })
+], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map
