@@ -10,13 +10,51 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var text_service_1 = require("../service/text.service");
 var http_1 = require("@angular/http");
 var AppComponent = (function () {
-    function AppComponent(http) {
+    function AppComponent(http, _textService) {
         this.http = http;
+        this._textService = _textService;
         this.currentId = "";
         this.productColor = "";
     }
+    AppComponent.prototype.prodConfirm = function () {
+        console.log(this._textService.designcontainerRef.nativeElement);
+        this.showPreview();
+        this.modalWrapper.nativeElement.style.display = "block";
+        this.modalOverlay.nativeElement.style.display = "block";
+    };
+    AppComponent.prototype.closeModal = function () {
+        this.modalWrapper.nativeElement.style.display = "none";
+        this.modalOverlay.nativeElement.style.display = "none";
+    };
+    AppComponent.prototype.saveImage = function () {
+        var me = this;
+        me.handlerParentRef.style.display = "block" ? me.handlerParentRef.style.display = 'none' : '';
+        html2canvas(this._textService.designcontainerRef.nativeElement).then(function (canvas) {
+            var a = document.createElement('a');
+            a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            a.download = 'template.png';
+            a.click();
+            // me.handlerParentRef.style.display = 'block';
+            me.closeModal();
+        });
+    };
+    AppComponent.prototype.showPreview = function () {
+        var me = this;
+        console.log(me.handlerParentRef);
+        me.handlerParentRef == undefined ? alert('Design your cap') : me.handlerParentRef.style.display = 'none';
+        html2canvas(this._textService.designcontainerRef.nativeElement).then(function (canvas) {
+            me.modalImgSrc = canvas.toDataURL("image/jpeg");
+            me.handlerParentRef != undefined ? me.handlerParentRef.style.display = 'block' : '';
+        });
+    };
+    AppComponent.prototype.updateMove = function (event) {
+        this.cursorx = ("X" + event.x + ",offesetX" + event.offsetX);
+        this.cursory = ("Y" + event.y + ",offsetY" + event.offsetY);
+        // console.log("doc",event)
+    };
     AppComponent.prototype.showInfo = function (obj) {
         this.productHoverOption.nativeElement.className = "product-hover-option-show";
         if (this.productHoverOption.nativeElement.className == 'product-hover-option-show' && obj.type == "mouseenter") {
@@ -34,8 +72,14 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
+        console.log("left-init");
+        console.log("app");
         this.http.get('../app/assets/product.json').subscribe(function (res) {
             _this.productObj = res.json();
+        });
+        this._textService.currentObjController('getHandlerParentObj', '', '').subscribe(function (data) {
+            _this.handlerParentRef = data;
+            _this.handlerParentRef = _this.handlerParentRef.nativeElement;
         });
     };
     return AppComponent;
@@ -44,12 +88,20 @@ __decorate([
     core_1.ViewChild('productHoverOption'),
     __metadata("design:type", Object)
 ], AppComponent.prototype, "productHoverOption", void 0);
+__decorate([
+    core_1.ViewChild('modalOverlay'),
+    __metadata("design:type", Object)
+], AppComponent.prototype, "modalOverlay", void 0);
+__decorate([
+    core_1.ViewChild('modalWrapper'),
+    __metadata("design:type", Object)
+], AppComponent.prototype, "modalWrapper", void 0);
 AppComponent = __decorate([
     core_1.Component({
         selector: 'my-app',
-        template: " \n\n    <div class=\"wrapper\">\n        <custom-header></custom-header>\n        <!--div class=\"wrapper-inner prod-detail\">\n            <div class=\"producy-wrapper\" *ngFor=\"let pObj of productObj\">\n                <div class=\"prod-title\">Customize {{pObj.type}}</div>\n                <div class=\"product-image\" *ngFor=\"let pImageObj of pObj?.productArray\">\n                    <img id=\"{{pImageObj.id}}\" src=\"{{pImageObj.folderName}}{{pImageObj.src}}\" [attr.data-color]=\"pImageObj.color\" class=\"prod-cup\" (mouseenter)='showInfo($event)' (mouseout)='showInfo($event)'/>\n                    <div class=\"product-desc\">\n                        <div class=\"color-item-info\">\n                            <span class=\"item-color\">7 Colors</span>\n                            <span class=\"item-available\">Available Items {{pImageObj.quantity}}</span>\n                        </div>\n                        <p class=\"product-name\">{{pImageObj.name}}</p>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class=\"product-hover-option\" #productHoverOption (mouseenter)='showInfo($event)' (mouseleave)='showInfo($event)'>\n            <div class=\"quantity-wrapper\">\n                <label>Quantity</label>\n                <input type=\"text\" class=\"quan\" [(ngModel)]=\"quanValue\">\n            </div>\n            <label class=\"chosse-color\">Choose Color</label>\n            <ul class=\"custom-color-picker\">\n                <li *ngFor=\"let p_color of productColor\"><span [style.backgroundColor]=p_color title={{p_color}}></span>\n            </ul>\n            <button class=\"customize-btn btn\" (click)=gotoTool($event)>Start Customize</button>\n        </div-->\n            <div class=\"wrapper-inner\">\n            <section class=\"left-module\" leftModule></section>\n            <div class=\"middle-module\" middleModule></div>\n            <section class=\"right-module  bg-grey\" rightModule></section>\n        </div>\n     \n    </div>\n\n    "
+        templateUrl: 'app/src/views/html/app.html'
     }),
-    __metadata("design:paramtypes", [http_1.Http])
+    __metadata("design:paramtypes", [http_1.Http, text_service_1.TextService])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.js.map

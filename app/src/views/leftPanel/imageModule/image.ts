@@ -15,13 +15,9 @@ export class imageModuleComponent {
     customClass = "image-upload col-xs-12";
     userArray: any;
     randomNumber: any;
-
-
     designcontainerRef: any;
-
-
     onRemoved(event: any) {
-        console.log(event)
+        //console.log(event)
     }
     onUploadFinished(data: any) {
         let me = this;
@@ -38,17 +34,20 @@ export class imageModuleComponent {
             'width': data.imageDimension.width,
             'height': data.imageDimension.height,
             'value': data.fileHolder.src,
-            'type': 'image'
+            'type': 'image',
+            'rotate':0
+            
         });
 
         setTimeout(function () {
-            // console.log(me.designcontainerRef.children[0].lastElementChild)
+            //console.log(me.designcontainerRef.children[0].lastElementChild)
             let userArray = me._textService.objArray;
-            let currentImage = me.designcontainerRef.children[0].lastElementChild;
+            let currentImage = me.designcontainerRef.children[1].lastElementChild;
+            console.log(currentImage)
             let currentW = me.designcontainerRef.style.width;
             let currentH = me.designcontainerRef.style.height;
-            me._textService.setImageDimension(currentImage, '', '', userArray[userArray.length - 1]);
-        }, 100)
+            me._textService.setImageDimension(currentImage, '', '', userArray[userArray.length - 1], me.designcontainerRef);
+        }, 500)
     }
     handleImageLoad(event: any) {
         console.log(event)
@@ -71,13 +70,36 @@ export class imageModuleComponent {
     // }
 
     constructor(private _textService: TextService) { }
+    // ngOnChanges() {
+    //     console.log("inchanges")
+    //     this.getDesignContainer();
+    // }
     ngOnInit() {
-        this._textService.designContainerController('get').subscribe(
-            data => {
-                this.designcontainerRef = data;
-                this.designcontainerRef = this.designcontainerRef.nativeElement
-            });
-
-
+        console.log("image-init")
+        this.designcontainerRef = this._textService.designcontainerRef.nativeElement;
+        console.log( this._textService.designcontainerRef)
+    }
+    // ngDoCheck() {
+    //     console.log("check")
+    //     this.getDesignContainer();
+    // }
+    // ngAfterContentInit() {
+    //     console.log("contentinit")
+    //     this.getDesignContainer();
+    // }
+    // ngAfterContentChecked() {
+    //     console.log("contentcheck")
+    //     this.getDesignContainer();
+    // }
+    // ngAfterViewInit() {
+    //     console.log("viewinti")
+    //     this.getDesignContainer();
+    // }
+    // ngAfterViewChecked() {
+    //     console.log("viewcheck")
+    //     this.getDesignContainer();
+    // }
+    getDesignContainer() {
+        // console.log(this._textService)
     }
 }

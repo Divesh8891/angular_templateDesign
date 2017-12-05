@@ -11,26 +11,26 @@ import { TextService } from '../../../service/text.service';
                         <div class="seperator"></div>
                         <div selectBox class="font-famliy-sec select-box "  [defaultOptionValue]="'Font-famliy'" (change)="updateFontFamliy($event)"></div>
                                                   <div class="seperator"></div>
-<div class="font-size-wrappper">
+                        <div class="font-size-wrappper">
                             <h5 class="m0">font-size</h5>
                             <div class="fontSizeSlider">
                                 <md-slider class="custom-slider" (input)="onfontSizeChanged($event)"  min="{{minfontSizeSlidervalue}}" max="{{maxfontSizeSlidervalue}}" value="{{inputfontSizeValue}}"></md-slider>
                             </div>
                             <input type="number" placeholder="top" class="fontS" (input)="onfontSizeChangedFromInput($event)" [(ngModel)]="inputfontSizeValue">
                         </div>
-                         <div class="line-height-wrappper">
+                         <!--div class="line-height-wrappper">
                             <h5 class="m0">line-Gap</h5>
                             <div class="lineHeightSlider">
                                 <md-slider class="custom-slider" (input)="onLineHChanged($event)"  min="{{minlineHeightSlidervalue}}" max="{{maxlineHeightSlidervalue}}" value="{{inputlineHeightValue}}"></md-slider>
                             </div>
                             <input type="number" placeholder="lineH" class="lineH" (input)="onLineHChangedFromInput($event)" [(ngModel)]="inputlineHeightValue">
-                        </div>
+                        </div-->
                         <!--div selectBox class="font-sec select-box" [defaultOptionValue]="'Font-size'" (change)="updateFontS($event)"></div>
                         <div selectBox class="line-height-sec select-box ml5" [defaultOptionValue]="'line-height'" (change)="updateLineHeight($event)"></div-->
                         <!--div selectBox class="stroke-width-sec select-box ml5" [defaultOptionValue]="'stroke-width'" (change)="updateStrokeWidth($event)"></div-->
                         <div class="seperator"></div>
                         
-                        <span #pickerTextColorBox [(colorPicker)]="textColor" (colorPickerChange)="closeTextPicker($event)"
+                        <!--span #pickerTextColorBox [(colorPicker)]="textColor" (colorPickerChange)="closeTextPicker($event)"
                             [cpPosition]="'right'"
                             [style.backgroundColor]="textColor"
                             [cpPositionOffset]="'50%'"
@@ -38,7 +38,7 @@ import { TextService } from '../../../service/text.service';
                             [cpOKButton]="true"
                             [cpSaveClickOutside]="true"
                             [cpOKButtonClass]= "'btn btn-primary btn-xs'"
-                            ></span>
+                            ></span-->
                             <!--button class="color btn icon" (click)=applyColor($event)><i  class="sprite-img"></i></button>
                             <button class="stroke-color btn  icon" (click)=applyColor($event)>Stroke Color</button>
                             <button class="back-color btn  icon" (click)=applyBgColor($event)><i class="sprite-img"></i></button-->
@@ -52,8 +52,15 @@ import { TextService } from '../../../service/text.service';
                             [cpSaveClickOutside]="true"
                             [cpOKButtonClass]= "'btn btn-primary btn-xs'"
                             ><i  class="sprite-img"></i></span>
+
                         <div selectBox class="opacity-width-sec select-box" [defaultOptionValue]="'Opacity'" (change)="updateOpacity($event)"></div>
                         <div class="seperator"></div>
+                        <div class="text-center align-center">
+                        <button class="btn" (click)=horizontalC($event)>HCenter</button>
+                        <button class="btn" (click)=verticallyC($event)>VCenter</button>
+                        </div>
+                        <div class="seperator"></div>
+                    
                         <button class="bold btn text-font-effect" (click)=applyBold($event)>B</button>
                         <button class="italic btn text-font-effect" (click)=applyItalic($event)>I</button>
                         <button class="underline btn text-font-effect" (click)=applyUnderline($event)>U</button>
@@ -69,26 +76,20 @@ import { TextService } from '../../../service/text.service';
 })
 
 export class textModuleComponent {
+    textPanelTitle = "Text";
 
     inputfontSizeValue: any;
     minfontSizeSlidervalue: any = 10;
     maxfontSizeSlidervalue: any = 100;
     defaultfontSizeSlidervalue: any = this.inputfontSizeValue;
 
-    inputlineHeightValue: any;
-    minlineHeightSlidervalue: any = 10;
-    maxlineHeightSlidervalue: any = 100;
-    defaultlineHeightSlidervalue: any = this.inputlineHeightValue;
-
-
-    textPanelTitle = "Text";
     opacityValue: any = '1'
     me = this;
     private color: string = "#ffffff";
     private textColor: string = "#000000";
 
-
     handlerRef: any;
+    handlerParentRef: any;
     designcontainerRef: any;
     currentObjRef: any;
 
@@ -107,29 +108,7 @@ export class textModuleComponent {
             this._textService.setAlignmentValue(event.target.value, 'font-size');
             this._textService.setAlignmentValue(event.target.value, 'lineH');
             this.updateTextcurrentObj('fontSize', event.target.value + 'px');
-
         }
-
-    }
-    onLineHChanged(event: any) {
-        if (this.currentObjRef != undefined) {
-            this.inputlineHeightValue = event.value;
-            this.updateTextcurrentObj('lineHeight', event.value + 'px')
-        }
-    }
-    onLineHChangedFromInput(event: any) {
-        if (this.currentObjRef != undefined) {
-            this._textService.setAlignmentValue(event.target.value, 'lineH');
-            this.updateTextcurrentObj('lineHeight', event.target.value + 'px');
-
-        }
-
-    }
-    updateFontS(event: any) {
-        this.updateTextcurrentObj('fontSize', event.target.value + 'px');
-    }
-    updateLineHeight(event: any) {
-        this.updateTextcurrentObj('lineHeight', event.target.value + 'px')
     }
     updateOpacity(event: any) {
         this.opacityValue = event.target.value;
@@ -138,23 +117,6 @@ export class textModuleComponent {
     updateFontFamliy(event: any) {
         this.updateTextcurrentObj('fontFamily', event.target.value)
     }
-    // updateStrokeWidth(event: any) {
-    //     this.updateTextcurrentObj("textShadow", this._textService.colorBoxRef.nativeElement.dataset['textShadow'] + ' 0px 0px ' + event.target.value + 'px')
-    // }
-    // applyColor(event: any) {
-    //     this.updateColorBoxObj("color");
-    // }
-    // applyStrokeColor(event: any) {
-    //     this.updateColorBoxObj("textShadow");
-    // }
-
-    // applyBgColor(event: any) {
-    //     this.updateColorBoxObj("backgroundColor");
-    // }
-    // updateColorBoxObj(property: any) {
-    //     this._textService.colorBoxRef.nativeElement.dataset['call'] = property;
-    //     this._textService.colorBoxRef.nativeElement.style.display = 'block';
-    // }
 
     applyBold(event: any) {
         if (event.target.classList.contains('active')) {
@@ -199,34 +161,42 @@ export class textModuleComponent {
         let oldFontValue = parseInt(this.currentObjRef.style[property])
         this.currentObjRef.style[property] = value;
         if (property == 'fontSize') {
-            console.log(parseInt(this.currentObjRef.style.width), value, oldFontValue)
             let newWidthValue = Math.round(((parseInt(this.currentObjRef.style.width) * parseInt(value)) / oldFontValue));
-            //console.log(objWidth,oldFontValue)
-            //let newWidthValue = this._textService.pixelToPercentage(((parseInt(value) * objWidth) / oldFontValue), this.designcontainerRef.style["width"]);
-            console.log(newWidthValue)
             this.currentObjRef.style.width = newWidthValue + '%'
         }
-        console.log(this.currentObjRef.offsetWidth)
+        // console.log(this.currentObjRef.offsetWidth)
         this._textService.setSliderValue(this.currentObjRef.offsetWidth, 'minV');
-        this.handlerRef.style.width = this.currentObjRef.offsetWidth + 10 + 'px';
-        this.handlerRef.style.height = this.currentObjRef.offsetHeight + 10 + 'px';
-    }
-    closeTextPicker(event: any) {
-        if (this.currentObjRef != undefined) this.currentObjRef.style.color = event
+
+        this.handlerParentRef.style.width = this.currentObjRef.offsetWidth + 10 + 'px';
+        this.handlerParentRef.style.height = this.currentObjRef.offsetHeight + 10 + 'px';
     }
     closeTextBgPicker(event: any) {
         if (this.currentObjRef != undefined) this.currentObjRef.style.backgroundColor = this._textService.hexToRgbA(event, this.opacityValue)
-
     }
 
+    horizontalC() {
+        let currentObjW = parseInt(this.currentObjRef.style['width'])
+        let objLet = Math.round((100 - currentObjW) / 2);
+        this.currentObjRef.style['left'] = Math.round((objLet * parseInt(this.designcontainerRef.style["width"])) / 100) + 'px';
+        this.handlerParentRef.style.left = parseInt(this.currentObjRef.style['left']) - 5 + 'px';
+    }
+    verticallyC() {
+
+        let currentObjW = parseInt(this.handlerParentRef.style['height']);
+        let containerH = parseInt(this.designcontainerRef.style["height"]);
+        let objTop = Math.round((containerH - currentObjW - 5) / 2);
+        this.currentObjRef.style.top = objTop + 'px';
+        
+        this.handlerParentRef.style["top"] = objTop - 5 + 'px';
+
+
+    }
     constructor(private _textService: TextService) {
     }
     ngOnInit() {
-        this._textService.designContainerController('get').subscribe(
-            data => {
-                this.designcontainerRef = data;
-                this.designcontainerRef = this.designcontainerRef.nativeElement
-            });
+        console.log("text-init")
+        this.designcontainerRef = this._textService.designcontainerRef.nativeElement;
+
         this._textService.currentObjController('getCurrentObj', '', '').subscribe(
             data => {
                 this.currentObjRef = data;
@@ -234,15 +204,16 @@ export class textModuleComponent {
                     this.currentObjRef = undefined
                 }
                 else {
-                    console.log(this.currentObjRef)
+                    //console.log(this.currentObjRef)
 
                     this.currentObjRef = this.currentObjRef.nativeElement
                 }
             });
-        this._textService.currentObjController('getHandlerObj', '', '').subscribe(
+      
+        this._textService.currentObjController('getHandlerParentObj', '', '').subscribe(
             data => {
-                this.handlerRef = data;
-                this.handlerRef = this.handlerRef.nativeElement
+                this.handlerParentRef = data;
+                this.handlerParentRef = this.handlerParentRef.nativeElement
             });
         this._textService.getFontSize().subscribe(
             data => {
@@ -253,7 +224,7 @@ export class textModuleComponent {
                     }, 100)
                 }
             });
-            this._textService.getLineH().subscribe(
+        this._textService.getLineH().subscribe(
             data => {
                 let me = this;
                 if (this.currentObjRef != undefined) {
@@ -264,4 +235,49 @@ export class textModuleComponent {
             });
     }
 
+    inputlineHeightValue: any;
+    minlineHeightSlidervalue: any = 10;
+    maxlineHeightSlidervalue: any = 100;
+    defaultlineHeightSlidervalue: any = this.inputlineHeightValue;
+
+    // updateLineHeight(event: any) {
+    //     this.updateTextcurrentObj('lineHeight', event.target.value + 'px')
+    // }
+    // updateFontS(event: any) {
+    //     this.updateTextcurrentObj('fontSize', event.target.value + 'px');
+    // }
+    // onLineHChanged(event: any) {
+    //     if (this.currentObjRef != undefined) {
+    //         this.inputlineHeightValue = event.value;
+    //         this.updateTextcurrentObj('lineHeight', event.value + 'px')
+    //     }
+    // }
+    // onLineHChangedFromInput(event: any) {
+    //     if (this.currentObjRef != undefined) {
+    //         this._textService.setAlignmentValue(event.target.value, 'lineH');
+    //         this.updateTextcurrentObj('lineHeight', event.target.value + 'px');
+
+    //     }
+
+    // }
+    // updateStrokeWidth(event: any) {
+    //     this.updateTextcurrentObj("textShadow", this._textService.colorBoxRef.nativeElement.dataset['textShadow'] + ' 0px 0px ' + event.target.value + 'px')
+    // }
+    // applyColor(event: any) {
+    //     this.updateColorBoxObj("color");
+    // }
+    // applyStrokeColor(event: any) {
+    //     this.updateColorBoxObj("textShadow");
+    // }
+
+    // applyBgColor(event: any) {
+    //     this.updateColorBoxObj("backgroundColor");
+    // }
+    // updateColorBoxObj(property: any) {
+    //     this._textService.colorBoxRef.nativeElement.dataset['call'] = property;
+    //     this._textService.colorBoxRef.nativeElement.style.display = 'block';
+    // }
+    // closeTextPicker(event: any) {
+    //     if (this.currentObjRef != undefined) this.currentObjRef.style.color = event
+    // }
 }

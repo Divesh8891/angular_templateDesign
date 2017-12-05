@@ -103,7 +103,7 @@ export class templateModuleComponent {
                 let objLeft = currentObj.style['left'] === '' ? 0 : parseInt(currentObj.style['left'])
                 let objTop = currentObj.style['top'] === '' ? 0 : parseInt(currentObj.style['top'])
                 if ((newH < userArray[i].height) || newW < calculatedW) {
-                    this._textService.setImageDimension(currentObj, newW, newH, userArray[i]);
+                    this._textService.setImageDimension(currentObj, newW, newH, userArray[i],this.designcontainerRef);
                 }
                 this._textService.setAlignmentValue(Math.round((objLeft * newW) / 100), 'left');
                 this._textService.setAlignmentValue(Math.round((objTop * newH) / 100), 'top');
@@ -174,11 +174,8 @@ export class templateModuleComponent {
 
     constructor(private cpService: ColorPickerService, private _textService: TextService) { }
     ngOnInit() {
-        this._textService.designContainerController('get').subscribe(
-            data => {
-                this.designcontainerRef = data;
-                this.designcontainerRef = this.designcontainerRef.nativeElement
-            });
+        this.designcontainerRef = this._textService.designcontainerRef.nativeElement;
+        
         this._textService.currentObjController('getCurrentObj', '', '').subscribe(
             data => {
                 if (this.currentObjRef == undefined) {

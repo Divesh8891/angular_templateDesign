@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { TextService } from '../../service/text.service';
+//import { TextService } from '../../service/text.service';
 
 @Component({
     selector: '[middleModule]',
     template: ` 
-                <section class="template-module bg-grey" templateModule (onfolderChoose)=openFolderOption($event)></section>
+                <!--section class="template-module bg-grey" templateModule (onfolderChoose)=openFolderOption($event)></section-->
                 <section class="design-section display-inline" designContainer></section>
                 <!--section class="help-image-popup " #helpImagePopup (onfolderChoose)=openFolderOption($event)>
                     <ul class="left-sec">
@@ -16,6 +16,7 @@ import { TextService } from '../../service/text.service';
                            <ul class="shapes"><li data-parent="shapes" class="active"><img src="../app/assets/imageLibrary/shapes/rect.png" /></ul>
                     </div>
                 </section-->
+                
         
                         
     `
@@ -45,6 +46,8 @@ export class MiddlePanelComponent {
     //     return results;
     // }
     ngOnInit() {
+        console.log("middle-init")
+        
       //,,  console.log(this._fsService)
 
     }

@@ -12,7 +12,7 @@ export class Draggable implements OnInit {
 
   @Output() postions = new EventEmitter();
   @Output() handlerClick = new EventEmitter();
-  
+
   constructor(public element: ElementRef) {
   }
 
@@ -21,15 +21,19 @@ export class Draggable implements OnInit {
     // css changes
     if (this._allowDrag) {
       this.element.nativeElement.style.position = 'relative';
+      this.element.nativeElement.style.left = '25px';
+      this.element.nativeElement.style.top = '95px';
       this.element.nativeElement.className += ' cursor-draggable';
     }
   }
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent) {
+   // console.log("Down")
     if (event.button === 2 || (this._handle !== undefined && event.target !== this._handle))
       return; // prevents right click drag, remove his if you don't want it
     this.md = true;
+    //console.log(event.clientY,event.clientX)
     this.topStart = event.clientY - this.element.nativeElement.style.top.replace('px', '');
     this.leftStart = event.clientX - this.element.nativeElement.style.left.replace('px', '');
     this.handlerClick.emit(event)
@@ -42,11 +46,11 @@ export class Draggable implements OnInit {
 
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
-    //console.dir(event.target)
     if (this.md && this._allowDrag) {
+   //   console.log(event.clientY, this.topStart, event.clientX, this.leftStart)
       this.element.nativeElement.style.top = (event.clientY - this.topStart) + 'px';
       this.element.nativeElement.style.left = (event.clientX - this.leftStart) + 'px';
-      this.postions.emit({'top':(event.clientY - this.topStart),'left':(event.clientX - this.leftStart)})
+      this.postions.emit({ 'top': (event.clientY - this.topStart), 'left': (event.clientX - this.leftStart) })
     }
   }
 

@@ -18,7 +18,7 @@ var textAreaComponent = (function () {
         this.textPlaceholder = 'Add Text';
     }
     textAreaComponent.prototype.addtext = function (event) {
-        console.log(this.dummyText);
+        //console.log(this.dummyText)
         this.textWidth = this.dummyText.nativeElement.offsetWidth;
         this.textHeight = this.dummyText.nativeElement.offsetHeight;
         var a = new Date();
@@ -32,14 +32,14 @@ var textAreaComponent = (function () {
             'width': this.textWidth,
             'height': this.textHeight,
             'value': this.textAreaValue,
-            'type': 'text'
+            'type': 'text',
+            'rotate': 0
         });
-        console.log(this.textWidth);
+        //console.log(this.textWidth)
         this._textService.setSliderValue(this.textWidth, 'minV');
         this._textService.setSliderValue(parseInt(this.designcontainerRef.style.width), 'maxV');
     };
     textAreaComponent.prototype.updateText = function (event) {
-        //console.log(event)
         var currentObj = this.currentObjRef;
         if (currentObj != undefined) {
             var handlerRef = this.handlerRef;
@@ -60,10 +60,7 @@ var textAreaComponent = (function () {
     };
     textAreaComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this._textService.designContainerController('get').subscribe(function (data) {
-            _this.designcontainerRef = data;
-            _this.designcontainerRef = _this.designcontainerRef.nativeElement;
-        });
+        this.designcontainerRef = this._textService.designcontainerRef.nativeElement;
         this._textService.currentObjController('getCurrentObj', '', '').subscribe(function (data) {
             _this.currentObjRef = data;
             if (_this.currentObjRef == undefined) {
@@ -73,7 +70,7 @@ var textAreaComponent = (function () {
                 _this.currentObjRef = _this.currentObjRef.nativeElement;
             }
         });
-        this._textService.currentObjController('getHandlerObj', '', '').subscribe(function (data) {
+        this._textService.currentObjController('getHandlerParentObj', '', '').subscribe(function (data) {
             _this.handlerRef = data;
             _this.handlerRef = _this.handlerRef.nativeElement;
         });
@@ -87,7 +84,7 @@ __decorate([
 textAreaComponent = __decorate([
     core_1.Component({
         selector: '[textArea]',
-        template: " \n                    <textarea [placeholder]=\"textPlaceholder\" [class]=\"textAreaClass\" [(ngModel)]= \"textAreaValue\" (input)=\"updateText($event)\"></textarea>\n                    <button class=\"btn btn-lrg\" (click)=\"addtext($event)\">Add</button>\n                    <p #dummyText style=\"visibility:hidden;position:absolute;top:-100%\" class=\"m0\">{{textAreaValue}}</p>\n                "
+        template: " \n                    <textarea [placeholder]=\"textPlaceholder\" [class]=\"textAreaClass\" [(ngModel)]= \"textAreaValue\" (input)=\"updateText($event)\"></textarea>\n                    <button class=\"btn btn-lrg\" (click)=\"addtext($event)\">Add</button>\n                    <p #dummyText style=\"visibility:hidden;position:absolute;top:-100%;\" class=\"m0\">{{textAreaValue}}</p>\n                "
     }),
     __metadata("design:paramtypes", [text_service_1.TextService])
 ], textAreaComponent);

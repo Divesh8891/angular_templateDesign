@@ -32,7 +32,7 @@ var imageModuleComponent = (function () {
         this.customClass = "image-upload col-xs-12";
     }
     imageModuleComponent.prototype.onRemoved = function (event) {
-        console.log(event);
+        //console.log(event)
     };
     imageModuleComponent.prototype.onUploadFinished = function (data) {
         var me = this;
@@ -49,26 +49,53 @@ var imageModuleComponent = (function () {
             'width': data.imageDimension.width,
             'height': data.imageDimension.height,
             'value': data.fileHolder.src,
-            'type': 'image'
+            'type': 'image',
+            'rotate': 0
         });
         setTimeout(function () {
-            // console.log(me.designcontainerRef.children[0].lastElementChild)
+            //console.log(me.designcontainerRef.children[0].lastElementChild)
             var userArray = me._textService.objArray;
-            var currentImage = me.designcontainerRef.children[0].lastElementChild;
+            var currentImage = me.designcontainerRef.children[1].lastElementChild;
+            console.log(currentImage);
             var currentW = me.designcontainerRef.style.width;
             var currentH = me.designcontainerRef.style.height;
-            me._textService.setImageDimension(currentImage, '', '', userArray[userArray.length - 1]);
-        }, 100);
+            me._textService.setImageDimension(currentImage, '', '', userArray[userArray.length - 1], me.designcontainerRef);
+        }, 500);
     };
     imageModuleComponent.prototype.handleImageLoad = function (event) {
         console.log(event);
     };
+    // ngOnChanges() {
+    //     console.log("inchanges")
+    //     this.getDesignContainer();
+    // }
     imageModuleComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this._textService.designContainerController('get').subscribe(function (data) {
-            _this.designcontainerRef = data;
-            _this.designcontainerRef = _this.designcontainerRef.nativeElement;
-        });
+        console.log("image-init");
+        this.designcontainerRef = this._textService.designcontainerRef.nativeElement;
+        console.log(this._textService.designcontainerRef);
+    };
+    // ngDoCheck() {
+    //     console.log("check")
+    //     this.getDesignContainer();
+    // }
+    // ngAfterContentInit() {
+    //     console.log("contentinit")
+    //     this.getDesignContainer();
+    // }
+    // ngAfterContentChecked() {
+    //     console.log("contentcheck")
+    //     this.getDesignContainer();
+    // }
+    // ngAfterViewInit() {
+    //     console.log("viewinti")
+    //     this.getDesignContainer();
+    // }
+    // ngAfterViewChecked() {
+    //     console.log("viewcheck")
+    //     this.getDesignContainer();
+    // }
+    imageModuleComponent.prototype.getDesignContainer = function () {
+        // console.log(this._textService)
     };
     return imageModuleComponent;
 }());

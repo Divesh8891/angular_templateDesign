@@ -1,51 +1,12 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { TextService } from '../service/text.service';
-
 import { Http, Response } from '@angular/http';
 import { HttpModule } from '@angular/http';
 
 
 @Component({
     selector: 'my-app',
-    template: ` 
-
-    <div class="wrapper">
-        <custom-header></custom-header>
-        <!--div class="wrapper-inner prod-detail">
-            <div class="producy-wrapper" *ngFor="let pObj of productObj">
-                <div class="prod-title">Customize {{pObj.type}}</div>
-                <div class="product-image" *ngFor="let pImageObj of pObj?.productArray">
-                    <img id="{{pImageObj.id}}" src="{{pImageObj.folderName}}{{pImageObj.src}}" [attr.data-color]="pImageObj.color" class="prod-cup" (mouseenter)='showInfo($event)' (mouseout)='showInfo($event)'/>
-                    <div class="product-desc">
-                        <div class="color-item-info">
-                            <span class="item-color">7 Colors</span>
-                            <span class="item-available">Available Items {{pImageObj.quantity}}</span>
-                        </div>
-                        <p class="product-name">{{pImageObj.name}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product-hover-option" #productHoverOption (mouseenter)='showInfo($event)' (mouseleave)='showInfo($event)'>
-            <div class="quantity-wrapper">
-                <label>Quantity</label>
-                <input type="text" class="quan" [(ngModel)]="quanValue">
-            </div>
-            <label class="chosse-color">Choose Color</label>
-            <ul class="custom-color-picker">
-                <li *ngFor="let p_color of productColor"><span [style.backgroundColor]=p_color title={{p_color}}></span>
-            </ul>
-            <button class="customize-btn btn" (click)=gotoTool($event)>Start Customize</button>
-        </div-->
-            <div class="wrapper-inner">
-            <section class="left-module" leftModule></section>
-            <div class="middle-module" middleModule></div>
-            <section class="right-module  bg-grey" rightModule></section>
-        </div>
-     
-    </div>
-
-    `
+    templateUrl: 'app/src/views/html/app.html'
 })
 
 export class AppComponent {
@@ -53,6 +14,57 @@ export class AppComponent {
     @ViewChild('productHoverOption') public productHoverOption: any;
     currentId: any = "";
     productColor: any = "";
+    handlerParentRef: any;
+    modalImgSrc: any;
+    cursorx: any;
+    cursory: any;
+
+    @ViewChild('modalOverlay') public modalOverlay: any;
+    @ViewChild('modalWrapper') public modalWrapper: any;
+
+
+    prodConfirm() {
+        console.log(this._textService.designcontainerRef.nativeElement)
+        this.showPreview();
+        this.modalWrapper.nativeElement.style.display = "block";
+        this.modalOverlay.nativeElement.style.display = "block";
+    }
+    closeModal() {
+        this.modalWrapper.nativeElement.style.display = "none";
+        this.modalOverlay.nativeElement.style.display = "none";
+    }
+    saveImage() {
+        let me = this;
+        me.handlerParentRef.style.display = "block" ? me.handlerParentRef.style.display = 'none' : '';
+
+        html2canvas(this._textService.designcontainerRef.nativeElement).then(function (canvas: any) {
+            var a = document.createElement('a');
+            a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            a.download = 'template.png';
+            a.click();
+            // me.handlerParentRef.style.display = 'block';
+            me.closeModal();
+        }
+        );
+
+    }
+    showPreview() {
+        let me = this;
+        console.log(me.handlerParentRef)
+        me.handlerParentRef == undefined ? alert('Design your cap') : me.handlerParentRef.style.display = 'none';
+
+        html2canvas(this._textService.designcontainerRef.nativeElement).then(function (canvas: any) {
+            me.modalImgSrc = canvas.toDataURL("image/jpeg");
+            me.handlerParentRef != undefined ? me.handlerParentRef.style.display = 'block' : '';
+        });
+
+    }
+    updateMove(event: any) {
+        this.cursorx = ("X"+event.x + ",offesetX" + event.offsetX )
+        this.cursory = ("Y"+event.y + ",offsetY" + event.offsetY )
+        // console.log("doc",event)
+    }
+    
     showInfo(obj: any) {
         this.productHoverOption.nativeElement.className = "product-hover-option-show";
         if (this.productHoverOption.nativeElement.className == 'product-hover-option-show' && obj.type == "mouseenter") {
@@ -71,12 +83,19 @@ export class AppComponent {
     }
     productObj: Object[];
 
-    constructor(private http: Http) { }
+    constructor(private http: Http, private _textService: TextService) { }
 
     ngOnInit() {
+        console.log("left-init");
+        console.log("app")
         this.http.get('../app/assets/product.json').subscribe(res => {
             this.productObj = res.json();
         });
+        this._textService.currentObjController('getHandlerParentObj', '', '').subscribe(
+            data => {
+                this.handlerParentRef = data;
+                this.handlerParentRef = this.handlerParentRef.nativeElement
+            });
     }
 
 

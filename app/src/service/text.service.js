@@ -10,6 +10,8 @@ var core_1 = require("@angular/core");
 var Subject_1 = require("rxjs/Subject");
 var TextService = (function () {
     function TextService() {
+        this.designcontainerRef = "";
+        this.moduleRef = "";
         this.objArrSource = new Subject_1.Subject();
         // public objArraySource = new Subject();
         this.sliderMinValue = new Subject_1.Subject();
@@ -22,29 +24,30 @@ var TextService = (function () {
         this.textBgValue = new Subject_1.Subject();
         this.currentObj = new Subject_1.Subject();
         this.handlerRef = new Subject_1.Subject();
-        this.designcontainerRef = new Subject_1.Subject();
+        this.handlerWrapper = new Subject_1.Subject();
         this.objArray = [];
-        this.setImageDimension = function (currentObj, containerW, containerH, objArray) {
+        this.setImageDimension = function (currentObj, containerW, containerH, objArray, pContainer) {
             // console.log("setdimension")
             // console.log(currentObj, containerW, containerH, objArray)
             var maxWidth = parseInt(containerW); // Max width for the image
             var maxHeight = parseInt(containerH); // Max height for the image
             if (containerW === '') {
-                maxWidth = parseInt(this.designcontainerRef.nativeElement.style.width); // Max width for the image
+                console.log(this);
+                maxWidth = parseInt(pContainer.style.width); // Max width for the image
             }
             if (containerH === '') {
-                maxHeight = parseInt(this.designcontainerRef.nativeElement.style.height);
+                maxHeight = parseInt(pContainer.style.height);
             }
             var localCurrentObj = currentObj;
             // console.log(maxWidth,maxHeight)
             var ratio = 0; // Used for aspect ratio
             var width = objArray.width; // Current image width
             var height = objArray.height; // Current image height
-            // console.log((maxWidth), maxHeight, width, height);
+            console.log((maxWidth), maxHeight, width, height);
             if (width > maxWidth) {
                 ratio = maxWidth / width; // get ratio for scaling image
-                localCurrentObj.style["width"] = this.pixelToPercentage(maxWidth, maxWidth);
-                localCurrentObj.style["height"] = this.pixelToPercentage((height * ratio), maxHeight);
+                localCurrentObj.style["width"] = this.pixelToPercentage(maxWidth - 100, maxWidth);
+                //localCurrentObj.style["height"] = this.pixelToPercentage((height * ratio), maxHeight);
                 height = height * ratio; // Reset height to match scaled image
                 width = width * ratio; // Reset width to match scaled image
             }
@@ -56,7 +59,7 @@ var TextService = (function () {
                 width = width * ratio; // Reset width to match scaled image
                 height = height * ratio; // Reset height to match scaled image
             }
-            //console.log(width, height)
+            console.log(width, height);
             objArray.width = width;
             objArray.height = height;
             // this.textHandler.nativeElement.style.width = parseInt(localCurrentObj.offsetWidth) + 10 + 'px';
@@ -67,7 +70,7 @@ var TextService = (function () {
     //'height': textHeight, 'value': this.textAreaValue/imgSrc, 'type': 'text'
     TextService.prototype.setObjArray = function (data) {
         var me = this;
-        this.objArray.push(new objectArray(data.id, data.oriWidth, data.oriHeight, data.ratio, data.width, data.height, data.value, data.type));
+        this.objArray.push(new objectArray(data.id, data.oriWidth, data.oriHeight, data.ratio, data.width, data.height, data.value, data.type, data.rotate));
         this.objArrSource.next(me.objArray);
     };
     TextService.prototype.getObjArray = function () {
@@ -124,28 +127,24 @@ var TextService = (function () {
     TextService.prototype.getLineH = function () {
         return this.lineHeightValue.asObservable();
     };
-    TextService.prototype.currentObjController = function (type, currentObjData, handlerData) {
+    TextService.prototype.currentObjController = function (type, currentObjData, handlerWrapperData) {
         if (type == 'set') {
             this.currentObj.next(currentObjData);
-            this.handlerRef.next(handlerData);
+            this.handlerWrapper.next(handlerWrapperData);
+            //console.log(handlerWrapperData)
         }
         if (type == 'getCurrentObj') {
             return this.currentObj.asObservable();
         }
-        if (type == 'getHandlerObj') {
-            return this.handlerRef.asObservable();
+        if (type == 'getHandlerParentObj') {
+            return this.handlerWrapper.asObservable();
         }
     };
-    TextService.prototype.designContainerController = function (type, data) {
-        if (data === void 0) { data = null; }
-        //console.log(type,data)
-        if (type == 'set') {
-            this.designcontainerRef.next(data);
-        }
-        if (type == 'get') {
-            // console.log(this.designcontainerRef)
-            return this.designcontainerRef.asObservable();
-        }
+    TextService.prototype.designContainerController = function (data) {
+        this.designcontainerRef = data;
+    };
+    TextService.prototype.moduleContainerController = function (data) {
+        this.moduleRef = data;
     };
     TextService.prototype.pixelToPercentage = function (objVal, containerVal) {
         return (Math.round((parseInt(objVal) / parseInt(containerVal)) * 100)) + '%';
@@ -159,7 +158,7 @@ exports.TextService = TextService;
 var objectArray = (function () {
     // 'id': this.randomNumber, 'oriWidth': textWidth, 'oriHeight': textHeight, 'ratio': ratio, 'width': textWidth, 
     //'height': textHeight, 'value': this.textAreaValue/imgSrc, 'type': 'text'
-    function objectArray(id, oriWidth, oriHeight, ratio, width, height, value, type) {
+    function objectArray(id, oriWidth, oriHeight, ratio, width, height, value, type, rotate) {
         this.id = id;
         this.oriWidth = oriWidth;
         this.oriHeight = oriHeight;
@@ -168,6 +167,7 @@ var objectArray = (function () {
         this.height = height;
         this.value = value;
         this.type = type;
+        this.rotate = rotate;
     }
     return objectArray;
 }());

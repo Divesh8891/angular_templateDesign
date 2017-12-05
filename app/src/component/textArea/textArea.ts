@@ -6,7 +6,7 @@ import { TextService } from '../../service/text.service';
     template: ` 
                     <textarea [placeholder]="textPlaceholder" [class]="textAreaClass" [(ngModel)]= "textAreaValue" (input)="updateText($event)"></textarea>
                     <button class="btn btn-lrg" (click)="addtext($event)">Add</button>
-                    <p #dummyText style="visibility:hidden;position:absolute;top:-100%" class="m0">{{textAreaValue}}</p>
+                    <p #dummyText style="visibility:hidden;position:absolute;top:-100%;" class="m0">{{textAreaValue}}</p>
                 `
 })
 
@@ -18,7 +18,7 @@ export class textAreaComponent {
     textWidth: any;
     textHeight: any;
 
-    
+
     handlerRef: any;
     designcontainerRef: any;
     currentObjRef: any;
@@ -26,7 +26,7 @@ export class textAreaComponent {
     @ViewChild('dummyText') public dummyText: any;
 
     addtext(event: any) {
-        console.log(this.dummyText)
+        //console.log(this.dummyText)
         this.textWidth = this.dummyText.nativeElement.offsetWidth;
         this.textHeight = this.dummyText.nativeElement.offsetHeight;
         let a = new Date();
@@ -40,16 +40,15 @@ export class textAreaComponent {
             'width': this.textWidth,
             'height': this.textHeight,
             'value': this.textAreaValue,
-            'type': 'text'
+            'type': 'text',
+            'rotate':0
         });
-        console.log(this.textWidth)
+       //console.log(this.textWidth)
         this._textService.setSliderValue(this.textWidth, 'minV');
         this._textService.setSliderValue(parseInt(this.designcontainerRef.style.width), 'maxV');
+
     }
     updateText(event: any) {
-        //console.log(event)
-
-
         let currentObj = this.currentObjRef;
         if (currentObj != undefined) {
             let handlerRef = this.handlerRef;
@@ -75,12 +74,8 @@ export class textAreaComponent {
 
     constructor(private _textService: TextService) { }
     ngOnInit() {
-       
-       this._textService.designContainerController('get').subscribe(
-            data => {
-                this.designcontainerRef = data;
-                this.designcontainerRef = this.designcontainerRef.nativeElement
-            });
+
+        this.designcontainerRef = this._textService.designcontainerRef.nativeElement;
         this._textService.currentObjController('getCurrentObj', '', '').subscribe(
             data => {
                 this.currentObjRef = data;
@@ -91,7 +86,7 @@ export class textAreaComponent {
                     this.currentObjRef = this.currentObjRef.nativeElement
                 }
             });
-        this._textService.currentObjController('getHandlerObj', '', '').subscribe(
+        this._textService.currentObjController('getHandlerParentObj', '', '').subscribe(
             data => {
                 this.handlerRef = data;
                 this.handlerRef = this.handlerRef.nativeElement

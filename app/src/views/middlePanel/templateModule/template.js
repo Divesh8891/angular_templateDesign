@@ -55,7 +55,7 @@ var templateModuleComponent = (function () {
                 var objLeft = currentObj.style['left'] === '' ? 0 : parseInt(currentObj.style['left']);
                 var objTop = currentObj.style['top'] === '' ? 0 : parseInt(currentObj.style['top']);
                 if ((newH < userArray[i].height) || newW < calculatedW) {
-                    this._textService.setImageDimension(currentObj, newW, newH, userArray[i]);
+                    this._textService.setImageDimension(currentObj, newW, newH, userArray[i], this.designcontainerRef);
                 }
                 this._textService.setAlignmentValue(Math.round((objLeft * newW) / 100), 'left');
                 this._textService.setAlignmentValue(Math.round((objTop * newH) / 100), 'top');
@@ -124,10 +124,7 @@ var templateModuleComponent = (function () {
     };
     templateModuleComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this._textService.designContainerController('get').subscribe(function (data) {
-            _this.designcontainerRef = data;
-            _this.designcontainerRef = _this.designcontainerRef.nativeElement;
-        });
+        this.designcontainerRef = this._textService.designcontainerRef.nativeElement;
         this._textService.currentObjController('getCurrentObj', '', '').subscribe(function (data) {
             if (_this.currentObjRef == undefined) {
                 _this.currentObjRef = undefined;

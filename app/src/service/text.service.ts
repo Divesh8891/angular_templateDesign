@@ -3,7 +3,8 @@ import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class TextService {
-
+    designcontainerRef: any = "";
+    moduleRef: any = "";
     public objArrSource = new Subject();
     // public objArraySource = new Subject();
 
@@ -21,14 +22,15 @@ export class TextService {
 
     public currentObj = new Subject();
     public handlerRef = new Subject();
-    public designcontainerRef = new Subject();
+    public handlerWrapper = new Subject();
+
 
     objArray: objectArray[] = [];
     // 'id': this.randomNumber, 'oriWidth': textWidth, 'oriHeight': textHeight, 'ratio': ratio, 'width': textWidth, 
     //'height': textHeight, 'value': this.textAreaValue/imgSrc, 'type': 'text'
     setObjArray(data: any) {
         let me = this;
-        this.objArray.push(new objectArray(data.id, data.oriWidth, data.oriHeight, data.ratio, data.width, data.height, data.value, data.type));
+        this.objArray.push(new objectArray(data.id, data.oriWidth, data.oriHeight, data.ratio, data.width, data.height, data.value, data.type,data.rotate));
         this.objArrSource.next(me.objArray);
     }
     getObjArray() {
@@ -86,46 +88,46 @@ export class TextService {
     getFontSize() {
         return this.fontSizeValue.asObservable();
     }
-     getLineH() {
+    getLineH() {
         return this.lineHeightValue.asObservable();
     }
-    currentObjController(type: any, currentObjData: any, handlerData: any) {
+    currentObjController(type: any, currentObjData: any,handlerWrapperData: any) {
         if (type == 'set') {
             this.currentObj.next(currentObjData);
-            this.handlerRef.next(handlerData)
+            this.handlerWrapper.next(handlerWrapperData)
+            //console.log(handlerWrapperData)
+
         }
 
         if (type == 'getCurrentObj') {
 
             return this.currentObj.asObservable();
         }
-        if (type == 'getHandlerObj') {
-            return this.handlerRef.asObservable();
-        }
-    }
-    designContainerController(type: any, data: any = null) {
-        //console.log(type,data)
-        if (type == 'set') {
-            this.designcontainerRef.next(data);
-        }
-        if (type == 'get') {
-            // console.log(this.designcontainerRef)
-            return this.designcontainerRef.asObservable();
+      
+        if (type == 'getHandlerParentObj') {
+            return this.handlerWrapper.asObservable();
         }
 
     }
+    designContainerController(data: any) {
+        this.designcontainerRef = data
+    }
+    moduleContainerController(data: any) {
+        this.moduleRef = data
+    }
 
 
-    setImageDimension = function (currentObj: any, containerW: any, containerH: any, objArray: any) {
+    setImageDimension = function (currentObj: any, containerW: any, containerH: any, objArray: any, pContainer: any) {
         // console.log("setdimension")
         // console.log(currentObj, containerW, containerH, objArray)
         let maxWidth = parseInt(containerW); // Max width for the image
         let maxHeight = parseInt(containerH);    // Max height for the image
         if (containerW === '') {
-            maxWidth = parseInt(this.designcontainerRef.nativeElement.style.width); // Max width for the image
+            console.log(this)
+            maxWidth = parseInt(pContainer.style.width); // Max width for the image
         }
         if (containerH === '') {
-            maxHeight = parseInt(this.designcontainerRef.nativeElement.style.height);
+            maxHeight = parseInt(pContainer.style.height);
         }
         let localCurrentObj = currentObj;
         // console.log(maxWidth,maxHeight)
@@ -133,11 +135,11 @@ export class TextService {
         var ratio = 0;  // Used for aspect ratio
         var width = objArray.width;    // Current image width
         var height = objArray.height;  // Current image height
-        // console.log((maxWidth), maxHeight, width, height);
+        console.log((maxWidth), maxHeight, width, height);
         if (width > maxWidth) {
             ratio = maxWidth / width;   // get ratio for scaling image
-            localCurrentObj.style["width"] = this.pixelToPercentage(maxWidth, maxWidth);
-            localCurrentObj.style["height"] = this.pixelToPercentage((height * ratio), maxHeight);
+            localCurrentObj.style["width"] = this.pixelToPercentage(maxWidth-100, maxWidth);
+            //localCurrentObj.style["height"] = this.pixelToPercentage((height * ratio), maxHeight);
             height = height * ratio;    // Reset height to match scaled image
             width = width * ratio;    // Reset width to match scaled image
         }
@@ -150,7 +152,7 @@ export class TextService {
             width = width * ratio;    // Reset width to match scaled image
             height = height * ratio;    // Reset height to match scaled image
         }
-        //console.log(width, height)
+        console.log(width, height)
         objArray.width = width;
         objArray.height = height;
         // this.textHandler.nativeElement.style.width = parseInt(localCurrentObj.offsetWidth) + 10 + 'px';
@@ -173,6 +175,7 @@ export class objectArray {
         public height: any,
         public value: any,
         public type: any,
+        public rotate: any
     ) { }
 
 
