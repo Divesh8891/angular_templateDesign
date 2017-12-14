@@ -17,7 +17,7 @@ var headerComponent = (function () {
 headerComponent = __decorate([
     core_1.Component({
         selector: 'custom-header',
-        template: " \n              <header class=\"header bg-grey\">\n                 <h4 [class]=\"headerHeadingClassName\">{{headerHeading}}</h4>\n              </header>\n    "
+        template: " \n                <div class=\"header\">\n                <a href=\"/\">\n                    <img src=\"app/assets/images/logo.png\" />\n                </a>\n                <ul class=\"nav\">\n                    <li class=\"\">\n                        <a  [routerLink]=\"['/home']\">Choose Product</a>\n                    </li>\n                    <li class=\"\">\n                        <a [routerLink]=\"['/editor']\">Create Custom Design</a>\n                    </li>\n                    <li class=\"\">\n                        <a href=\"javascript:void(0)\" class=\"login-link\">Login</a>\n                        <div class=\"user-info-wrapper\">\n                            <span class=\"user-name\">Divesh</span>\n                            <a href=\"javascript:void(0)\" class=\"logout-link\">Logout</a>\n                        </div>\n                    </li>\n                </ul>\n\n            </div>\n    "
     })
 ], headerComponent);
 exports.headerComponent = headerComponent;
