@@ -1,0 +1,77 @@
+
+    <div class="wrapper-inner">
+        <div class="cursorval">{{cursorx}},{{cursory}}</div>
+        <div class="product-detail-wrapper">
+            <div class="up">
+                <span class="product-name" title="Cap with color">Cap with color</span>
+                <span class="item-count">Available Item: 100</span>
+                <span class="prod-price">₹50 per piece</span>
+            </div>
+            <div class="more-prod-detail">
+                <label class="color-label">Choose Product Color</label>
+                <span class="prod-color"></span>
+                <ul class="custom-color-picker">
+                    <li>
+                        <span style="background-color: #f54c2b;" data-color="#f54c2b"></span>
+                    </li>
+                    <li>
+                        <span style="background-color: #000000;" data-color="#000000"></span>
+                    </li>
+                    <li>
+                        <span style="background-color: #ffffff;" data-color="#ffffff"></span>
+                    </li>
+                    <li>
+                        <span style="background-color: #f2e409" data-color="#f2e409"></span>
+                    </li>
+                    <li>
+                        <span style="background-color: #6cf209" data-color="#6cf209"></span>
+                    </li>
+                </ul>
+                <label class="quan-label">Quantity</label>
+                <input type="text" class="quan-input" />
+                <span class="prod-total-cost">Total Cost: ₹100</span>
+                <button class="btn prod-confirmation" (click)=prodConfirm($event)>Add to Cart</button>
+            </div>
+
+        </div>
+        <div class="middle-module" middleModule (document:mousemove)="updateMove($event)"></div>
+        <section class="left-module" leftModule></section>
+    </div>
+    <div class="modal-wrapper" #modalWrapper>
+        <div class="modal">
+            <div class="modal-header"></div>
+            <div class="modal-body">
+                <div class="modal-left-section">
+                    <span class="confirm-prod-name">Cap wu=otha asdasd</span>
+                    <div class="confirm-prod-quantity">
+                        <label>Quantity</label>
+                        <span>100</span>
+                    </div>
+                    <div class="comfirm-prod-color">
+                        <label class="color-label">Color</label>
+                        <span style="background-color:#000"></span>
+                    </div>
+                    <div class="comfirm-prod-size">
+                        <label class="size-label">Size</label>
+                        <span>XL</span>
+                    </div>
+                    <div class="comfirm-prod-prize">
+                        <label class="prize-label">Total Cost</label>
+                        <span>200</span>
+                    </div>
+
+                    <button class="save btn btn-lrg proceed-to-buy" (click)=saveImage($event)>Proceed to buy</button>
+                </div>
+                <div class="preview-wrapper">
+                    <!--label class="img-prev-label">Image Preview</label-->
+                    <img class="img-preview" src="{{modalImgSrc}}" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="close-modal btn" (click)=closeModal($event)>Back to Editor</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" #modalOverlay></div>
+
+

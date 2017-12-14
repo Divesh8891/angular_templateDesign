@@ -1,0 +1,44 @@
+<div class="desgin-tool-sec" style="width:480px; height: 480px;" #designTooSec (window:scroll)="updateScroll($event)">
+    <img src="../app/assets/images/Products/2.png" class="product-bg-img" />
+    <section class="desgin-inner" data-bg="">
+        <ng-container *ngFor="let obj of localObjArray">
+            <p #xyz *ngIf="obj.type=='text'" class="textNative" data-type="text" title="{{obj.type}}" id="{{obj.id}}" (click)="textNodeEvent($event,text)"
+                style="font-size: 18px;">{{obj.value}}</p>
+            <img #xyz *ngIf="obj.type=='image'" class="imgNative" data-type="image" title="{{obj.type}}" id="{{obj.id}}" (click)="imgNodeEvent($event,img)"
+                src={{obj.value}}/>
+                <img #xyz *ngIf="obj.type=='shape'" class="imgNative" data-type="image" title="{{obj.type}}" id="{{obj.id}}" (click)="imgNodeEvent($event,img)"
+                src={{obj.value}}/>
+        </ng-container>
+    </section>
+    <div class="handler-wrapper" #handlerWrapper (dblclick)="onhandlerdbClick()">
+        <div class="handler cube" #handler [ng2-draggable]="true" (handlerClick)="onhandlerClick($event)" (postions)=getPos($event)>
+
+        </div>
+        <div class="update-color handler-icon" #pickerBgBox [(colorPicker)]="color" (colorPickerChange)="closeTextPicker($event)"
+            [cpPosition]="'right'" [style.backgroundColor]="color" [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true"
+            class="update-color handler-icon" [cpPresetColors]="colorArray" [cpOKButton]="true" [cpSaveClickOutside]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'">
+        </div>
+        <div title="Rotate" class="update-rotate handler-icon" data-type="rotate" (mousedown)="updateDown($event)" (document:mousemove)="updateMove($event)"
+            (document:click)="updateUp($event)"></div>
+        <div title="Width" class="update-width handler-icon" data-type="width" (mousedown)="updateDown($event)" (document:mousemove)="updateMove($event)"
+            (document:click)="updateUp($event)"></div>
+        <div title="Resize" class="update-resize handler-icon" data-type="resize" (mousedown)="updateDown($event)" (document:mousemove)="updateMove($event)"
+            (document:click)="updateUp($event)"></div>
+        <div title="Height" class="update-height handler-icon" data-type="height" (mousedown)="updateDown($event)" (document:mousemove)="updateMove($event)"
+            (document:click)="updateUp($event)"></div>
+        <div title="Alignment" class="update-alignment handler-icon" (dblclick)="openAlignmentPanel('close',$event)" (click)="openAlignmentPanel('open',$event)">
+            <div class="align-action" #alignmentPanel>
+                <i class="sprite-img sendBack" (click)=sendBack($event) title="Send Back"></i>
+                <i class="sprite-img bringFront" (click)=bringFront($event) title="Bring Front"></i>
+                <i class="sprite-img sendBackword" (click)=sendforward($event) title="Send Backward"></i>
+                <i class="sprite-img bringForward" (click)=bringForward($event) title="Bring Forward"></i>
+            </div>
+        </div>
+        <div title="Dublicate" class="update-dublicate handler-icon" data-type="dublicate" (click)="createDublicate($event)"></div>
+        <div title="Delete" class="update-delete handler-icon" (click)=deleteNode($event)></div>
+    </div>
+</div>
+<div class="scaleSlider">
+    <md-slider class="custom-slider" step="0.01" (input)="onScaleChanged($event)" min="{{minScaleValue}}" max="{{maxScaleValue}}"
+        value="{{inputScaleValue}}"></md-slider>
+</div>
